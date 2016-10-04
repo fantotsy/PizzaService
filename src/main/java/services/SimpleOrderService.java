@@ -13,6 +13,11 @@ public class SimpleOrderService implements OrderService {
     private InMemoryPizzaRepository inMemoryPizzaRepository;
     private InMemoryOrderRepository inMemoryOrderRepository;
 
+    public SimpleOrderService() {
+        inMemoryPizzaRepository = new InMemoryPizzaRepository();
+        inMemoryOrderRepository = new InMemoryOrderRepository();
+    }
+
     public InMemoryPizzaRepository getInMemoryPizzaRepository() {
         return inMemoryPizzaRepository;
     }
@@ -21,11 +26,7 @@ public class SimpleOrderService implements OrderService {
         return inMemoryOrderRepository;
     }
 
-    public SimpleOrderService() {
-        inMemoryPizzaRepository = new InMemoryPizzaRepository();
-        inMemoryOrderRepository = new InMemoryOrderRepository();
-    }
-
+    @Override
     public Order placeNewOrder(Customer customer, Integer... pizzasId) {
         List<Pizza> pizzas = new ArrayList<>();
 
