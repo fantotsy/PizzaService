@@ -11,7 +11,6 @@ import services.order.SimpleOrderService;
 import static org.junit.Assert.assertEquals;
 
 public class AppRunnerTest {
-    private Context context;
     private OrderService orderService;
 
     public AppRunnerTest() {
@@ -20,7 +19,7 @@ public class AppRunnerTest {
 
     @Before
     public void setUp() {
-        context = new ApplicationContext(new JavaConfig());
+        Context context = new ApplicationContext(new JavaConfig());
         orderService = context.getBean("orderService");
     }
 
@@ -36,5 +35,10 @@ public class AppRunnerTest {
         orderService.getPizzaService().getPizzaRepository().getPizzas().add(pizza);
         Pizza actual = orderService.getPizzaService().getPizzaRepository().getPizzaById(5);
         assertEquals(pizza, actual);
+    }
+
+    @Test
+    public void testConvertTypeToBeanName() {
+        assertEquals("integer", new ApplicationContext(new JavaConfig()).convertTypeToBeanName(Integer.class));
     }
 }

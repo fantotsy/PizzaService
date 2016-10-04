@@ -23,8 +23,7 @@ public class ApplicationContext implements Context {
         if (numberOfParameters == 0) {
             try {
                 T bean = (T) type.newInstance();
-                beans.put(beanName, bean);
-                return bean;
+                return putBeanAndReturnIt(beanName, bean);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -37,8 +36,7 @@ public class ApplicationContext implements Context {
             }
             try {
                 T bean = (T) constructor.newInstance(params);
-                beans.put(beanName, bean);
-                return bean;
+                return putBeanAndReturnIt(beanName, bean);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -50,5 +48,10 @@ public class ApplicationContext implements Context {
         char[] classNameArray = className.toCharArray();
         classNameArray[0] = Character.toLowerCase(classNameArray[0]);
         return new String(classNameArray);
+    }
+
+    public <T> T putBeanAndReturnIt(String beanName, T bean) {
+        beans.put(beanName, bean);
+        return bean;
     }
 }
