@@ -9,7 +9,6 @@ public class SimplePizzaService implements PizzaService {
     private PizzaRepository pizzaRepository;
 
     public SimplePizzaService() {
-        pizzaRepository = new InMemoryPizzaRepository();
         InitialContext context = new InitialContext();
         pizzaRepository = context.getInstance("pizzaRepository");
     }
