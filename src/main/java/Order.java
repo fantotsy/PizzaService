@@ -5,6 +5,10 @@ public class Order {
     private List<Pizza> order;
     private Customer customer;
 
+    public Order() {
+
+    }
+
     public Order(Long id, Customer customer, List<Pizza> order) {
         this.id = id;
         this.order = order;

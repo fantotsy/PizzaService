@@ -8,6 +8,10 @@ public class Pizza {
         Vegetarian, Sea, Meat;
     }
 
+    public Pizza() {
+
+    }
+
     public Pizza(Long id, String name, double price, PizzaTypes type) {
         this.id = id;
         this.name = name;

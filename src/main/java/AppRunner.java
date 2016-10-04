@@ -4,7 +4,6 @@ public class AppRunner {
         Order order;
         SimpleOrderService simpleOrderService = new SimpleOrderService();
         order = simpleOrderService.placeNewOrder(customer, 1, 2, 3);
-
         System.out.println(order);
     }
 }

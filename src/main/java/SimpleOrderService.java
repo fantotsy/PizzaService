@@ -5,6 +5,14 @@ public class SimpleOrderService {
     private List<Pizza> pizzas;
     private List<Order> orders;
 
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     public SimpleOrderService() {
         pizzas = new ArrayList<Pizza>() {{
             add(new Pizza(1L, "First", 100.0, Pizza.PizzaTypes.Vegetarian));
@@ -22,10 +30,11 @@ public class SimpleOrderService {
             pizzas.add(getPizzaById(id));
         }
         Order newOrder = new Order(1L, customer, pizzas);
+        saveOrder(newOrder);
         return newOrder;
     }
 
-    private Pizza getPizzaById(int id) {
+    public Pizza getPizzaById(int id) {
         for (Pizza pizza : pizzas) {
             if (pizza.getId() == id) {
                 return pizza;
