@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleOrderService implements OrderService {
-    private OrderRepository orderRepository;
-    private PizzaService pizzaService;
+    private final OrderRepository orderRepository;
+    private final PizzaService pizzaService;
 
-    public SimpleOrderService() {
-        pizzaService = new SimplePizzaService();
-        orderRepository = new InMemoryOrderRepository();
+    public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService) {
+        this.orderRepository = orderRepository;
+        this.pizzaService = pizzaService;
     }
 
     @Override
