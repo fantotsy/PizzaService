@@ -1,5 +1,4 @@
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -24,9 +23,9 @@ public class AppRunnerTest {
 
     @Test
     public void testGetPizzaById() {
-        Pizza pizza = new Pizza(1L, "First", 100.0, Pizza.PizzaTypes.Vegetarian);
+        Pizza pizza = new Pizza(5L, "Fifth", 500.0, Pizza.PizzaTypes.Vegetarian);
         simpleOrderService.getPizzas().add(pizza);
-        Pizza actual = simpleOrderService.getPizzaById(1);
+        Pizza actual = simpleOrderService.getPizzaById(5);
         assertEquals(pizza, actual);
     }
 }
