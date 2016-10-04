@@ -1,8 +1,6 @@
 package services.pizza;
 
 import domain.Pizza;
-import infrastructure.InitialContext;
-import repository.pizza.InMemoryPizzaRepository;
 import repository.pizza.PizzaRepository;
 
 public class SimplePizzaService implements PizzaService {

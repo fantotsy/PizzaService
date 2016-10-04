@@ -3,10 +3,8 @@ package services.order;
 import domain.Customer;
 import domain.Order;
 import domain.Pizza;
-import repository.order.InMemoryOrderRepository;
 import repository.order.OrderRepository;
 import services.pizza.PizzaService;
-import services.pizza.SimplePizzaService;
 
 import java.util.ArrayList;
 import java.util.List;

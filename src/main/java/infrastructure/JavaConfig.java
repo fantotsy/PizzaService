@@ -2,7 +2,6 @@ package infrastructure;
 
 import repository.order.InMemoryOrderRepository;
 import repository.pizza.InMemoryPizzaRepository;
-import repository.pizza.PizzaRepository;
 import services.order.SimpleOrderService;
 import services.pizza.SimplePizzaService;
 
