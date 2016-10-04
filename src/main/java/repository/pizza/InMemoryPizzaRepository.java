@@ -1,4 +1,4 @@
-package repository;
+package repository.pizza;
 
 import domain.Pizza;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryPizzaRepository implements PizzaRepository {
-    private List<Pizza> pizzas;
+    private final List<Pizza> pizzas;
 
     public InMemoryPizzaRepository() {
         pizzas = new ArrayList<Pizza>() {{

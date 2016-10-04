@@ -1,4 +1,4 @@
-package repository;
+package repository.order;
 
 import domain.Order;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryOrderRepository implements OrderRepository {
-    private List<Order> orders;
+    private final List<Order> orders;
 
     public InMemoryOrderRepository() {
         orders = new ArrayList<>();
@@ -17,7 +17,8 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void saveOrder(Order order) {
+    public Order saveOrder(Order order) {
         orders.add(order);
+        return order;
     }
 }

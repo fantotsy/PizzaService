@@ -1,28 +1,30 @@
-package services;
+package services.order;
 
 import domain.Customer;
 import domain.Order;
 import domain.Pizza;
-import repository.InMemoryOrderRepository;
-import repository.InMemoryPizzaRepository;
+import repository.order.InMemoryOrderRepository;
+import repository.order.OrderRepository;
+import services.pizza.PizzaService;
+import services.pizza.SimplePizzaService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleOrderService implements OrderService {
-    private InMemoryPizzaRepository inMemoryPizzaRepository;
-    private InMemoryOrderRepository inMemoryOrderRepository;
+    private PizzaService pizzaService;
+    private OrderRepository inMemoryOrderRepository;
 
     public SimpleOrderService() {
-        inMemoryPizzaRepository = new InMemoryPizzaRepository();
+        pizzaService = new SimplePizzaService();
         inMemoryOrderRepository = new InMemoryOrderRepository();
     }
 
-    public InMemoryPizzaRepository getInMemoryPizzaRepository() {
-        return inMemoryPizzaRepository;
+    public PizzaService getPizzaService() {
+        return pizzaService;
     }
 
-    public InMemoryOrderRepository getInMemoryOrderRepository() {
+    public OrderRepository getInMemoryOrderRepository() {
         return inMemoryOrderRepository;
     }
 
@@ -31,7 +33,7 @@ public class SimpleOrderService implements OrderService {
         List<Pizza> pizzas = new ArrayList<>();
 
         for (int id : pizzasId) {
-            pizzas.add(inMemoryPizzaRepository.getPizzaById(id));
+            pizzas.add(pizzaService.getPizzaById(id));
         }
         Order newOrder = new Order(1L, customer, pizzas);
 

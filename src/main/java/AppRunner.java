@@ -1,6 +1,6 @@
 import domain.Customer;
 import domain.Order;
-import services.SimpleOrderService;
+import services.order.SimpleOrderService;
 
 public class AppRunner {
     public static void main(String[] args) {
