@@ -8,9 +8,8 @@ import repository.pizza.PizzaRepository;
 public class SimplePizzaService implements PizzaService {
     private PizzaRepository pizzaRepository;
 
-    public SimplePizzaService() {
-        InitialContext context = new InitialContext();
-        pizzaRepository = context.getInstance("pizzaRepository");
+    public SimplePizzaService(PizzaRepository pizzaRepository) {
+        this.pizzaRepository = pizzaRepository;
     }
 
     @Override
