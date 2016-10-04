@@ -26,15 +26,17 @@ public class SimpleOrderService {
 
     public Order placeNewOrder(Customer customer, Integer... pizzasId) {
         List<Pizza> pizzas = new ArrayList<>();
+
         for (int id : pizzasId) {
             pizzas.add(getPizzaById(id));
         }
         Order newOrder = new Order(1L, customer, pizzas);
+
         saveOrder(newOrder);
         return newOrder;
     }
 
-    public Pizza getPizzaById(int id) {
+    public Pizza getPizzaById(long id) {
         for (Pizza pizza : pizzas) {
             if (pizza.getId() == id) {
                 return pizza;
