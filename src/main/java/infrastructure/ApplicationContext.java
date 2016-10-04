@@ -50,7 +50,7 @@ public class ApplicationContext implements Context {
         return new String(classNameArray);
     }
 
-    public <T> T putBeanAndReturnIt(String beanName, T bean) {
+    private <T> T putBeanAndReturnIt(String beanName, T bean) {
         beans.put(beanName, bean);
         return bean;
     }
