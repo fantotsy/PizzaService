@@ -12,20 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleOrderService implements OrderService {
+    private OrderRepository orderRepository;
     private PizzaService pizzaService;
-    private OrderRepository inMemoryOrderRepository;
 
     public SimpleOrderService() {
         pizzaService = new SimplePizzaService();
-        inMemoryOrderRepository = new InMemoryOrderRepository();
+        orderRepository = new InMemoryOrderRepository();
     }
 
+    @Override
+    public OrderRepository getInMemoryOrderRepository() {
+        return orderRepository;
+    }
+
+    @Override
     public PizzaService getPizzaService() {
         return pizzaService;
-    }
-
-    public OrderRepository getInMemoryOrderRepository() {
-        return inMemoryOrderRepository;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class SimpleOrderService implements OrderService {
         }
         Order newOrder = new Order(1L, customer, pizzas);
 
-        inMemoryOrderRepository.saveOrder(newOrder);
+        orderRepository.saveOrder(newOrder);
         return newOrder;
     }
 }

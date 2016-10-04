@@ -1,14 +1,20 @@
 package services.pizza;
 
 import domain.Pizza;
+import infrastructure.InitialContext;
 import repository.pizza.InMemoryPizzaRepository;
 import repository.pizza.PizzaRepository;
 
-import java.util.List;
-
 public class SimplePizzaService implements PizzaService {
-    private PizzaRepository pizzaRepository = new InMemoryPizzaRepository();
+    private PizzaRepository pizzaRepository;
 
+    public SimplePizzaService() {
+        pizzaRepository = new InMemoryPizzaRepository();
+        InitialContext context = new InitialContext();
+        pizzaRepository = context.getInstance("pizzaRepository");
+    }
+
+    @Override
     public PizzaRepository getPizzaRepository() {
         return pizzaRepository;
     }
