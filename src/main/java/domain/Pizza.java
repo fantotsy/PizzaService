@@ -1,3 +1,5 @@
+package domain;
+
 public class Pizza {
     private Long id;
     private String name;
@@ -79,7 +81,7 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return "Pizza{" +
+        return "domain.Pizza{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +

@@ -1,3 +1,5 @@
+package domain;
+
 public class Customer {
     private Long id;
     private String name;
@@ -48,7 +50,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
+        return "domain.Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

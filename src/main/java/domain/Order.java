@@ -1,3 +1,5 @@
+package domain;
+
 import java.util.List;
 
 public class Order {
@@ -62,7 +64,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "domain.Order{" +
                 "id=" + id +
                 ", order=" + order +
                 ", customer=" + customer +

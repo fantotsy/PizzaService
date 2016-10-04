@@ -1,5 +1,10 @@
+import domain.Customer;
+import domain.Order;
+import services.SimpleOrderService;
+
 public class AppRunner {
     public static void main(String[] args) {
+        System.out.println("domain.Pizza Service");
         Customer customer = new Customer(1L, "Vasya");
         Order order;
         SimpleOrderService simpleOrderService = new SimpleOrderService();
