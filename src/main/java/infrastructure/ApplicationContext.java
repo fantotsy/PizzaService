@@ -14,32 +14,54 @@ public class ApplicationContext implements Context {
 
     @Override
     public <T> T getBean(String beanName) {
-        if (beans.containsKey(beanName)) {
-            return (T) beans.get(beanName);
-        }
         Class<?> type = config.getImpl(beanName);
-        Constructor<?> constructor = type.getConstructors()[0];
-        int numberOfParameters = constructor.getParameterCount();
-        if (numberOfParameters == 0) {
-            try {
-                T bean = (T) type.newInstance();
-                return putBeanAndReturnIt(beanName, bean);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+        Object bean = beans.get(beanName);
+
+        if (bean != null) {
+            return (T) bean;
+        }
+
+        BeanBuilder builder = new BeanBuilder(type);
+        builder.createBean();
+        bean = builder.build();
+        beans.put(beanName, bean);
+        return (T) bean;
+    }
+
+    private class BeanBuilder<T> {
+        private final Class<?> type;
+        private T bean;
+
+        BeanBuilder(Class<?> type) {
+            this.type = type;
+        }
+
+        private void createBean() {
+            Constructor<?> constructor = type.getConstructors()[0];
+            int numberOfParameters = constructor.getParameterCount();
+            if (numberOfParameters == 0) {
+                try {
+                    this.bean = (T) type.newInstance();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                Class<?>[] parameterTypes = constructor.getParameterTypes();
+                Object[] params = new Object[numberOfParameters];
+                for (int i = 0; i < numberOfParameters; i++) {
+                    String parameterBeanName = convertTypeToBeanName(parameterTypes[i]);
+                    params[i] = getBean(parameterBeanName);
+                }
+                try {
+                    this.bean = (T) constructor.newInstance(params);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
-        } else {
-            Class<?>[] parameterTypes = constructor.getParameterTypes();
-            Object[] params = new Object[numberOfParameters];
-            for (int i = 0; i < numberOfParameters; i++) {
-                String parameterBeanName = convertTypeToBeanName(parameterTypes[i]);
-                params[i] = getBean(parameterBeanName);
-            }
-            try {
-                T bean = (T) constructor.newInstance(params);
-                return putBeanAndReturnIt(beanName, bean);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+        }
+
+        private T build() {
+            return bean;
         }
     }
 
@@ -48,10 +70,5 @@ public class ApplicationContext implements Context {
         char[] classNameArray = className.toCharArray();
         classNameArray[0] = Character.toLowerCase(classNameArray[0]);
         return new String(classNameArray);
-    }
-
-    private <T> T putBeanAndReturnIt(String beanName, T bean) {
-        beans.put(beanName, bean);
-        return bean;
     }
 }
