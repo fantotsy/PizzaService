@@ -1,6 +1,7 @@
 package repository.order;
 
 import domain.Order;
+import infrastructure.BenchMark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         return orders;
     }
 
+    @BenchMark(value = true)
     @Override
     public Order saveOrder(Order order) {
         orders.add(order);

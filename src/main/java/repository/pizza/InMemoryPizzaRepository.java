@@ -1,20 +1,21 @@
 package repository.pizza;
 
 import domain.Pizza;
+import infrastructure.BenchMark;
+import infrastructure.PostCreate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryPizzaRepository implements PizzaRepository {
-    private final List<Pizza> pizzas;
+    private final List<Pizza> pizzas = new ArrayList<>();
 
-    public InMemoryPizzaRepository() {
-        pizzas = new ArrayList<Pizza>() {{
-            add(new Pizza(1L, "First", 100.0, Pizza.PizzaTypes.Vegetarian));
-            add(new Pizza(2L, "Second", 200.0, Pizza.PizzaTypes.Sea));
-            add(new Pizza(3L, "Third", 300.0, Pizza.PizzaTypes.Meat));
-            add(new Pizza(4L, "Third", 400.0, Pizza.PizzaTypes.Meat));
-        }};
+    @PostCreate
+    public void init() {
+        pizzas.add(new Pizza(1L, "First", 100.0, Pizza.PizzaTypes.Vegetarian));
+        pizzas.add(new Pizza(2L, "Second", 200.0, Pizza.PizzaTypes.Sea));
+        pizzas.add(new Pizza(3L, "Third", 300.0, Pizza.PizzaTypes.Meat));
+        pizzas.add(new Pizza(4L, "Third", 400.0, Pizza.PizzaTypes.Meat));
     }
 
     @Override

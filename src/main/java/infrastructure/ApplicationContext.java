@@ -1,6 +1,10 @@
 package infrastructure;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,12 +27,17 @@ public class ApplicationContext implements Context {
 
         BeanBuilder<T> builder = new BeanBuilder<>(type);
         builder.createBean();
+
+        builder.callPostCreateMethod();
+        builder.callInitMethod();
+        builder.createBeanProxy();
+
         bean = builder.build();
         beans.put(beanName, bean);
         return (T) bean;
     }
 
-    class BeanBuilder<T> {
+    private class BeanBuilder<T> {
         private final Class<?> type;
         private T bean;
 
@@ -50,6 +59,49 @@ public class ApplicationContext implements Context {
                     this.bean = (T) constructor.newInstance(params);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
+                }
+            }
+        }
+
+        private void callInitMethod() {
+            Class<?> beanClass = bean.getClass();
+            Method method;
+            try {
+                method = beanClass.getMethod("init");
+                method.invoke(bean);
+            } catch (Exception ex) {
+                return;
+            }
+        }
+
+        private void callPostCreateMethod() {
+            Method[] beanMethods = type.getDeclaredMethods();
+            for (Method method : beanMethods) {
+                if (method.getAnnotation(PostCreate.class) != null) {
+                    try {
+                        method.invoke(bean);
+                    } catch (Exception ex) {
+                        throw new RuntimeException();
+                    }
+                }
+            }
+        }
+
+        private void createBeanProxy() {
+            Method[] beanMethods = type.getDeclaredMethods();
+            for (Method beanMethod : beanMethods) {
+                BenchMark annotation = beanMethod.getAnnotation(BenchMark.class);
+                if (annotation != null && annotation.value()) {
+                    T targetBean = bean;
+                    bean = (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), new InvocationHandler() {
+                        @Override
+                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                            long startTime = System.nanoTime();
+                            Object result = method.invoke(targetBean, args);
+                            System.out.println(method.getName() + " " + (System.nanoTime() - startTime));
+                            return result;
+                        }
+                    });
                 }
             }
         }
