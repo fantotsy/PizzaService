@@ -21,14 +21,14 @@ public class ApplicationContext implements Context {
             return (T) bean;
         }
 
-        BeanBuilder builder = new BeanBuilder(type);
+        BeanBuilder<T> builder = new BeanBuilder<>(type);
         builder.createBean();
         bean = builder.build();
         beans.put(beanName, bean);
         return (T) bean;
     }
 
-    private class BeanBuilder<T> {
+    class BeanBuilder<T> {
         private final Class<?> type;
         private T bean;
 
@@ -38,20 +38,14 @@ public class ApplicationContext implements Context {
 
         private void createBean() {
             Constructor<?> constructor = type.getConstructors()[0];
-            int numberOfParameters = constructor.getParameterCount();
-            if (numberOfParameters == 0) {
+            if (constructor.getParameterCount() == 0) {
                 try {
                     this.bean = (T) type.newInstance();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             } else {
-                Class<?>[] parameterTypes = constructor.getParameterTypes();
-                Object[] params = new Object[numberOfParameters];
-                for (int i = 0; i < numberOfParameters; i++) {
-                    String parameterBeanName = convertTypeToBeanName(parameterTypes[i]);
-                    params[i] = getBean(parameterBeanName);
-                }
+                Object[] params = getConstructorParameterBeans(constructor);
                 try {
                     this.bean = (T) constructor.newInstance(params);
                 } catch (Exception ex) {
@@ -62,6 +56,17 @@ public class ApplicationContext implements Context {
 
         private T build() {
             return bean;
+        }
+
+        private Object[] getConstructorParameterBeans(Constructor constructor) {
+            Class<?>[] parameterTypes = constructor.getParameterTypes();
+            int numberOfParameters = constructor.getParameterCount();
+            Object[] params = new Object[numberOfParameters];
+            for (int i = 0; i < numberOfParameters; i++) {
+                String parameterBeanName = convertTypeToBeanName(parameterTypes[i]);
+                params[i] = getBean(parameterBeanName);
+            }
+            return params;
         }
     }
 
