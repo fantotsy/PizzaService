@@ -1,8 +1,8 @@
 import domain.Customer;
 import domain.Order;
-import infrastructure.ApplicationContext;
-import infrastructure.Context;
-import infrastructure.JavaConfig;
+import infrastructure.context.ApplicationContext;
+import infrastructure.context.Context;
+import infrastructure.config.JavaConfig;
 import services.order.OrderService;
 
 public class AppRunner {

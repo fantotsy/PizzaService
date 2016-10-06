@@ -1,7 +1,7 @@
 package repository.order;
 
 import domain.Order;
-import infrastructure.BenchMark;
+import infrastructure.annotations.BenchMark;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package infrastructure;
+package infrastructure.config;
 
 import repository.order.InMemoryOrderRepository;
 import repository.pizza.InMemoryPizzaRepository;

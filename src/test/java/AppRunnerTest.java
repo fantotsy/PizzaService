@@ -1,12 +1,11 @@
 import domain.Customer;
 import domain.Pizza;
-import infrastructure.ApplicationContext;
-import infrastructure.Context;
-import infrastructure.JavaConfig;
+import infrastructure.context.ApplicationContext;
+import infrastructure.context.Context;
+import infrastructure.config.JavaConfig;
 import org.junit.Before;
 import org.junit.Test;
 import services.order.OrderService;
-import services.order.SimpleOrderService;
 
 import static org.junit.Assert.assertEquals;
 
