@@ -5,5 +5,14 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <!-- <bean/> definitions here -->
+    <bean name="pizzaRepository" class="ua.fantotsy.repository.pizza.InMemoryPizzaRepository" init-method="init"/>
+    <bean name="orderRepository" class="ua.fantotsy.repository.order.InMemoryOrderRepository"/>
+    <bean name="pizzaService" class="ua.fantotsy.services.pizza.SimplePizzaService">
+        <constructor-arg ref="pizzaRepository"/>
+    </bean>
+    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
+        <constructor-arg ref="orderRepository"/>
+        <constructor-arg ref="pizzaService"/>
+    </bean>
 
 </beans>
