@@ -1,11 +1,11 @@
-import domain.Customer;
-import domain.Pizza;
-import infrastructure.context.ApplicationContext;
-import infrastructure.context.Context;
-import infrastructure.config.JavaConfig;
+import ua.fantotsy.domain.Customer;
+import ua.fantotsy.domain.Pizza;
+import ua.fantotsy.infrastructure.context.ApplicationContext;
+import ua.fantotsy.infrastructure.context.Context;
+import ua.fantotsy.infrastructure.config.JavaConfig;
 import org.junit.Before;
 import org.junit.Test;
-import services.order.OrderService;
+import ua.fantotsy.services.order.OrderService;
 
 import static org.junit.Assert.assertEquals;
 
