@@ -17,7 +17,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     <bean class="ua.fantotsy.services.UsageSomeService" init-method="init">
         <constructor-arg>
-            <ref parent="T1"/>
+            <bean class="ua.fantotsy.services.Test2SomeService"/>
         </constructor-arg>
     </bean>
 
