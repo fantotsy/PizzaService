@@ -24,9 +24,12 @@ public class SpringAppRunner {
 
         PizzaRepository pizzaRepository = (PizzaRepository) repoContext.getBean("pizzaRepository");
         System.out.println(pizzaRepository.getPizzaById(1));
+
         OrderService orderService = (OrderService) appContext.getBean("orderService");
         Order order = orderService.placeNewOrder(null, 1, 2, 3);
         System.out.println(order);
+
         repoContext.close();
+        appContext.close();
     }
 }
