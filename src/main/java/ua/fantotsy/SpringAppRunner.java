@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class SpringAppRunner {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml", "appContext_1.xml");
         System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
         PizzaRepository pizzaRepository = (PizzaRepository) context.getBean("pizzaRepository");
         System.out.println(pizzaRepository.getPizzaById(1));
