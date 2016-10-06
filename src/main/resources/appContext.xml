@@ -15,7 +15,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <constructor-arg ref="pizzaService"/>
     </bean>
 
-    <bean class="ua.fantotsy.services.UsageSomeService" init-method="init">
+    <bean class="ua.fantotsy.services.UsageSomeService" init-method="init" lazy-init="false">
         <constructor-arg>
             <bean class="ua.fantotsy.services.Test2SomeService"/>
         </constructor-arg>
