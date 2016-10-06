@@ -15,4 +15,10 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <constructor-arg ref="pizzaService"/>
     </bean>
 
+    <bean class="ua.fantotsy.services.UsageSomeService" init-method="init">
+        <constructor-arg>
+            <ref parent="T1"/>
+        </constructor-arg>
+    </bean>
+
 </beans>
