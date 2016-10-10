@@ -81,7 +81,7 @@ public class Order {
             throw new RuntimeException("Such percentage is not allowed.");
         } else {
             double price = pizzas.get(0).getPrice();
-            double discount = price * ((double)percentage / 100);
+            double discount = price * ((double) percentage / 100);
             double reducedPrice = price - discount;
             for (Pizza pizza : pizzas) {
                 pizza.setPrice(reducedPrice);
