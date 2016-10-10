@@ -49,10 +49,17 @@ public class AppRunnerTest {
     }
 
     @Test
-    public void testGetTotalOrderPrice(){
+    public void testGetTotalOrderPriceWithoutDiscount(){
         orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
         orderService.placeNewOrder(null, 1);
         assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
+    }
+
+    @Test
+    public void testGetTotalOrderPriceWithDiscount(){
+        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
+        orderService.placeNewOrder(null, 1, 1, 1, 1, 1);
+        assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package ua.fantotsy.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
@@ -42,10 +43,58 @@ public class Order {
 
     public double getTotalPrice() {
         double result = 0.0;
+        if (isMoreThanFourPizzasInOrder()) {
+            reducePizzaPrice(getTheMostExpensivePizza(), 30);
+        }
         for (Pizza pizza : order) {
             result += pizza.getPrice();
         }
         return result;
+    }
+
+    private boolean isMoreThanFourPizzasInOrder() {
+        return (order.size() > 4);
+    }
+
+    private List<Pizza> getTheMostExpensivePizza() {
+        if (isEmpty()) {
+            throw new RuntimeException("Order is empty.");
+        } else {
+            List<Pizza> result = new ArrayList<>();
+            double maxPrice = order.get(0).getPrice();
+            for (Pizza pizza : order) {
+                if (pizza.getPrice() < maxPrice) {
+                    maxPrice = pizza.getPrice();
+                }
+            }
+            for (Pizza pizza : order) {
+                if (pizza.getPrice() == maxPrice) {
+                    result.add(pizza);
+                }
+            }
+            return result;
+        }
+    }
+
+    private void reducePizzaPrice(List<Pizza> pizzas, int percentage) {
+        if (!isAllowedPercentage(percentage)) {
+            throw new RuntimeException("Such percentage is not allowed.");
+        } else {
+            double price = pizzas.get(0).getPrice();
+            double discount = price * ((double)percentage / 100);
+            double reducedPrice = price - discount;
+            for (Pizza pizza : pizzas) {
+                pizza.setPrice(reducedPrice);
+            }
+        }
+    }
+
+    private boolean isAllowedPercentage(int percentage) {
+        return ((percentage >= 1) && (percentage <= 100));
+    }
+
+    private boolean isEmpty() {
+        return (order.size() == 0);
     }
 
     @Override
