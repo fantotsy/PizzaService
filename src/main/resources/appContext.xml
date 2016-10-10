@@ -13,6 +13,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
         <constructor-arg ref="orderRepository"/>
         <constructor-arg ref="pizzaService"/>
+        <constructor-arg ref="customerService"/>
+    </bean>
+
+    <bean name="customerService" class="ua.fantotsy.services.customer.SimpleCustomerService">
+        <constructor-arg ref="customerRepository"/>
     </bean>
 
     <bean class="ua.fantotsy.services.UsageSomeService" init-method="init" lazy-init="false">

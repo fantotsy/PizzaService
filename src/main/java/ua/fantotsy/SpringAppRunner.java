@@ -3,7 +3,10 @@ package ua.fantotsy;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.fantotsy.domain.Address;
+import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
+import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.repository.pizza.PizzaRepository;
 import ua.fantotsy.services.SomeService;
 import ua.fantotsy.services.order.OrderService;
@@ -20,14 +23,11 @@ public class SpringAppRunner {
                 new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repoContext);
         System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
 
-        System.out.println(repoContext.getBean("T1", SomeService.class).getString());
-        System.out.println(appContext.getBean("T1", SomeService.class).getString());
-
-        PizzaRepository pizzaRepository = (PizzaRepository) repoContext.getBean("pizzaRepository");
-        System.out.println(pizzaRepository.getPizzaById(1));
-
         OrderService orderService = (OrderService) appContext.getBean("orderService");
-        Order order = orderService.placeNewOrder(null, 1, 2, 3);
+        Customer customer = new Customer("Vasya", new Address("Kyiv", "K18a"), true);
+        orderService.addNewCustomer(customer);
+        orderService.addNewPizza(new Pizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT));
+        Order order = orderService.placeNewOrder(customer, 1);
         System.out.println(order);
 
         repoContext.close();

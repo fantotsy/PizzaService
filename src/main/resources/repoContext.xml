@@ -12,4 +12,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     <bean name="orderRepository" class="ua.fantotsy.repository.order.InMemoryOrderRepository"/>
 
+    <bean name="customerRepository" class="ua.fantotsy.repository.customer.InMemoryCustomerRepository"/>
+
 </beans>
