@@ -1,6 +1,5 @@
 package ua.fantotsy.repository.order;
 
-import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.annotations.BenchMark;
 
@@ -8,17 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryOrderRepository implements OrderRepository {
+    /*Fields*/
     private final List<Order> orders;
 
+    /*Constructors*/
     public InMemoryOrderRepository() {
         orders = new ArrayList<>();
     }
 
+    /*Public Methods*/
     @BenchMark(value = false)
     @Override
     public Order saveOrder(Order order) {
         order.setId(getNextId());
         orders.add(order);
+        order.confirm();
         return order;
     }
 
@@ -33,10 +36,15 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void payById(long id){
+    public void payOrderById(long id) {
         Order order = getOrderById(id);
         order.pay();
-        order.setStatus(true);
+    }
+
+    @Override
+    public void cancelOrderById(long id) {
+        Order order = getOrderById(id);
+        order.cancel();
     }
 
     @Override
@@ -44,6 +52,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         return orders.size();
     }
 
+    /*Private Methods*/
     private long getNextId() {
         return (orders.size() + 1);
     }

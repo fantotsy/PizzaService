@@ -11,30 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleOrderService implements OrderService {
+    /*Fields*/
     private final OrderRepository orderRepository;
     private final PizzaService pizzaService;
     private final CustomerService customerService;
 
+    /*Constructors*/
     public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService, CustomerService customerService) {
         this.orderRepository = orderRepository;
         this.pizzaService = pizzaService;
         this.customerService = customerService;
     }
 
+    /*Public Methods*/
     @Override
     public Order placeNewOrder(Customer customer, Integer... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
             throw new RuntimeException("Not allowed amount of pizzas!");
         } else {
-
             List<Pizza> pizzas = new ArrayList<>();
-
             for (int id : pizzasId) {
                 pizzas.add(getPizzaById(id));
             }
             Order newOrder = new Order(customer, pizzas);
             newOrder.countTotalPrice();
-
             orderRepository.saveOrder(newOrder);
             return newOrder;
         }
@@ -71,8 +71,13 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public void payByOrderId(long id){
-        orderRepository.payById(id);
+    public void payOrderById(long id) {
+        orderRepository.payOrderById(id);
+    }
+
+    @Override
+    public void cancelOrderById(long id) {
+        orderRepository.cancelOrderById(id);
     }
 
     @Override
@@ -80,6 +85,7 @@ public class SimpleOrderService implements OrderService {
         return orderRepository.getOrderById(id).getTotalPrice();
     }
 
+    /*Private Methods*/
     private boolean isAllowedAmountOfPizzas(Integer... pizzasId) {
         return ((pizzasId.length >= 1) && (pizzasId.length <= 10));
     }

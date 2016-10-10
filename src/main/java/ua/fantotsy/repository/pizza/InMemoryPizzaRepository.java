@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryPizzaRepository implements PizzaRepository {
+    /*Fields*/
     private final List<Pizza> pizzas = new ArrayList<>();
 
+    /*Public Methods*/
     @PostCreate
     public void init() {
 
@@ -32,6 +34,7 @@ public class InMemoryPizzaRepository implements PizzaRepository {
         pizzas.add(newPizza);
     }
 
+    /*Private Methods*/
     private long getNextId() {
         return (pizzas.size() + 1);
     }

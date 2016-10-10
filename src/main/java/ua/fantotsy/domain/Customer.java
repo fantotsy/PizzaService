@@ -1,11 +1,13 @@
 package ua.fantotsy.domain;
 
 public class Customer {
+    /*Fields*/
     private Long id;
     private String name;
     private Address address;
     private AccumulativeCard accumulativeCard;
 
+    /*Constructors*/
     public Customer(String name, Address address, boolean hasAccumulativeCard) {
         this.name = name;
         this.address = address;
@@ -14,6 +16,23 @@ public class Customer {
         }
     }
 
+    /*Methods*/
+    public double getCardBalance() {
+        if (hasAccumulativeCard()) {
+            return accumulativeCard.getBalance();
+        }
+        throw new RuntimeException("This customer has no accumulative card.");
+    }
+
+    public boolean hasAccumulativeCard() {
+        return (accumulativeCard != null);
+    }
+
+    public void increaseAccumulativeCardBalance(double delta) {
+        accumulativeCard.increaseAccumulativeCardBalance(delta);
+    }
+
+    /*Getters & Setters*/
     public Long getId() {
         return id;
     }
@@ -36,21 +55,6 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public double getCardBalance() {
-        if (hasAccumulativeCard()) {
-            return accumulativeCard.getBalance();
-        }
-        throw new RuntimeException("This customer has no accumulative card.");
-    }
-
-    public boolean hasAccumulativeCard() {
-        return (accumulativeCard != null);
-    }
-
-    public void increaseAccumulativeCardBalance(double delta) {
-        accumulativeCard.increaseAccumulativeCardBalance(delta);
     }
 
     @Override

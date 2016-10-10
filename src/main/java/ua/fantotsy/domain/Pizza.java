@@ -1,32 +1,25 @@
 package ua.fantotsy.domain;
 
 public class Pizza {
+    /*Fields*/
     private Long id;
     private String name;
     private double price;
     private PizzaTypes type;
 
-    public enum PizzaTypes {
-        Vegetarian, Sea, Meat;
-    }
-
-    public Pizza() {
-
-    }
-
+    /*Constructors*/
     public Pizza(String name, double price, PizzaTypes type) {
         this.name = name;
         this.price = price;
         this.type = type;
     }
 
-    public Pizza(long id, String name, double price, PizzaTypes type) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.type = type;
+    /*Internal Objects*/
+    public enum PizzaTypes {
+        VEGETARIAN, SEA, MEAT;
     }
 
+    /*Getters & Setters*/
     public Long getId() {
         return id;
     }

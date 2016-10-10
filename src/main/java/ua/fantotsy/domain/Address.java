@@ -1,14 +1,17 @@
 package ua.fantotsy.domain;
 
 public class Address {
+    /*Fields*/
     private String city;
     private String street;
 
+    /*Constructors*/
     public Address(String city, String street) {
         this.city = city;
         this.street = street;
     }
 
+    /*Getters & Setters*/
     public String getCity() {
         return city;
     }

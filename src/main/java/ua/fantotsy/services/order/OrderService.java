@@ -22,7 +22,9 @@ public interface OrderService {
 
     void addNewCustomer(Customer newCustomer);
 
-    void payByOrderId(long id);
+    void payOrderById(long id);
+
+    void cancelOrderById(long id);
 
     double getTotalOrderPriceById(long id);
 }

@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryCustomerRepository implements CustomerRepository {
+    /*Fields*/
     private final List<Customer> customers;
 
+    /*Constructors*/
     public InMemoryCustomerRepository() {
         customers = new ArrayList<>();
     }
 
+    /*Public Methods*/
     @Override
     public Customer getCustomerById(long id) {
         if (customers.size() > 0) {
@@ -30,6 +33,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
         customers.add(customer);
     }
 
+    /*Private Methods*/
     private long getNextId() {
         return (customers.size() + 1);
     }

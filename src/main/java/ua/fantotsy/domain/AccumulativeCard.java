@@ -1,22 +1,26 @@
 package ua.fantotsy.domain;
 
 public class AccumulativeCard {
+    /*Fields*/
     private Double balance;
 
-    public AccumulativeCard(){
+    /*Constructors*/
+    public AccumulativeCard() {
         balance = 0.0;
     }
 
+    /*Methods*/
+    public void increaseAccumulativeCardBalance(double delta) {
+        balance += delta;
+    }
+
+    /*Getters & Setters*/
     public Double getBalance() {
         return balance;
     }
 
     public void setBalance(Double balance) {
         this.balance = balance;
-    }
-
-    public void increaseAccumulativeCardBalance(double delta){
-        balance += delta;
     }
 
     @Override

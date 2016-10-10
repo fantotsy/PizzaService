@@ -6,23 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
+    /*Constants*/
+    private static int PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT = 30;
+    private static int PERCENTAGE_OF_CARD_BALANCE_ON_ORDER_DISCOUNT = 10;
+    private static int MAX_PERCENTAGE_OF_ORDER_PRICE_FOR_CARD_DISCOUNT = 30;
+    private static int MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT = 4;
+
+    /*Fields*/
     private Long id;
     private List<Pizza> order;
     private Customer customer;
     private Double totalPrice;
     private Status status;
 
-    private static int PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT = 30;
-    private static int PERCENTAGE_OF_CARD_BALANCE_ON_ORDER_DISCOUNT = 10;
-    private static int MAX_PERCENTAGE_OF_ORDER_PRICE_FOR_CARD_DISCOUNT = 30;
-    private static int MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT = 4;
-
+    /*Constructors*/
     public Order(Customer customer, List<Pizza> order) {
         this.order = order;
         this.customer = customer;
         status = Status.NEW;
     }
 
+    /*Internal Objects*/
     private enum Status {
         NEW {
             public Status nextStatus() {
@@ -66,42 +70,7 @@ public class Order {
         public abstract Status previousStatus();
     }
 
-    public void setStatus(boolean isNextStatus) {
-        if (isNextStatus) {
-            status = status.nextStatus();
-        } else {
-            status = status.previousStatus();
-        }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Pizza> getOrder() {
-        return order;
-    }
-
-    public void setOrder(List<Pizza> order) {
-        this.order = order;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
+    /*Public Methods*/
     public void countTotalPrice() {
         double result = 0.0;
         if (isMoreThanFourPizzasInOrder()) {
@@ -124,14 +93,24 @@ public class Order {
         totalPrice = result;
     }
 
-    private boolean isMoreThanFourPizzasInOrder() {
-        return (order.size() > MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT);
-    }
-
     public void pay() {
         if (customer.hasAccumulativeCard()) {
             customer.increaseAccumulativeCardBalance(totalPrice);
         }
+        status.nextStatus();
+    }
+
+    public void cancel() {
+        status.previousStatus();
+    }
+
+    public void confirm() {
+        status.nextStatus();
+    }
+
+    /*Private Methods*/
+    private boolean isMoreThanFourPizzasInOrder() {
+        return (order.size() > MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT);
     }
 
     private List<Pizza> getTheMostExpensivePizza() {
@@ -169,6 +148,31 @@ public class Order {
 
     private boolean isEmpty() {
         return (order.size() == 0);
+    }
+
+    /*Getters & Setters*/
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setOrder(List<Pizza> order) {
+        this.order = order;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
     @Override
