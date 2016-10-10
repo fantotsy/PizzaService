@@ -22,14 +22,13 @@ public class AppRunnerTest {
     public void setUp() {
         Context context = new ApplicationContext(new JavaConfig());
         orderService = context.getBean("orderService");
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
+        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.VEGETARIAN));
         orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
         orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
     }
 
     @Test(expected = RuntimeException.class)
     public void testTooMuchPizzasInOrder() {
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
         orderService.placeNewOrder(orderService.getCustomerById(1), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
@@ -46,7 +45,7 @@ public class AppRunnerTest {
 
     @Test
     public void testGetPizzaById() {
-        Pizza pizza = new Pizza("Second", 200.0, Pizza.PizzaTypes.Vegetarian);
+        Pizza pizza = new Pizza("Second", 200.0, Pizza.PizzaTypes.SEA);
         orderService.addNewPizza(pizza);
         Pizza actual = orderService.getPizzaById(2);
         assertEquals(pizza, actual);
@@ -67,13 +66,13 @@ public class AppRunnerTest {
     @Test
     public void testGetTotalOrderPriceWithoutDiscountWithCard() {
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
-        orderService.payByOrderId(1L);
+        orderService.payOrderById(1L);
         assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
-        orderService.payByOrderId(2L);
+        orderService.payOrderById(2L);
         assertEquals(90.0, orderService.getTotalOrderPriceById(2L), eps);
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
-        orderService.payByOrderId(3L);
+        orderService.payOrderById(3L);
         assertEquals(81.0, orderService.getTotalOrderPriceById(3L), eps);
     }
 
