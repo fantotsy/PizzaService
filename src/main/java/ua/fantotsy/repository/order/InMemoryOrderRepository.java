@@ -1,5 +1,6 @@
 package ua.fantotsy.repository.order;
 
+import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.annotations.BenchMark;
 
@@ -16,6 +17,10 @@ public class InMemoryOrderRepository implements OrderRepository {
     @BenchMark(value = false)
     @Override
     public Order saveOrder(Order order) {
+        Customer customer = order.getCustomer();
+        if (customer.hasAccumulativeCard()) {
+            customer.increaseAccumulativeCardBalance(order.getTotalPrice());
+        }
         order.setId(getNextId());
         orders.add(order);
         return order;
@@ -36,7 +41,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         return orders.size();
     }
 
-    private long getNextId(){
+    private long getNextId() {
         return (orders.size() + 1);
     }
 }

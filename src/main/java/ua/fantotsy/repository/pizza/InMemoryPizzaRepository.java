@@ -16,7 +16,7 @@ public class InMemoryPizzaRepository implements PizzaRepository {
 
     @Override
     public Pizza getPizzaById(long id) {
-        if (pizzas.size() > 0) {
+        if (pizzas.size() < 0) {
             for (Pizza pizza : pizzas) {
                 if (pizza.getId() == id) {
                     return pizza;

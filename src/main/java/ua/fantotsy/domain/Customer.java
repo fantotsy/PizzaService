@@ -4,14 +4,14 @@ public class Customer {
     private Long id;
     private String name;
     private Address address;
+    private AccumulativeCard accumulativeCard;
 
-    public Customer() {
-
-    }
-
-    public Customer(Long id, String name) {
-        this.id = id;
+    public Customer(String name, Address address, boolean hasAccumulativeCard) {
         this.name = name;
+        this.address = address;
+        if (hasAccumulativeCard) {
+            accumulativeCard = new AccumulativeCard();
+        }
     }
 
     public Long getId() {
@@ -36,6 +36,14 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public boolean hasAccumulativeCard() {
+        return (accumulativeCard != null);
+    }
+
+    public void increaseAccumulativeCardBalance(double delta) {
+        accumulativeCard.increaseAccumulativeCardBalance(delta);
     }
 
     @Override
