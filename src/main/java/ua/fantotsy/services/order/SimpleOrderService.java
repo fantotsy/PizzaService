@@ -28,7 +28,7 @@ public class SimpleOrderService implements OrderService {
             for (int id : pizzasId) {
                 pizzas.add(getPizzaById(id));
             }
-            Order newOrder = new Order(1L, customer, pizzas);
+            Order newOrder = new Order(customer, pizzas);
 
             orderRepository.saveOrder(newOrder);
             return newOrder;
@@ -53,6 +53,11 @@ public class SimpleOrderService implements OrderService {
     @Override
     public void addNewPizza(Pizza newPizza) {
         pizzaService.addNewPizza(newPizza);
+    }
+
+    @Override
+    public double getTotalOrderPriceById(long id) {
+        return orderRepository.getOrderById(id).getTotalPrice();
     }
 
     private boolean isAllowedAmountOfPizzas(Integer... pizzasId) {

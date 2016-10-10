@@ -14,7 +14,13 @@ public class Pizza {
 
     }
 
-    public Pizza(Long id, String name, double price, PizzaTypes type) {
+    public Pizza(String name, double price, PizzaTypes type) {
+        this.name = name;
+        this.price = price;
+        this.type = type;
+    }
+
+    public Pizza(long id, String name, double price, PizzaTypes type) {
         this.id = id;
         this.name = name;
         this.price = price;

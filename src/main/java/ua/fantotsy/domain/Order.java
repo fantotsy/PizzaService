@@ -11,8 +11,7 @@ public class Order {
 
     }
 
-    public Order(Long id, Customer customer, List<Pizza> order) {
-        this.id = id;
+    public Order(Customer customer, List<Pizza> order) {
         this.order = order;
         this.customer = customer;
     }
@@ -39,6 +38,14 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public double getTotalPrice() {
+        double result = 0.0;
+        for (Pizza pizza : order) {
+            result += pizza.getPrice();
+        }
+        return result;
     }
 
     @Override

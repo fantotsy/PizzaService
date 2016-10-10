@@ -10,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AppRunnerTest {
     private OrderService orderService;
+    private double eps = 0.00001;
 
     public AppRunnerTest() {
 
@@ -23,7 +24,8 @@ public class AppRunnerTest {
 
     @Test(expected = RuntimeException.class)
     public void testTooMuchPizzasInOrder() {
-        orderService.placeNewOrder(null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
+        orderService.placeNewOrder(null, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
     @Test(expected = RuntimeException.class)
@@ -33,16 +35,24 @@ public class AppRunnerTest {
 
     @Test
     public void testAllowedAmountOfPizzasInOrder() {
+        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
         orderService.placeNewOrder(null, 1);
         assertEquals(1, orderService.getNumberOfOrders());
     }
 
     @Test
     public void testGetPizzaById() {
-        Pizza pizza = new Pizza(5L, "Fifth", 500.0, Pizza.PizzaTypes.Vegetarian);
+        Pizza pizza = new Pizza("First", 500.0, Pizza.PizzaTypes.Vegetarian);
         orderService.addNewPizza(pizza);
-        Pizza actual = orderService.getPizzaById(5);
+        Pizza actual = orderService.getPizzaById(1);
         assertEquals(pizza, actual);
+    }
+
+    @Test
+    public void testGetTotalOrderPrice(){
+        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
+        orderService.placeNewOrder(null, 1);
+        assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
     }
 
     @Test

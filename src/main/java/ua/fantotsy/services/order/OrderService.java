@@ -17,4 +17,6 @@ public interface OrderService {
     int getNumberOfOrders();
 
     void addNewPizza(Pizza newPizza);
+
+    double getTotalOrderPriceById(long id);
 }

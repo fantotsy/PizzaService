@@ -11,24 +11,28 @@ public class InMemoryPizzaRepository implements PizzaRepository {
 
     @PostCreate
     public void init() {
-        pizzas.add(new Pizza(1L, "First", 100.0, Pizza.PizzaTypes.Vegetarian));
-        pizzas.add(new Pizza(2L, "Second", 200.0, Pizza.PizzaTypes.Sea));
-        pizzas.add(new Pizza(3L, "Third", 300.0, Pizza.PizzaTypes.Meat));
-        pizzas.add(new Pizza(4L, "Third", 400.0, Pizza.PizzaTypes.Meat));
+
     }
 
     @Override
     public Pizza getPizzaById(long id) {
-        for (Pizza pizza : pizzas) {
-            if (pizza.getId() == id) {
-                return pizza;
+        if (pizzas.size() > 0) {
+            for (Pizza pizza : pizzas) {
+                if (pizza.getId() == id) {
+                    return pizza;
+                }
             }
         }
         throw new IllegalArgumentException();
     }
 
     @Override
-    public void addNewPizza(Pizza newPizza){
+    public void addNewPizza(Pizza newPizza) {
+        newPizza.setId(getNextId());
         pizzas.add(newPizza);
+    }
+
+    private long getNextId() {
+        return (pizzas.size() + 1);
     }
 }
