@@ -7,10 +7,7 @@ public class Order {
     private Long id;
     private List<Pizza> order;
     private Customer customer;
-
-    public Order() {
-
-    }
+    private Double totalPrice;
 
     public Order(Customer customer, List<Pizza> order) {
         this.order = order;
@@ -41,7 +38,15 @@ public class Order {
         this.customer = customer;
     }
 
-    public double getTotalPrice() {
+    public double getTotalPrice(){
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void countTotalPrice() {
         double result = 0.0;
         if (isMoreThanFourPizzasInOrder()) {
             reducePizzaPrice(getTheMostExpensivePizza(), 30);
@@ -49,7 +54,14 @@ public class Order {
         for (Pizza pizza : order) {
             result += pizza.getPrice();
         }
-        return result;
+        if (customer.hasAccumulativeCard()) {
+            double percentageOfCardBalance = getPercentageOfPrice(customer.getCardBalance(), 10);
+            double percentageOfOrderPrice = getPercentageOfPrice(result, 30);
+            if (percentageOfCardBalance <= percentageOfOrderPrice) {
+                result -= percentageOfCardBalance;
+            }
+        }
+        totalPrice = result;
     }
 
     private boolean isMoreThanFourPizzasInOrder() {
@@ -81,12 +93,16 @@ public class Order {
             throw new RuntimeException("Such percentage is not allowed.");
         } else {
             double price = pizzas.get(0).getPrice();
-            double discount = price * ((double) percentage / 100);
+            double discount = getPercentageOfPrice(price, percentage);
             double reducedPrice = price - discount;
             for (Pizza pizza : pizzas) {
                 pizza.setPrice(reducedPrice);
             }
         }
+    }
+
+    private double getPercentageOfPrice(double price, int percentage) {
+        return (price * ((double) percentage / 100));
     }
 
     private boolean isAllowedPercentage(int percentage) {

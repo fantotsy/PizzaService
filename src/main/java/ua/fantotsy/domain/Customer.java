@@ -38,6 +38,13 @@ public class Customer {
         this.address = address;
     }
 
+    public double getCardBalance() {
+        if (hasAccumulativeCard()) {
+            return accumulativeCard.getBalance();
+        }
+        throw new RuntimeException("This customer has no accumulative card.");
+    }
+
     public boolean hasAccumulativeCard() {
         return (accumulativeCard != null);
     }

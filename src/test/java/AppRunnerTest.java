@@ -1,5 +1,4 @@
 import org.junit.Before;
-import org.junit.BeforeClass;
 import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Pizza;
@@ -65,17 +64,18 @@ public class AppRunnerTest {
         assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
     }
 
-//    @Test
-//    public void testGetTotalOrderPriceWithoutDiscountAndCard() {
-//        orderService.placeNewOrder(orderService.getCustomerById(2), 1);
-//        assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
-//    }
-//
-//    @Test
-//    public void testGetTotalOrderPriceWithDiscountWithoutCard() {
-//        orderService.placeNewOrder(orderService.getCustomerById(2), 1, 1, 1, 1, 1);
-//        assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
-//    }
+    @Test
+    public void testGetTotalOrderPriceWithoutDiscountWithCard() {
+        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        assertEquals(90.0, orderService.getTotalOrderPriceById(2L), eps);
+    }
+
+    @Test
+    public void testGetTotalOrderPriceWithDiscountWithCard() {
+        orderService.placeNewOrder(orderService.getCustomerById(2), 1, 1, 1, 1, 1);
+        assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
+    }
 
     @Test
     public void testConvertTypeToBeanName() {
