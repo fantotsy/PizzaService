@@ -3,6 +3,10 @@ package ua.fantotsy.domain;
 public class AccumulativeCard {
     private Double balance;
 
+    public AccumulativeCard(){
+        balance = 0.0;
+    }
+
     public Double getBalance() {
         return balance;
     }

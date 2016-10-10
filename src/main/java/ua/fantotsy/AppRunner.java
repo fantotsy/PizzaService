@@ -1,5 +1,6 @@
 package ua.fantotsy;
 
+import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.context.ApplicationContext;
@@ -12,7 +13,7 @@ public class AppRunner {
         System.out.println("Pizza Service");
         Context context = new ApplicationContext(new JavaConfig());
 
-        Customer customer = new Customer();
+        Customer customer = new Customer("Petya", new Address("City", "Street"), true);
         OrderService orderService = context.getBean("orderService");
         Order order = orderService.placeNewOrder(customer, 1, 2, 3);
         System.out.println(order);

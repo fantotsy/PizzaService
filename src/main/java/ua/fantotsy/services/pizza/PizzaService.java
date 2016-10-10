@@ -5,7 +5,7 @@ import ua.fantotsy.repository.pizza.PizzaRepository;
 
 public interface PizzaService {
 
-    Pizza getPizzaById(Integer id);
+    Pizza getPizzaById(long id);
 
     void addNewPizza(Pizza newPizza);
 }

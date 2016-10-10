@@ -1,8 +1,11 @@
+import org.junit.Before;
+import org.junit.BeforeClass;
+import ua.fantotsy.domain.Address;
+import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.context.ApplicationContext;
 import ua.fantotsy.infrastructure.context.Context;
 import ua.fantotsy.infrastructure.config.JavaConfig;
-import org.junit.Before;
 import org.junit.Test;
 import ua.fantotsy.services.order.OrderService;
 
@@ -20,47 +23,59 @@ public class AppRunnerTest {
     public void setUp() {
         Context context = new ApplicationContext(new JavaConfig());
         orderService = context.getBean("orderService");
+        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
+        orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
+        orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
     }
 
     @Test(expected = RuntimeException.class)
     public void testTooMuchPizzasInOrder() {
         orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
-        orderService.placeNewOrder(null, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        orderService.placeNewOrder(orderService.getCustomerById(1), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
     @Test(expected = RuntimeException.class)
     public void testNotEnoughPizzasInOrder() {
-        orderService.placeNewOrder(null);
+        orderService.placeNewOrder(orderService.getCustomerById(1));
     }
 
     @Test
     public void testAllowedAmountOfPizzasInOrder() {
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
-        orderService.placeNewOrder(null, 1);
+        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
         assertEquals(1, orderService.getNumberOfOrders());
     }
 
     @Test
     public void testGetPizzaById() {
-        Pizza pizza = new Pizza("First", 500.0, Pizza.PizzaTypes.Vegetarian);
+        Pizza pizza = new Pizza("Second", 200.0, Pizza.PizzaTypes.Vegetarian);
         orderService.addNewPizza(pizza);
-        Pizza actual = orderService.getPizzaById(1);
+        Pizza actual = orderService.getPizzaById(2);
         assertEquals(pizza, actual);
     }
 
     @Test
-    public void testGetTotalOrderPriceWithoutDiscount(){
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
-        orderService.placeNewOrder(null, 1);
+    public void testGetTotalOrderPriceWithoutDiscountAndCard() {
+        orderService.placeNewOrder(orderService.getCustomerById(2), 1);
         assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
     }
 
     @Test
-    public void testGetTotalOrderPriceWithDiscount(){
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.Vegetarian));
-        orderService.placeNewOrder(null, 1, 1, 1, 1, 1);
+    public void testGetTotalOrderPriceWithDiscountWithoutCard() {
+        orderService.placeNewOrder(orderService.getCustomerById(2), 1, 1, 1, 1, 1);
         assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
     }
+
+//    @Test
+//    public void testGetTotalOrderPriceWithoutDiscountAndCard() {
+//        orderService.placeNewOrder(orderService.getCustomerById(2), 1);
+//        assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
+//    }
+//
+//    @Test
+//    public void testGetTotalOrderPriceWithDiscountWithoutCard() {
+//        orderService.placeNewOrder(orderService.getCustomerById(2), 1, 1, 1, 1, 1);
+//        assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
+//    }
 
     @Test
     public void testConvertTypeToBeanName() {

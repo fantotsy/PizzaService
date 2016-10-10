@@ -10,13 +10,17 @@ public interface OrderService {
 
     Order placeNewOrder(Customer customer, Integer... pizzasId);
 
-    Pizza getPizzaById(Integer id);
+    Pizza getPizzaById(long id);
+
+    Customer getCustomerById(long id);
 
     void saveOrder(Order newOrder);
 
     int getNumberOfOrders();
 
     void addNewPizza(Pizza newPizza);
+
+    void addNewCustomer(Customer newCustomer);
 
     double getTotalOrderPriceById(long id);
 }
