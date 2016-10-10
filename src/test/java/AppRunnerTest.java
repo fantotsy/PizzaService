@@ -1,4 +1,3 @@
-import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.context.ApplicationContext;
 import ua.fantotsy.infrastructure.context.Context;
@@ -22,17 +21,27 @@ public class AppRunnerTest {
         orderService = context.getBean("orderService");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testTooMuchPizzasInOrder() {
+        orderService.placeNewOrder(null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testNotEnoughPizzasInOrder() {
+        orderService.placeNewOrder(null);
+    }
+
     @Test
-    public void testPlaceNewOrder() {
-        orderService.placeNewOrder(new Customer(), 1);
-        assertEquals(1, orderService.getInMemoryOrderRepository().getOrders().size());
+    public void testAllowedAmountOfPizzasInOrder() {
+        orderService.placeNewOrder(null, 1);
+        assertEquals(1, orderService.getNumberOfOrders());
     }
 
     @Test
     public void testGetPizzaById() {
         Pizza pizza = new Pizza(5L, "Fifth", 500.0, Pizza.PizzaTypes.Vegetarian);
-        orderService.getPizzaService().getPizzaRepository().getPizzas().add(pizza);
-        Pizza actual = orderService.getPizzaService().getPizzaRepository().getPizzaById(5);
+        orderService.addNewPizza(pizza);
+        Pizza actual = orderService.getPizzaById(5);
         assertEquals(pizza, actual);
     }
 

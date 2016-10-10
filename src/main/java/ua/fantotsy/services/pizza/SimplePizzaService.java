@@ -11,12 +11,12 @@ public class SimplePizzaService implements PizzaService {
     }
 
     @Override
-    public PizzaRepository getPizzaRepository() {
-        return pizzaRepository;
+    public Pizza getPizzaById(Integer id) {
+        return pizzaRepository.getPizzaById(id);
     }
 
     @Override
-    public Pizza getPizzaById(Integer id) {
-        return pizzaRepository.getPizzaById(id);
+    public void addNewPizza(Pizza newPizza) {
+        pizzaRepository.addNewPizza(newPizza);
     }
 }

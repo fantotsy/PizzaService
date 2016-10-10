@@ -19,25 +19,43 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public OrderRepository getInMemoryOrderRepository() {
-        return orderRepository;
-    }
-
-    @Override
-    public PizzaService getPizzaService() {
-        return pizzaService;
-    }
-
-    @Override
     public Order placeNewOrder(Customer customer, Integer... pizzasId) {
-        List<Pizza> pizzas = new ArrayList<>();
+        if (!isAllowedAmountOfPizzas(pizzasId)) {
+            throw new RuntimeException("Not allowed amount of pizzas!");
+        } else {
+            List<Pizza> pizzas = new ArrayList<>();
 
-        for (int id : pizzasId) {
-            pizzas.add(pizzaService.getPizzaById(id));
+            for (int id : pizzasId) {
+                pizzas.add(getPizzaById(id));
+            }
+            Order newOrder = new Order(1L, customer, pizzas);
+
+            orderRepository.saveOrder(newOrder);
+            return newOrder;
         }
-        Order newOrder = new Order(1L, customer, pizzas);
+    }
 
+    @Override
+    public Pizza getPizzaById(Integer id) {
+        return pizzaService.getPizzaById(id);
+    }
+
+    @Override
+    public void saveOrder(Order newOrder) {
         orderRepository.saveOrder(newOrder);
-        return newOrder;
+    }
+
+    @Override
+    public int getNumberOfOrders() {
+        return orderRepository.getNumberOfOrders();
+    }
+
+    @Override
+    public void addNewPizza(Pizza newPizza) {
+        pizzaService.addNewPizza(newPizza);
+    }
+
+    private boolean isAllowedAmountOfPizzas(Integer... pizzasId) {
+        return ((pizzasId.length >= 1) && (pizzasId.length <= 10));
     }
 }

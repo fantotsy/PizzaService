@@ -18,11 +18,6 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     @Override
-    public List<Pizza> getPizzas() {
-        return pizzas;
-    }
-
-    @Override
     public Pizza getPizzaById(long id) {
         for (Pizza pizza : pizzas) {
             if (pizza.getId() == id) {
@@ -30,5 +25,10 @@ public class InMemoryPizzaRepository implements PizzaRepository {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    @Override
+    public void addNewPizza(Pizza newPizza){
+        pizzas.add(newPizza);
     }
 }

@@ -13,15 +13,15 @@ public class InMemoryOrderRepository implements OrderRepository {
         orders = new ArrayList<>();
     }
 
-    @Override
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    @BenchMark(value = true)
+    @BenchMark(value = false)
     @Override
     public Order saveOrder(Order order) {
         orders.add(order);
         return order;
+    }
+
+    @Override
+    public int getNumberOfOrders() {
+        return orders.size();
     }
 }
