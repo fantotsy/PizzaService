@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AppRunnerTest {
     private OrderService orderService;
-    private double eps = 0.00001;
+    private final double eps = 0.00001;
 
     public AppRunnerTest() {
 
@@ -67,8 +67,11 @@ public class AppRunnerTest {
     @Test
     public void testGetTotalOrderPriceWithoutDiscountWithCard() {
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
         assertEquals(90.0, orderService.getTotalOrderPriceById(2L), eps);
+        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        assertEquals(81.0, orderService.getTotalOrderPriceById(3L), eps);
     }
 
     @Test

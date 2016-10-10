@@ -9,6 +9,11 @@ public class Order {
     private Customer customer;
     private Double totalPrice;
 
+    private static int PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT = 30;
+    private static int PERCENTAGE_OF_CARD_BALANCE_ON_ORDER_DISCOUNT = 10;
+    private static int MAX_PERCENTAGE_OF_ORDER_PRICE_FOR_CARD_DISCOUNT = 30;
+    private static int MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT = 4;
+
     public Order(Customer customer, List<Pizza> order) {
         this.order = order;
         this.customer = customer;
@@ -38,7 +43,7 @@ public class Order {
         this.customer = customer;
     }
 
-    public double getTotalPrice(){
+    public double getTotalPrice() {
         return totalPrice;
     }
 
@@ -49,23 +54,27 @@ public class Order {
     public void countTotalPrice() {
         double result = 0.0;
         if (isMoreThanFourPizzasInOrder()) {
-            reducePizzaPrice(getTheMostExpensivePizza(), 30);
+            reducePizzaPrice(getTheMostExpensivePizza(), PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT);
         }
         for (Pizza pizza : order) {
             result += pizza.getPrice();
         }
         if (customer.hasAccumulativeCard()) {
-            double percentageOfCardBalance = getPercentageOfPrice(customer.getCardBalance(), 10);
-            double percentageOfOrderPrice = getPercentageOfPrice(result, 30);
+            double percentageOfCardBalance =
+                    getPercentageOfPrice(customer.getCardBalance(), PERCENTAGE_OF_CARD_BALANCE_ON_ORDER_DISCOUNT);
+            double percentageOfOrderPrice =
+                    getPercentageOfPrice(result, MAX_PERCENTAGE_OF_ORDER_PRICE_FOR_CARD_DISCOUNT);
             if (percentageOfCardBalance <= percentageOfOrderPrice) {
                 result -= percentageOfCardBalance;
+            } else {
+                result -= percentageOfOrderPrice;
             }
         }
         totalPrice = result;
     }
 
     private boolean isMoreThanFourPizzasInOrder() {
-        return (order.size() > 4);
+        return (order.size() > MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT);
     }
 
     private List<Pizza> getTheMostExpensivePizza() {
