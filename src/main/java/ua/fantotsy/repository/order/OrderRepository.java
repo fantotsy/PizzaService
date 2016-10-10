@@ -10,5 +10,7 @@ public interface OrderRepository {
 
     Order getOrderById(long id);
 
+    void payById(long id);
+
     int getNumberOfOrders();
 }

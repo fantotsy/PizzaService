@@ -17,10 +17,6 @@ public class InMemoryOrderRepository implements OrderRepository {
     @BenchMark(value = false)
     @Override
     public Order saveOrder(Order order) {
-        Customer customer = order.getCustomer();
-        if (customer.hasAccumulativeCard()) {
-            customer.increaseAccumulativeCardBalance(order.getTotalPrice());
-        }
         order.setId(getNextId());
         orders.add(order);
         return order;
@@ -34,6 +30,13 @@ public class InMemoryOrderRepository implements OrderRepository {
             }
         }
         throw new RuntimeException("Such order id does not exist.");
+    }
+
+    @Override
+    public void payById(long id){
+        Order order = getOrderById(id);
+        order.pay();
+        order.setStatus(true);
     }
 
     @Override

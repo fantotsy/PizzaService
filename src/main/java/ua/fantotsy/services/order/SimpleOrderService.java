@@ -26,6 +26,7 @@ public class SimpleOrderService implements OrderService {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
             throw new RuntimeException("Not allowed amount of pizzas!");
         } else {
+
             List<Pizza> pizzas = new ArrayList<>();
 
             for (int id : pizzasId) {
@@ -67,6 +68,11 @@ public class SimpleOrderService implements OrderService {
     @Override
     public void addNewCustomer(Customer newCustomer) {
         customerService.addNewCustomer(newCustomer);
+    }
+
+    @Override
+    public void payByOrderId(long id){
+        orderRepository.payById(id);
     }
 
     @Override

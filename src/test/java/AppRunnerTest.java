@@ -67,10 +67,13 @@ public class AppRunnerTest {
     @Test
     public void testGetTotalOrderPriceWithoutDiscountWithCard() {
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        orderService.payByOrderId(1L);
         assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        orderService.payByOrderId(2L);
         assertEquals(90.0, orderService.getTotalOrderPriceById(2L), eps);
         orderService.placeNewOrder(orderService.getCustomerById(1), 1);
+        orderService.payByOrderId(3L);
         assertEquals(81.0, orderService.getTotalOrderPriceById(3L), eps);
     }
 
