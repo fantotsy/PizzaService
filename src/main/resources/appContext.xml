@@ -8,13 +8,17 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype"/>
+    <!--<bean name="order" class="ua.fantotsy.domain.Order" scope="prototype"/>-->
 
-    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" autowire="constructor">
+    <bean name="pizza" class="ua.fantotsy.infrastructure.MyFactoryBean"/>
+
+    <bean class="ua.fantotsy.infrastructure.BenchmarkBeanPostProcessor"/>
+
+    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
         <lookup-method name="createNewOrder" bean="order"/>
     </bean>
 
-    <context:component-scan base-package="ua.fantotsy"/>
-    <context:annotation-config/>
+    <context:component-scan base-package="ua.fantotsy.services"/>
+    <context:component-scan base-package="ua.fantotsy.domain"/>
 
 </beans>

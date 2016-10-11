@@ -1,10 +1,15 @@
 package ua.fantotsy.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import ua.fantotsy.infrastructure.annotations.BenchMark;
 import ua.fantotsy.infrastructure.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Scope(scopeName = "prototype")
 public class Order {
     /*Constants*/
     private static int PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT = 30;
@@ -118,7 +123,7 @@ public class Order {
 
     /*Private Methods*/
     private boolean isMoreThanFourPizzasInOrder() {
-        return (order.size() > PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT);
+        return (order.size() > MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT);
     }
 
     private void reducePizzaPrice(List<Pizza> pizzas, int percentage) {
@@ -134,6 +139,7 @@ public class Order {
         }
     }
 
+    @BenchMark(value = true)
     private List<Pizza> getTheMostExpensivePizza() {
         if (isEmpty()) {
             throw new RuntimeException("Order is empty.");
@@ -159,6 +165,10 @@ public class Order {
     }
 
     /*Getters & Setters*/
+    public List<Pizza> getOrder(){
+        return order;
+    }
+
     public Long getId() {
         return id;
     }

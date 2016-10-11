@@ -1,5 +1,6 @@
 package ua.fantotsy.services.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import ua.fantotsy.domain.Customer;
@@ -20,6 +21,7 @@ public class SimpleOrderService implements OrderService {
     private ApplicationContext applicationContext;
 
     /*Constructors*/
+    @Autowired
     public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService, CustomerService customerService) {
         this.orderRepository = orderRepository;
         this.pizzaService = pizzaService;

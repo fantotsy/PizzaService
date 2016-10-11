@@ -6,6 +6,7 @@ import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.PostCreate;
 import ua.fantotsy.repository.customer.InMemoryCustomerRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     /*Public Methods*/
-    @PostCreate
+    @PostConstruct
     public void init() {
 
     }

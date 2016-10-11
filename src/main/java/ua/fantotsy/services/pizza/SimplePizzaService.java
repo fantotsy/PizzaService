@@ -3,6 +3,7 @@ package ua.fantotsy.services.pizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.fantotsy.domain.Pizza;
+import ua.fantotsy.infrastructure.annotations.BenchMark;
 import ua.fantotsy.repository.pizza.PizzaRepository;
 
 @Service
@@ -23,6 +24,7 @@ public class SimplePizzaService implements PizzaService {
     }
 
     @Override
+    @BenchMark(value = true)
     public void addNewPizza(Pizza newPizza) {
         pizzaRepository.addNewPizza(newPizza);
     }
