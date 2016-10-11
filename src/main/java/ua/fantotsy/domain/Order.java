@@ -20,10 +20,14 @@ public class Order {
     private Status status;
 
     /*Constructors*/
+    public Order(){
+        status = Status.NEW;
+    }
+
     public Order(Customer customer, List<Pizza> order) {
+        this();
         this.order = order;
         this.customer = customer;
-        status = Status.NEW;
     }
 
     /*Internal Objects*/

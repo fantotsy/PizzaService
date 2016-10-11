@@ -1,5 +1,6 @@
 package ua.fantotsy;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.fantotsy.domain.Address;
@@ -7,6 +8,7 @@ import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.services.order.OrderService;
+import ua.fantotsy.services.order.SimpleOrderService;
 
 import java.util.Arrays;
 

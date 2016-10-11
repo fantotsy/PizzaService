@@ -1,5 +1,7 @@
 package ua.fantotsy.services.order;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
@@ -10,11 +12,12 @@ import ua.fantotsy.services.pizza.PizzaService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleOrderService implements OrderService {
+public class SimpleOrderService implements OrderService, ApplicationContextAware {
     /*Fields*/
     private final OrderRepository orderRepository;
     private final PizzaService pizzaService;
     private final CustomerService customerService;
+    private ApplicationContext applicationContext;
 
     /*Constructors*/
     public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService, CustomerService customerService) {
@@ -33,11 +36,18 @@ public class SimpleOrderService implements OrderService {
             for (int id : pizzasId) {
                 pizzas.add(getPizzaById(id));
             }
-            Order newOrder = new Order(customer, pizzas);
+            Order newOrder = createNewOrder();
+            newOrder.setCustomer(customer);
+            newOrder.setOrder(pizzas);
             newOrder.countTotalPrice();
             orderRepository.saveOrder(newOrder);
             return newOrder;
         }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @Override
@@ -86,6 +96,10 @@ public class SimpleOrderService implements OrderService {
     }
 
     /*Private Methods*/
+    private Order createNewOrder() {
+        return (Order) applicationContext.getBean("order");
+    }
+
     private boolean isAllowedAmountOfPizzas(Integer... pizzasId) {
         return ((pizzasId.length >= 1) && (pizzasId.length <= 10));
     }
