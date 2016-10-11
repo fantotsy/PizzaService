@@ -12,7 +12,7 @@ import ua.fantotsy.services.pizza.PizzaService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleOrderService implements OrderService, ApplicationContextAware {
+public class SimpleOrderService implements OrderService {
     /*Fields*/
     private final OrderRepository orderRepository;
     private final PizzaService pizzaService;
@@ -43,11 +43,6 @@ public class SimpleOrderService implements OrderService, ApplicationContextAware
             orderRepository.saveOrder(newOrder);
             return newOrder;
         }
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
     }
 
     @Override
@@ -96,8 +91,8 @@ public class SimpleOrderService implements OrderService, ApplicationContextAware
     }
 
     /*Private Methods*/
-    private Order createNewOrder() {
-        return (Order) applicationContext.getBean("order");
+    Order createNewOrder() {
+        throw new IllegalStateException();
     }
 
     private boolean isAllowedAmountOfPizzas(Integer... pizzasId) {

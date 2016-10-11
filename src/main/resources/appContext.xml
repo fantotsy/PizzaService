@@ -8,7 +8,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     <bean name="pizzaService" class="ua.fantotsy.services.pizza.SimplePizzaService" autowire="constructor"/>
 
-    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" autowire="constructor"/>
+    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" autowire="constructor">
+        <lookup-method name="createNewOrder" bean="order"/>
+    </bean>
 
     <bean name="customerService" class="ua.fantotsy.services.customer.SimpleCustomerService" autowire="constructor"/>
 
