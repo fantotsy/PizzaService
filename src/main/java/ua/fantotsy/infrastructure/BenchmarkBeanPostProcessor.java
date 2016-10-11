@@ -25,9 +25,9 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
                         Class<?> clazz = targetBean.getClass();
                         String name = method.getName();
                         Class<?>[] parameters = method.getParameterTypes();
-                        Method meth = clazz.getMethod(name,parameters);
+                        Method meth = clazz.getMethod(name, parameters);
 
-                        if(meth.isAnnotationPresent(BenchMark.class)) {
+                        if (meth.isAnnotationPresent(BenchMark.class)) {
                             long startTime = System.nanoTime();
                             Object result = method.invoke(targetBean, args);
                             System.out.println(method.getName() + " " + (System.nanoTime() - startTime));

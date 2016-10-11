@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
+import ua.fantotsy.infrastructure.annotations.BenchMark;
 import ua.fantotsy.repository.order.OrderRepository;
 import ua.fantotsy.services.customer.CustomerService;
 import ua.fantotsy.services.pizza.PizzaService;
@@ -30,6 +31,7 @@ public class SimpleOrderService implements OrderService {
 
     /*Public Methods*/
     @Override
+    @BenchMark(value = true)
     public Order placeNewOrder(Customer customer, Integer... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
             throw new RuntimeException("Not allowed amount of pizzas!");
