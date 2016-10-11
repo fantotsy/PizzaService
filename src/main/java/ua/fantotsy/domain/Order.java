@@ -75,6 +75,10 @@ public class Order {
     }
 
     /*Public Methods*/
+    public int getAmountOfPizzas(){
+        return order.size();
+    }
+
     public void countTotalPrice() {
         double result = 0.0;
         if (isMoreThanFourPizzasInOrder()) {
@@ -114,7 +118,20 @@ public class Order {
 
     /*Private Methods*/
     private boolean isMoreThanFourPizzasInOrder() {
-        return (order.size() > MAX_AMOUNT_OF_PIZZAS_FOR_DISCOUNT);
+        return (order.size() > PERCENTAGE_OF_PIZZA_PRICE_ON_PIZZA_DISCOUNT);
+    }
+
+    private void reducePizzaPrice(List<Pizza> pizzas, int percentage) {
+        if (!Utils.isAllowedPercentage(percentage)) {
+            throw new RuntimeException("Such percentage is not allowed.");
+        } else {
+            double price = pizzas.get(0).getPrice();
+            double discount = Utils.getPercentageOfNumber(price, percentage);
+            double reducedPrice = price - discount;
+            for (Pizza pizza : pizzas) {
+                pizza.setPrice(reducedPrice);
+            }
+        }
     }
 
     private List<Pizza> getTheMostExpensivePizza() {
@@ -134,19 +151,6 @@ public class Order {
                 }
             }
             return result;
-        }
-    }
-
-    private void reducePizzaPrice(List<Pizza> pizzas, int percentage) {
-        if (!Utils.isAllowedPercentage(percentage)) {
-            throw new RuntimeException("Such percentage is not allowed.");
-        } else {
-            double price = pizzas.get(0).getPrice();
-            double discount = Utils.getPercentageOfNumber(price, percentage);
-            double reducedPrice = price - discount;
-            for (Pizza pizza : pizzas) {
-                pizza.setPrice(reducedPrice);
-            }
         }
     }
 

@@ -90,8 +90,8 @@ public class SimpleOrderService implements OrderService {
         return orderRepository.getOrderById(id).getTotalPrice();
     }
 
-    /*Private Methods*/
-    Order createNewOrder() {
+    /*Protected & Private Methods*/
+    protected Order createNewOrder() {
         throw new IllegalStateException();
     }
 

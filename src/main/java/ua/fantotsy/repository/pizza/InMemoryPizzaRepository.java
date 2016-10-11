@@ -1,14 +1,23 @@
 package ua.fantotsy.repository.pizza;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.PostCreate;
+import ua.fantotsy.repository.customer.InMemoryCustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class InMemoryPizzaRepository implements PizzaRepository {
     /*Fields*/
-    private final List<Pizza> pizzas = new ArrayList<>();
+    private final List<Pizza> pizzas;
+
+    /*Constructors*/
+    public InMemoryPizzaRepository() {
+        pizzas = new ArrayList<>();
+    }
 
     /*Public Methods*/
     @PostCreate

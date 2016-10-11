@@ -1,11 +1,14 @@
 package ua.fantotsy.repository.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.annotations.BenchMark;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class InMemoryOrderRepository implements OrderRepository {
     /*Fields*/
     private final List<Order> orders;
