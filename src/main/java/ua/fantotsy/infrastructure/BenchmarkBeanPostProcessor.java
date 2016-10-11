@@ -22,12 +22,8 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
                 bean = Proxy.newProxyInstance(bean.getClass().getClassLoader(), getAllDeclaredInterfaces(bean), new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        Class<?> clazz = targetBean.getClass();
-                        String name = method.getName();
-                        Class<?>[] parameters = method.getParameterTypes();
-                        Method meth = clazz.getMethod(name, parameters);
-
-                        if (meth.isAnnotationPresent(BenchMark.class)) {
+                        if (targetBean.getClass().getMethod(method.getName(), method.getParameterTypes())
+                                .isAnnotationPresent(BenchMark.class)) {
                             long startTime = System.nanoTime();
                             Object result = method.invoke(targetBean, args);
                             System.out.println(method.getName() + " " + (System.nanoTime() - startTime));
@@ -42,18 +38,18 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
-    private Class<?>[] getAllDeclaredInterfaces(Object o) {
-        List<Class<?>> interfaces = new ArrayList<>();
-        Class<?> klazz = o.getClass();
-        while (klazz != null) {
-            Collections.addAll(interfaces, klazz.getInterfaces());
-            klazz = klazz.getSuperclass();
-        }
-        return interfaces.stream().toArray(Class<?>[]::new);
-    }
-
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return bean;
+    }
+
+    private Class<?>[] getAllDeclaredInterfaces(Object o) {
+        List<Class<?>> interfaces = new ArrayList<>();
+        Class<?> clazz = o.getClass();
+        while (clazz != null) {
+            Collections.addAll(interfaces, clazz.getInterfaces());
+            clazz = clazz.getSuperclass();
+        }
+        return interfaces.toArray(new Class<?>[interfaces.size()]);
     }
 }

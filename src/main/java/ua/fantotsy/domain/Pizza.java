@@ -19,6 +19,11 @@ public class Pizza {
         VEGETARIAN, SEA, MEAT;
     }
 
+    /*Methods*/
+    public void decreasePrice(double delta) {
+        price -= delta;
+    }
+
     /*Getters & Setters*/
     public Long getId() {
         return id;

@@ -7,6 +7,8 @@ import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
+import ua.fantotsy.domain.discounts.AccumulativeCardDiscount;
+import ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount;
 import ua.fantotsy.services.order.OrderService;
 import ua.fantotsy.services.order.SimpleOrderService;
 
@@ -26,8 +28,14 @@ public class SpringAppRunner {
         Customer customer = new Customer("Vasya", new Address("Kyiv", "K18a"), true);
         orderService.addNewCustomer(customer);
         orderService.addNewPizza(new Pizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT));
-        Order order = orderService.placeNewOrder(customer, 1);
-        System.out.println(order);
+        orderService.addNewDiscount(new TheMostExpensivePizzaDiscount());
+        orderService.addNewDiscount(new AccumulativeCardDiscount());
+        Order order1 = orderService.placeNewOrder(customer, 1, 1, 1, 1, 1);
+        order1.pay();
+        Order order2 = orderService.placeNewOrder(customer, 1, 1);
+        System.out.println("TOTAL: " + order1.getTotalPrice());
+        System.out.println("TOTAL: " + order2.getTotalPrice());
+        //System.out.println(order2);
 
         repoContext.close();
         appContext.close();
