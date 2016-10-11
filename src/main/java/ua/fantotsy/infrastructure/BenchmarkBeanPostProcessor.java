@@ -7,6 +7,9 @@ import ua.fantotsy.infrastructure.annotations.BenchMark;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
 
@@ -16,10 +19,15 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
         for (Method beanMethod : beanMethods) {
             if (beanMethod.isAnnotationPresent(BenchMark.class)) {
                 Object targetBean = bean;
-                bean = Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
+                bean = Proxy.newProxyInstance(bean.getClass().getClassLoader(), getAllDeclaredInterfaces(bean), new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        if (method.isAnnotationPresent(BenchMark.class)) {
+                        Class<?> clazz = targetBean.getClass();
+                        String name = method.getName();
+                        Class<?>[] parameters = method.getParameterTypes();
+                        Method meth = clazz.getMethod(name,parameters);
+
+                        if(meth.isAnnotationPresent(BenchMark.class)) {
                             long startTime = System.nanoTime();
                             Object result = method.invoke(targetBean, args);
                             System.out.println(method.getName() + " " + (System.nanoTime() - startTime));
@@ -32,6 +40,16 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
             }
         }
         return bean;
+    }
+
+    private Class<?>[] getAllDeclaredInterfaces(Object o) {
+        List<Class<?>> interfaces = new ArrayList<>();
+        Class<?> klazz = o.getClass();
+        while (klazz != null) {
+            Collections.addAll(interfaces, klazz.getInterfaces());
+            klazz = klazz.getSuperclass();
+        }
+        return interfaces.stream().toArray(Class<?>[]::new);
     }
 
     @Override
