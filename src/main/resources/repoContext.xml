@@ -4,10 +4,6 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean name="T1" class="ua.fantotsy.services.Test1SomeService" destroy-method="destroy"/>
-    <bean name="T2" class="ua.fantotsy.services.Test1SomeService"/>
-
-
     <bean name="pizzaRepository" class="ua.fantotsy.repository.pizza.InMemoryPizzaRepository" init-method="init"/>
 
     <bean name="orderRepository" class="ua.fantotsy.repository.order.InMemoryOrderRepository"/>

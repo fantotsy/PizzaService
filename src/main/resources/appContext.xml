@@ -4,26 +4,14 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean name="T1" class="ua.fantotsy.services.Test2SomeService"/>
-
     <bean name="pizzaService" class="ua.fantotsy.services.pizza.SimplePizzaService">
         <constructor-arg ref="pizzaRepository"/>
     </bean>
 
-    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
-        <constructor-arg ref="orderRepository"/>
-        <constructor-arg ref="pizzaService"/>
-        <constructor-arg ref="customerService"/>
-    </bean>
+    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" autowire="constructor"/>
 
     <bean name="customerService" class="ua.fantotsy.services.customer.SimpleCustomerService">
         <constructor-arg ref="customerRepository"/>
-    </bean>
-
-    <bean class="ua.fantotsy.services.UsageSomeService" init-method="init" lazy-init="false">
-        <constructor-arg>
-            <bean class="ua.fantotsy.services.Test2SomeService"/>
-        </constructor-arg>
     </bean>
 
 </beans>
