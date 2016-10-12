@@ -58,10 +58,10 @@ public class TheMostExpensivePizzaDiscount extends Discount {
     }
 
     private Pizza getPizzaInOrderById(int id) {
-        return order.getOrder().get(id);
+        return order.getPizzas().get(id);
     }
 
     private List<Pizza> getPizzasFromOrder() {
-        return order.getOrder();
+        return order.getPizzas();
     }
 }

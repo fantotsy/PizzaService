@@ -34,6 +34,9 @@ public class SpringAppRunner {
         System.out.println("TOTAL: " + order1.getTotalPrice());
         System.out.println("TOTAL: " + order2.getTotalPrice());
 
+        System.out.println(order1);
+        System.out.println(order2);
+
         repoContext.close();
         appContext.close();
     }

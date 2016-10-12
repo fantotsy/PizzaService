@@ -63,10 +63,9 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                '}';
+        StringBuilder info = new StringBuilder();
+        info.append("\t\tCity: " + city + "\n");
+        info.append("\t\tStreet: " + street + "\n");
+        return info.toString();
     }
 }

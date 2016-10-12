@@ -8,6 +8,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="ua.fantotsy.services"/>
+    <context:component-scan base-package="ua.fantotsy.domain"/>
+
     <bean class="ua.fantotsy.infrastructure.annotations.BenchmarkBeanPostProcessor"/>
 
     <bean name="pizzaService" class="ua.fantotsy.services.pizza.SimplePizzaService">
@@ -38,8 +41,5 @@
             </set>
         </constructor-arg>
     </bean>
-
-    <context:component-scan base-package="ua.fantotsy.services"/>
-    <context:component-scan base-package="ua.fantotsy.domain"/>
 
 </beans>

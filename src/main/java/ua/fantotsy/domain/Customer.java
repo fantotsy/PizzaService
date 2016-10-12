@@ -85,10 +85,9 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                '}';
+        StringBuilder info = new StringBuilder();
+        info.append("\tName: " + name + "\n");
+        info.append("\tAddress:\n" + address);
+        return info.toString();
     }
 }

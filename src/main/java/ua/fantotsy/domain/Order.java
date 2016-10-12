@@ -94,6 +94,7 @@ public class Order {
                 double currentDiscount = discount.getDiscount(this);
                 if (currentDiscount > maxDiscount) {
                     maxDiscount = currentDiscount;
+                    setAppliedDiscount(discount);
                 }
             }
         }
@@ -135,8 +136,12 @@ public class Order {
     }
 
     /*Getters & Setters*/
-    public void setActiveDiscounts(Set<Discount> activeDiscounts) {
-        this.activeDiscounts = activeDiscounts;
+    public Discount getAppliedDiscount() {
+        return payment.getAppliedDiscount();
+    }
+
+    private void setAppliedDiscount(Discount appliedDiscount) {
+        payment.setAppliedDiscount(appliedDiscount);
     }
 
     public double getInitialPrice() {
@@ -163,7 +168,7 @@ public class Order {
         payment.setTotalPrice(totalPrice);
     }
 
-    public List<Pizza> getOrder() {
+    public List<Pizza> getPizzas() {
         return pizzas;
     }
 
@@ -175,8 +180,8 @@ public class Order {
         this.id = id;
     }
 
-    public void setOrder(List<Pizza> order) {
-        this.pizzas = order;
+    public void setPizzas(List<Pizza> pizzas) {
+        this.pizzas = pizzas;
     }
 
     public Customer getCustomer() {
@@ -214,12 +219,9 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", pizzas=" + pizzas +
-                ", customer=" + customer +
-                ", payment=" + payment +
-                ", status=" + status +
-                '}';
+        StringBuilder info = new StringBuilder();
+        info.append("Order #" + id + ":\n");
+        info.append("Customer:\n" + customer);
+        return info.toString();
     }
 }

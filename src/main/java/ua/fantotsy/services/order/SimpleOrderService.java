@@ -37,7 +37,7 @@ public class SimpleOrderService implements OrderService {
             }
             Order newOrder = createNewOrder();
             newOrder.setCustomer(customer);
-            newOrder.setOrder(pizzas);
+            newOrder.setPizzas(pizzas);
             newOrder.countTotalPrice();
             orderRepository.saveOrder(newOrder);
             return newOrder;
