@@ -27,6 +27,7 @@ public class SimpleAccumulativeCardService implements AccumulativeCardService {
         return accumulativeCard;
     }
 
+    /*Privet & Protected Methods*/
     protected AccumulativeCard createNewAccumulativeCard() {
         throw new IllegalStateException();
     }

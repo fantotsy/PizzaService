@@ -1,6 +1,5 @@
 package ua.fantotsy.repository.customer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.fantotsy.domain.Customer;
 

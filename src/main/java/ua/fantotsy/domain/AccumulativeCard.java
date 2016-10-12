@@ -21,10 +21,6 @@ public class AccumulativeCard {
     }
 
     /*Getters & Setters*/
-    public double getBalance() {
-        return balance;
-    }
-
     public long getId() {
         return id;
     }
@@ -33,14 +29,18 @@ public class AccumulativeCard {
         this.id = id;
     }
 
-    public void setBalance(Double balance) {
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof AccumulativeCard)) return false;
 
         AccumulativeCard that = (AccumulativeCard) o;
 
@@ -55,9 +55,7 @@ public class AccumulativeCard {
 
     @Override
     public String toString() {
-        return "AccumulativeCard{" +
-                "id=" + id +
-                ", balance=" + balance +
-                '}';
+        return "Accumulation card id: " + id +
+                "\nAccumulation card balance: " + balance + "\n";
     }
 }

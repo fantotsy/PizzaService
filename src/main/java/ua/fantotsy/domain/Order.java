@@ -79,28 +79,6 @@ public class Order {
         return pizzas.size();
     }
 
-    private void countInitialPrice() {
-        double result = 0.0;
-        for (Pizza pizza : pizzas) {
-            result += pizza.getPrice();
-        }
-        setInitialPrice(result);
-    }
-
-    private void countDiscount() {
-        double maxDiscount = 0.0;
-        for (Discount discount : activeDiscounts) {
-            if (discount.canBeApplied(this)) {
-                double currentDiscount = discount.getDiscount(this);
-                if (currentDiscount > maxDiscount) {
-                    maxDiscount = currentDiscount;
-                    setAppliedDiscount(discount);
-                }
-            }
-        }
-        setDiscount(maxDiscount);
-    }
-
     public void countTotalPrice() {
         countInitialPrice();
         countDiscount();
@@ -127,6 +105,28 @@ public class Order {
     }
 
     /*Private Methods*/
+    private void countInitialPrice() {
+        double result = 0.0;
+        for (Pizza pizza : pizzas) {
+            result += pizza.getPrice();
+        }
+        setInitialPrice(result);
+    }
+
+    private void countDiscount() {
+        double maxDiscount = 0.0;
+        for (Discount discount : activeDiscounts) {
+            if (discount.canBeApplied(this)) {
+                double currentDiscount = discount.getDiscount(this);
+                if (currentDiscount > maxDiscount) {
+                    maxDiscount = currentDiscount;
+                    setAppliedDiscount(discount);
+                }
+            }
+        }
+        setDiscount(maxDiscount);
+    }
+
     private void removeInactiveDiscounts(Set<Discount> discounts) {
         for (Discount discount : discounts) {
             if (discount.getState().equals(Discount.DiscountState.INACTIVE)) {
@@ -136,12 +136,28 @@ public class Order {
     }
 
     /*Getters & Setters*/
-    public Discount getAppliedDiscount() {
-        return payment.getAppliedDiscount();
+    public Long getId() {
+        return id;
     }
 
-    private void setAppliedDiscount(Discount appliedDiscount) {
-        payment.setAppliedDiscount(appliedDiscount);
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(List<Pizza> pizzas) {
+        this.pizzas = pizzas;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public double getInitialPrice() {
@@ -150,6 +166,14 @@ public class Order {
 
     private void setInitialPrice(double initialPrice) {
         payment.setInitialPrice(initialPrice);
+    }
+
+    public Discount getAppliedDiscount() {
+        return payment.getAppliedDiscount();
+    }
+
+    private void setAppliedDiscount(Discount appliedDiscount) {
+        payment.setAppliedDiscount(appliedDiscount);
     }
 
     private double getDiscount() {
@@ -168,60 +192,37 @@ public class Order {
         payment.setTotalPrice(totalPrice);
     }
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Order)) return false;
 
         Order order = (Order) o;
 
-        if (id != null ? !id.equals(order.id) : order.id != null) return false;
-        if (pizzas != null ? !pizzas.equals(order.pizzas) : order.pizzas != null) return false;
-        if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
-        if (payment != null ? !payment.equals(order.payment) : order.payment != null) return false;
-        return status == order.status;
+        return id != null ? id.equals(order.id) : order.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (pizzas != null ? pizzas.hashCode() : 0);
-        result = 31 * result + (customer != null ? customer.hashCode() : 0);
-        result = 31 * result + (payment != null ? payment.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         StringBuilder info = new StringBuilder();
-        info.append("Order #" + id + ":\n");
-        info.append("Customer:\n" + customer);
+        info.append("ORDER #" + id + ":\n");
+        info.append("CUSTOMER:\n" + customer);
+        info.append("PIZZAS:\n");
+        for (int i = 0; i < pizzas.size(); i++) {
+            info.append(pizzas.get(i));
+            if (i < (pizzas.size() - 1)) {
+                info.append("\n\t----------\n");
+            } else {
+                info.append("\n");
+            }
+        }
+        info.append("PAYMENT:\n" + payment);
         return info.toString();
     }
 }

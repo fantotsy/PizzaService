@@ -58,6 +58,10 @@ public class Customer {
         this.address = address;
     }
 
+    public AccumulativeCard getAccumulativeCard() {
+        return accumulativeCard;
+    }
+
     public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
         this.accumulativeCard = accumulativeCard;
     }
@@ -65,29 +69,22 @@ public class Customer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Customer)) return false;
 
         Customer customer = (Customer) o;
 
-        if (id != null ? !id.equals(customer.id) : customer.id != null) return false;
-        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
-        return address != null ? address.equals(customer.address) : customer.address == null;
+        return id != null ? id.equals(customer.id) : customer.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        StringBuilder info = new StringBuilder();
-        info.append("\tName: " + name + "\n");
-        info.append("\tAddress:\n" + address);
-        return info.toString();
+        return "\tName: " + name +
+                "\n\tAddress:\n" + address;
     }
 }

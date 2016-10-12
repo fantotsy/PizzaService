@@ -1,9 +1,7 @@
 package ua.fantotsy.repository.pizza;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.fantotsy.domain.Pizza;
-import ua.fantotsy.repository.customer.InMemoryCustomerRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;

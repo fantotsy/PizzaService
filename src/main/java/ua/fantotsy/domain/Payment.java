@@ -43,7 +43,7 @@ class Payment {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Payment)) return false;
 
         Payment payment = (Payment) o;
 
@@ -70,11 +70,8 @@ class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" +
-                "initialPrice=" + initialPrice +
-                ", appliedDiscount=" + appliedDiscount +
-                ", discount=" + discount +
-                ", totalPrice=" + totalPrice +
-                '}';
+        return "\tInitial price: " + initialPrice + " UAH" +
+                "\n\tDiscount: " + discount + " UAH (" + appliedDiscount.getName() + ")" +
+                "\n\tIN TOTAL: " + totalPrice + " UAH\n";
     }
 }

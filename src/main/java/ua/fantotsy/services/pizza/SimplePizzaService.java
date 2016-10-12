@@ -16,10 +16,6 @@ public class SimplePizzaService implements PizzaService {
         this.pizzaRepository = pizzaRepository;
     }
 
-    public void init() {
-        addNewPizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT);
-    }
-
     /*Public Methods*/
     @Override
     public Pizza getPizzaById(long id) {

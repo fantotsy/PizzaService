@@ -29,6 +29,7 @@ public class SimpleAddressService implements AddressService {
         return address;
     }
 
+    /*Private & Protected Methods*/
     protected Address createNewAddress() {
         throw new IllegalStateException();
     }

@@ -31,7 +31,13 @@ public class InMemoryAccumulativeCardRepository implements AccumulativeCardRepos
 
     @Override
     public void addNewAccumulativeCard(AccumulativeCard accumulativeCard) {
+        accumulativeCard.setId(getNextId());
         accumulativeCards.add(accumulativeCard);
+    }
+
+    /*Private Methods*/
+    private long getNextId() {
+        return (accumulativeCards.size() + 1);
     }
 
 }

@@ -13,18 +13,13 @@ public class Pizza {
     private PizzaTypes type;
 
     /*Constructors*/
-    public Pizza(){
+    public Pizza() {
 
     }
 
     /*Internal Objects*/
     public enum PizzaTypes {
         VEGETARIAN, SEA, MEAT;
-    }
-
-    /*Methods*/
-    public void decreasePrice(double delta) {
-        price -= delta;
     }
 
     /*Getters & Setters*/
@@ -63,36 +58,24 @@ public class Pizza {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Pizza)) return false;
 
         Pizza pizza = (Pizza) o;
 
-        if (Double.compare(pizza.price, price) != 0) return false;
-        if (id != null ? !id.equals(pizza.id) : pizza.id != null) return false;
-        if (name != null ? !name.equals(pizza.name) : pizza.name != null) return false;
-        return type == pizza.type;
+        return id != null ? id.equals(pizza.id) : pizza.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "ua.fantotsy.domain.Pizza{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", type=" + type +
-                '}';
+        return "\tPizza #" + id +
+                "\n\tName: " + name +
+                "\n\tType: " + type.name() +
+                "\n\tPrice: " + price + " UAH";
     }
 }

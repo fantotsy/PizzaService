@@ -31,6 +31,12 @@ public class InMemoryAddressRepository implements AddressRepository {
 
     @Override
     public void addNewAddress(Address address) {
+        address.setId(getNextId());
         addresses.add(address);
+    }
+
+    /*Private Methods*/
+    private long getNextId() {
+        return (addresses.size() + 1);
     }
 }
