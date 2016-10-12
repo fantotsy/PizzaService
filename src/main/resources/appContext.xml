@@ -8,14 +8,25 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--<bean name="order" class="ua.fantotsy.domain.Order" scope="prototype"/>-->
-
     <bean name="pizza" class="ua.fantotsy.infrastructure.MyFactoryBean"/>
 
     <bean class="ua.fantotsy.infrastructure.BenchmarkBeanPostProcessor"/>
 
     <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
         <lookup-method name="createNewOrder" bean="order"/>
+    </bean>
+
+    <!--<bean name="accumulativeCardDiscount" class="ua.fantotsy.domain.discounts.AccumulativeCardDiscount"/>-->
+
+    <!--<bean name="theMostExpensivePizzaDiscount" class="ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount"/>-->
+
+    <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype" lazy-init="true">
+        <constructor-arg>
+            <set>
+                <ref bean="accumulativeCardDiscount"/>
+                <ref bean="theMostExpensivePizzaDiscount"/>
+            </set>
+        </constructor-arg>
     </bean>
 
     <context:component-scan base-package="ua.fantotsy.services"/>

@@ -1,5 +1,6 @@
 package ua.fantotsy.domain.discounts;
 
+import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.utils.Utils;
@@ -7,6 +8,7 @@ import ua.fantotsy.infrastructure.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TheMostExpensivePizzaDiscount extends Discount {
     private final static int MIN_AMOUNT_OF_PIZZAS = 4;
     private final static int PIZZA_PRICE_PERCENTAGE = 30;

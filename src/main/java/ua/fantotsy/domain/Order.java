@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Component
-@Scope(scopeName = "prototype")
+//@Component
+//@Scope(scopeName = "prototype")
 public class Order {
     /*Fields*/
     private Long id;
@@ -20,16 +20,11 @@ public class Order {
     private Set<Discount> activeDiscounts;
 
     /*Constructors*/
-    public Order() {
+    public Order(Set<Discount> discounts) {
         status = Status.NEW;
         payment = new Payment();
-        activeDiscounts = new HashSet<>();
-    }
-
-    public Order(Customer customer, List<Pizza> pizzas) {
-        this();
-        this.pizzas = pizzas;
-        this.customer = customer;
+        removeInactiveDiscounts(discounts);
+        activeDiscounts = discounts;
     }
 
     /*Internal Objects*/
@@ -76,7 +71,7 @@ public class Order {
         public abstract Status previousStatus();
     }
 
-    /*Methods*/
+    /*Public cMethods*/
     public int getAmountOfPizzas() {
         return pizzas.size();
     }
@@ -125,6 +120,15 @@ public class Order {
 
     public boolean isEmpty() {
         return (pizzas.size() == 0);
+    }
+
+    /*Private Methods*/
+    private void removeInactiveDiscounts(Set<Discount> discounts) {
+        for (Discount discount : discounts) {
+            if (discount.getState().equals(Discount.DiscountState.INACTIVE)) {
+                discounts.remove(discount);
+            }
+        }
     }
 
     /*Getters & Setters*/

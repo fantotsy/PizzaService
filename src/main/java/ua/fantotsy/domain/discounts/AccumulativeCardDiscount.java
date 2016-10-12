@@ -1,9 +1,11 @@
 package ua.fantotsy.domain.discounts;
 
+import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.utils.Utils;
 
+@Component
 public class AccumulativeCardDiscount extends Discount {
     private static int INITIAL_PRICE_PERCENTAGE_LIMIT = 30;
     private static int ACCUMULATION_CARD_PERCENTAGE = 10;

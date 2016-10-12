@@ -28,8 +28,6 @@ public class SpringAppRunner {
         Customer customer = new Customer("Vasya", new Address("Kyiv", "K18a"), true);
         orderService.addNewCustomer(customer);
         orderService.addNewPizza(new Pizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT));
-        orderService.addNewDiscount(new TheMostExpensivePizzaDiscount());
-        orderService.addNewDiscount(new AccumulativeCardDiscount());
         Order order1 = orderService.placeNewOrder(customer, 1, 1, 1, 1, 1);
         order1.pay();
         Order order2 = orderService.placeNewOrder(customer, 1, 1);

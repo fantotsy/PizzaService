@@ -17,12 +17,6 @@ public interface OrderService {
 
     Customer getCustomerById(long id);
 
-    Set<Discount> getDiscounts();
-
-    Set<Discount> getActiveDiscounts();
-
-    Discount getDiscountByName(String name);
-
     void saveOrder(Order newOrder);
 
     int getNumberOfOrders();
@@ -30,8 +24,6 @@ public interface OrderService {
     void addNewPizza(Pizza newPizza);
 
     void addNewCustomer(Customer newCustomer);
-
-    void addNewDiscount(Discount discount);
 
     void payOrderById(long id);
 
