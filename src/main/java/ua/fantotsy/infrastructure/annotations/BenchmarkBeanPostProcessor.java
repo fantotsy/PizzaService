@@ -1,4 +1,4 @@
-package ua.fantotsy.infrastructure;
+package ua.fantotsy.infrastructure.annotations;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

@@ -2,27 +2,30 @@ package domain;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.fantotsy.domain.Address;
-import ua.fantotsy.domain.Customer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.fantotsy.domain.Pizza;
-import ua.fantotsy.infrastructure.config.JavaConfig;
-import ua.fantotsy.infrastructure.context.ApplicationContext;
-import ua.fantotsy.infrastructure.context.Context;
 import ua.fantotsy.services.order.OrderService;
 
 import static org.junit.Assert.assertEquals;
 
 public class OrderTest {
+    private final ConfigurableApplicationContext repoContext;
+    private final ConfigurableApplicationContext appContext;
     private OrderService orderService;
     private final double eps = 0.00001;
 
+    public OrderTest() {
+        repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
+        appContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repoContext);
+    }
+
     @Before
     public void setUp() {
-        Context context = new ApplicationContext(new JavaConfig());
-//        orderService = context.getBean("orderService");
-//        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.VEGETARIAN));
-//        orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
-//        orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
+        orderService = (OrderService) appContext.getBean("orderService");
+        orderService.addNewPizza("Diabola", 100.0, Pizza.PizzaTypes.MEAT);
+        orderService.addNewCustomer("Vasya", "Kyiv", "K18a", true);
+        orderService.addNewCustomer("Vasya", "Kyiv", "K18a", false);
     }
 
     @Test

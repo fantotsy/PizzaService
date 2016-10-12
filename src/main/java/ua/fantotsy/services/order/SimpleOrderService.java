@@ -18,8 +18,7 @@ public class SimpleOrderService implements OrderService {
 
     /*Constructors*/
     @Autowired
-    public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService,
-                              CustomerService customerService) {
+    public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService, CustomerService customerService) {
         this.orderRepository = orderRepository;
         this.pizzaService = pizzaService;
         this.customerService = customerService;

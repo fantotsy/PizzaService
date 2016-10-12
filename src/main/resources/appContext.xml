@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean class="ua.fantotsy.infrastructure.BenchmarkBeanPostProcessor"/>
+    <bean class="ua.fantotsy.infrastructure.annotations.BenchmarkBeanPostProcessor"/>
 
     <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" scope="prototype">
         <lookup-method name="createNewOrder" bean="order"/>
