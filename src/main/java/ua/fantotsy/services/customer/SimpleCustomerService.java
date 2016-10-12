@@ -6,16 +6,18 @@ import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.repository.customer.CustomerRepository;
+import ua.fantotsy.services.address.AddressService;
 
-@Service
 public class SimpleCustomerService implements CustomerService {
     /*Fields*/
     private CustomerRepository customerRepository;
+    private AddressService addressService;
 
     /*Constructors*/
     @Autowired
-    public SimpleCustomerService(CustomerRepository customerRepository) {
+    public SimpleCustomerService(CustomerRepository customerRepository, AddressService addressService) {
         this.customerRepository = customerRepository;
+        this.addressService = addressService;
     }
 
     /*Public Methods*/
@@ -29,9 +31,7 @@ public class SimpleCustomerService implements CustomerService {
         Customer newCustomer = createNewCustomer();
         newCustomer.setName(name);
 
-        Address address = createNewAddress();
-        address.setCity(city);
-        address.setStreet(street);
+        Address address = addressService.addAndReturnNewAddress(city, street);
         newCustomer.setAddress(address);
 
         if (hasAccumulativeCard) {
@@ -44,10 +44,6 @@ public class SimpleCustomerService implements CustomerService {
 
     /*Private & Protected Methods*/
     protected Customer createNewCustomer() {
-        throw new IllegalStateException();
-    }
-
-    protected Address createNewAddress() {
         throw new IllegalStateException();
     }
 

@@ -2,15 +2,25 @@ package ua.fantotsy.domain;
 
 public class Address {
     /*Fields*/
+    private long id;
     private String city;
     private String street;
 
     /*Constructors*/
-    public Address(){
+    public Address() {
 
     }
 
     /*Getters & Setters*/
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getCity() {
         return city;
     }
@@ -49,7 +59,8 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "city='" + city + '\'' +
+                "id=" + id +
+                ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 '}';
     }
