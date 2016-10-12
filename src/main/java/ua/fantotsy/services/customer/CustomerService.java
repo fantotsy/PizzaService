@@ -6,5 +6,5 @@ public interface CustomerService {
 
     Customer getCustomerById(long id);
 
-    void addNewCustomer(Customer customer);
+    void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard);
 }

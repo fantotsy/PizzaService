@@ -10,12 +10,18 @@
 
     <bean class="ua.fantotsy.infrastructure.annotations.BenchmarkBeanPostProcessor"/>
 
-    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" scope="prototype">
-        <lookup-method name="createNewOrder" bean="order"/>
+    <bean name="pizzaService" class="ua.fantotsy.services.pizza.SimplePizzaService" scope="prototype">
+        <lookup-method name="createNewPizza" bean="pizza"/>
+    </bean>
+
+    <bean name="customerService" class="ua.fantotsy.services.customer.SimpleCustomerService" scope="prototype">
+        <lookup-method name="createNewCustomer" bean="customer"/>
         <lookup-method name="createNewAddress" bean="address"/>
         <lookup-method name="createNewAccumulativeCard" bean="accumulativeCard"/>
-        <lookup-method name="createNewCustomer" bean="customer"/>
-        <lookup-method name="createNewPizza" bean="pizza"/>
+    </bean>
+
+    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" scope="prototype">
+        <lookup-method name="createNewOrder" bean="order"/>
     </bean>
 
     <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype">

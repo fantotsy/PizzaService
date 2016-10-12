@@ -6,5 +6,5 @@ public interface PizzaService {
 
     Pizza getPizzaById(long id);
 
-    void addNewPizza(Pizza newPizza);
+    void addNewPizza(String name, double price, Pizza.PizzaTypes type);
 }

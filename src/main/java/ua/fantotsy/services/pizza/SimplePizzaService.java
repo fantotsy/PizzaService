@@ -6,7 +6,6 @@ import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.repository.pizza.PizzaRepository;
 
-@Service
 public class SimplePizzaService implements PizzaService {
     /*Fields*/
     private PizzaRepository pizzaRepository;
@@ -17,7 +16,11 @@ public class SimplePizzaService implements PizzaService {
         this.pizzaRepository = pizzaRepository;
     }
 
-    /*Methods*/
+    public void init() {
+        addNewPizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT);
+    }
+
+    /*Public Methods*/
     @Override
     public Pizza getPizzaById(long id) {
         return pizzaRepository.getPizzaById(id);
@@ -25,7 +28,16 @@ public class SimplePizzaService implements PizzaService {
 
     @Override
     @Benchmark(value = true)
-    public void addNewPizza(Pizza newPizza) {
+    public void addNewPizza(String name, double price, Pizza.PizzaTypes type) {
+        Pizza newPizza = createNewPizza();
+        newPizza.setName(name);
+        newPizza.setPrice(price);
+        newPizza.setType(type);
         pizzaRepository.addNewPizza(newPizza);
+    }
+
+    /*Private & Protected Methods*/
+    protected Pizza createNewPizza() {
+        throw new IllegalStateException();
     }
 }

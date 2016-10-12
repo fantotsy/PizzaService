@@ -66,29 +66,12 @@ public class SimpleOrderService implements OrderService {
 
     @Override
     public void addNewPizza(String name, double price, Pizza.PizzaTypes type) {
-        Pizza newPizza = createNewPizza();
-        newPizza.setName(name);
-        newPizza.setPrice(price);
-        newPizza.setType(type);
-        pizzaService.addNewPizza(newPizza);
+        pizzaService.addNewPizza(name, price, type);
     }
 
     @Override
     public void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard) {
-        Customer newCustomer = createNewCustomer();
-        newCustomer.setName(name);
-
-        Address address = createNewAddress();
-        address.setCity(city);
-        address.setStreet(street);
-        newCustomer.setAddress(address);
-
-        if (hasAccumulativeCard) {
-            AccumulativeCard accumulativeCard = createNewAccumulativeCard();
-            newCustomer.setAccumulativeCard(accumulativeCard);
-        }
-
-        customerService.addNewCustomer(newCustomer);
+        customerService.addNewCustomer(name, city, street, hasAccumulativeCard);
     }
 
     @Override
@@ -106,23 +89,7 @@ public class SimpleOrderService implements OrderService {
         return orderRepository.getOrderById(id).getTotalPrice();
     }
 
-    /*Protected & Private Methods*/
-    protected Pizza createNewPizza() {
-        throw new IllegalStateException();
-    }
-
-    protected Customer createNewCustomer() {
-        throw new IllegalStateException();
-    }
-
-    protected Address createNewAddress() {
-        throw new IllegalStateException();
-    }
-
-    protected AccumulativeCard createNewAccumulativeCard() {
-        throw new IllegalStateException();
-    }
-
+    /*Private & Protected Methods*/
     protected Order createNewOrder() {
         throw new IllegalStateException();
     }
