@@ -7,6 +7,4 @@ public interface AddressService {
     Address getAddressById(long id);
 
     Address addAndReturnNewAddress(String city, String street);
-
-    Address createNewAddress();
 }

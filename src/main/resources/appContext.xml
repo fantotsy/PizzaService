@@ -16,11 +16,14 @@
 
     <bean name="customerService" class="ua.fantotsy.services.customer.SimpleCustomerService">
         <lookup-method name="createNewCustomer" bean="customer"/>
-        <lookup-method name="createNewAccumulativeCard" bean="accumulativeCard"/>
     </bean>
 
     <bean name="addressService" class="ua.fantotsy.services.address.SimpleAddressService">
         <lookup-method name="createNewAddress" bean="address"/>
+    </bean>
+
+    <bean name="accumulativeCardService" class="ua.fantotsy.services.accumulativeCard.SimpleAccumulativeCardService">
+        <lookup-method name="createNewAccumulativeCard" bean="accumulativeCard"/>
     </bean>
 
     <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
@@ -35,14 +38,6 @@
             </set>
         </constructor-arg>
     </bean>
-
-    <bean name="customer" class="ua.fantotsy.domain.Customer" scope="prototype"/>
-
-    <bean name="pizza" class="ua.fantotsy.domain.Pizza" scope="prototype"/>
-
-    <bean name="address" class="ua.fantotsy.domain.Address" scope="prototype"/>
-
-    <bean name="accumulativeCard" class="ua.fantotsy.domain.AccumulativeCard" scope="prototype"/>
 
     <context:component-scan base-package="ua.fantotsy.services"/>
     <context:component-scan base-package="ua.fantotsy.domain"/>

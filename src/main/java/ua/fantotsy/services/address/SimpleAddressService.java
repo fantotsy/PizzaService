@@ -29,8 +29,7 @@ public class SimpleAddressService implements AddressService {
         return address;
     }
 
-    @Override
-    public Address createNewAddress() {
+    protected Address createNewAddress() {
         throw new IllegalStateException();
     }
 }
