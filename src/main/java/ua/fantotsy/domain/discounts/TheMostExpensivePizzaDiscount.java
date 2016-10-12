@@ -12,7 +12,6 @@ import java.util.List;
 public class TheMostExpensivePizzaDiscount extends Discount {
     private final static int MIN_AMOUNT_OF_PIZZAS = 4;
     private final static int PIZZA_PRICE_PERCENTAGE = 30;
-    private Order order;
 
     @Override
     public boolean canBeApplied(Order order) {

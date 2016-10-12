@@ -1,31 +1,31 @@
 package ua.fantotsy.domain;
 
-public class Payment {
-    private Double initialPrice;
-    private Double discount;
-    private Double totalPrice;
+class Payment {
+    private double initialPrice;
+    private double discount;
+    private double totalPrice;
 
-    public Double getInitialPrice() {
+    double getInitialPrice() {
         return initialPrice;
     }
 
-    public void setInitialPrice(Double initialPrice) {
+    void setInitialPrice(double initialPrice) {
         this.initialPrice = initialPrice;
     }
 
-    public Double getDiscount() {
+    double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    void setDiscount(double discount) {
         this.discount = discount;
     }
 
-    public Double getTotalPrice() {
+    double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

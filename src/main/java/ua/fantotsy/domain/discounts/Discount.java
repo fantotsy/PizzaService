@@ -3,27 +3,45 @@ package ua.fantotsy.domain.discounts;
 import ua.fantotsy.domain.Order;
 
 public abstract class Discount {
-    protected String name;
-    protected DiscountState state;
+    private String name;
+    private DiscountState state;
+    protected Order order;
 
-    public enum DiscountState {
-        ACTIVE, INACTIVE;
-    }
-
-    public Discount() {
+    Discount() {
         name = this.getClass().getSimpleName();
         state = DiscountState.ACTIVE;
+    }
+
+    private enum DiscountState {
+        ACTIVE {
+            @Override
+            public DiscountState reverseState() {
+                return INACTIVE;
+            }
+        },
+        INACTIVE {
+            @Override
+            public DiscountState reverseState() {
+                return ACTIVE;
+            }
+        };
+
+        public abstract DiscountState reverseState();
     }
 
     public abstract boolean canBeApplied(Order order);
 
     public abstract double getDiscount(Order order);
 
+    public void changeState() {
+        state = state.reverseState();
+    }
+
     public String getName() {
         return name;
     }
 
-    public DiscountState getState(){
+    public DiscountState getState() {
         return state;
     }
 

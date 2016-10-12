@@ -7,9 +7,8 @@ import ua.fantotsy.infrastructure.utils.Utils;
 
 @Component
 public class AccumulativeCardDiscount extends Discount {
-    private static int INITIAL_PRICE_PERCENTAGE_LIMIT = 30;
-    private static int ACCUMULATION_CARD_PERCENTAGE = 10;
-    private Order order;
+    private final static int INITIAL_PRICE_PERCENTAGE_LIMIT = 30;
+    private final static int ACCUMULATION_CARD_PERCENTAGE = 10;
 
     @Override
     public boolean canBeApplied(Order order) {

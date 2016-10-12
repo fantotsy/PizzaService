@@ -1,15 +1,10 @@
 package ua.fantotsy.domain;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//@Component
-//@Scope(scopeName = "prototype")
 public class Order {
     /*Fields*/
     private Long id;
@@ -30,37 +25,45 @@ public class Order {
     /*Internal Objects*/
     private enum Status {
         NEW {
+            @Override
             public Status nextStatus() {
                 return IN_PROGRESS;
             }
 
+            @Override
             public Status previousStatus() {
                 throw new RuntimeException("Previous status for NEW does not exist.");
             }
         },
         IN_PROGRESS {
+            @Override
             public Status nextStatus() {
                 return DONE;
             }
 
+            @Override
             public Status previousStatus() {
                 return CANCELED;
             }
         },
         CANCELED {
+            @Override
             public Status nextStatus() {
                 throw new RuntimeException("Next status for CANCELED does not exist.");
             }
 
+            @Override
             public Status previousStatus() {
                 throw new RuntimeException("Previous status for CANCELED does not exist.");
             }
         },
         DONE {
+            @Override
             public Status nextStatus() {
                 throw new RuntimeException("Next status for DONE does not exist.");
             }
 
+            @Override
             public Status previousStatus() {
                 throw new RuntimeException("Previous status for DONE does not exist.");
             }
@@ -104,18 +107,18 @@ public class Order {
     }
 
     public void cancel() {
-        status.previousStatus();
+        status = status.previousStatus();
     }
 
     public void confirm() {
-        status.nextStatus();
+        status = status.nextStatus();
     }
 
     public void pay() {
         if (customer.hasAccumulativeCard()) {
             customer.increaseAccumulativeCardBalance(getTotalPrice());
         }
-        status.nextStatus();
+        status = status.nextStatus();
     }
 
     public boolean isEmpty() {
@@ -159,7 +162,6 @@ public class Order {
     public void setTotalPrice(Double totalPrice) {
         payment.setTotalPrice(totalPrice);
     }
-
 
     public List<Pizza> getOrder() {
         return pizzas;
