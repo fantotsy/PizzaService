@@ -7,6 +7,7 @@ public class AccumulativeCard {
 
     /*Constructors*/
     public AccumulativeCard() {
+
     }
 
     /*Methods*/

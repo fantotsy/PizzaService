@@ -2,7 +2,7 @@ package ua.fantotsy.infrastructure;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import ua.fantotsy.infrastructure.annotations.BenchMark;
+import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -17,13 +17,14 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Method[] beanMethods = bean.getClass().getMethods();
         for (Method beanMethod : beanMethods) {
-            if (beanMethod.isAnnotationPresent(BenchMark.class)) {
+            Benchmark annotation = beanMethod.getAnnotation(Benchmark.class);
+            if (annotation != null && annotation.value()) {
                 Object targetBean = bean;
                 bean = Proxy.newProxyInstance(bean.getClass().getClassLoader(), getAllDeclaredInterfaces(bean), new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        if (targetBean.getClass().getMethod(method.getName(), method.getParameterTypes())
-                                .isAnnotationPresent(BenchMark.class)) {
+                        Benchmark annotation = targetBean.getClass().getMethod(method.getName(), method.getParameterTypes()).getAnnotation(Benchmark.class);
+                        if (annotation != null && annotation.value()) {
                             long startTime = System.nanoTime();
                             Object result = method.invoke(targetBean, args);
                             System.out.println(method.getName() + " " + (System.nanoTime() - startTime));

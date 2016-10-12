@@ -1,6 +1,6 @@
 package ua.fantotsy.infrastructure.context;
 
-import ua.fantotsy.infrastructure.annotations.BenchMark;
+import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.infrastructure.annotations.PostCreate;
 import ua.fantotsy.infrastructure.config.Config;
 
@@ -93,7 +93,7 @@ public class ApplicationContext implements Context {
         private void createBeanProxy() {
             Method[] beanMethods = type.getDeclaredMethods();
             for (Method beanMethod : beanMethods) {
-                BenchMark annotation = beanMethod.getAnnotation(BenchMark.class);
+                Benchmark annotation = beanMethod.getAnnotation(Benchmark.class);
                 if (annotation != null && annotation.value()) {
                     T targetBean = bean;
                     bean = (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), new InvocationHandler() {

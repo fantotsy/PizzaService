@@ -10,11 +10,6 @@ public class Address {
 
     }
 
-    public Address(String city, String street) {
-        this.city = city;
-        this.street = street;
-    }
-
     /*Getters & Setters*/
     public String getCity() {
         return city;

@@ -1,9 +1,8 @@
 package ua.fantotsy.repository.order;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.fantotsy.domain.Order;
-import ua.fantotsy.infrastructure.annotations.BenchMark;
+import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     /*Public Methods*/
-    @BenchMark(value = false)
+    @Benchmark(value = false)
     @Override
     public Order saveOrder(Order order) {
         order.setId(getNextId());

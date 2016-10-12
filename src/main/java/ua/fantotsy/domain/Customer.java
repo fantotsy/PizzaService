@@ -12,14 +12,6 @@ public class Customer {
 
     }
 
-    public Customer(String name, Address address, boolean hasAccumulativeCard) {
-        this.name = name;
-        this.address = address;
-        if (hasAccumulativeCard) {
-            accumulativeCard = new AccumulativeCard();
-        }
-    }
-
     /*Methods*/
     public double getCardBalance() {
         if (hasAccumulativeCard()) {

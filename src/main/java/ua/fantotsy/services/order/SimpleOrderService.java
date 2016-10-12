@@ -1,9 +1,8 @@
 package ua.fantotsy.services.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import ua.fantotsy.domain.*;
-import ua.fantotsy.infrastructure.annotations.BenchMark;
+import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.repository.order.OrderRepository;
 import ua.fantotsy.services.customer.CustomerService;
 import ua.fantotsy.services.pizza.PizzaService;
@@ -28,7 +27,7 @@ public class SimpleOrderService implements OrderService {
 
     /*Public Methods*/
     @Override
-    @BenchMark(value = true)
+    @Benchmark(value = true)
     public Order placeNewOrder(Customer customer, Integer... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
             throw new RuntimeException("Not allowed amount of pizzas!");
@@ -89,6 +88,7 @@ public class SimpleOrderService implements OrderService {
             AccumulativeCard accumulativeCard = createNewAccumulativeCard();
             newCustomer.setAccumulativeCard(accumulativeCard);
         }
+
         customerService.addNewCustomer(newCustomer);
     }
 
@@ -106,7 +106,6 @@ public class SimpleOrderService implements OrderService {
     public double getTotalOrderPriceById(long id) {
         return orderRepository.getOrderById(id).getTotalPrice();
     }
-
 
     /*Protected & Private Methods*/
     protected Pizza createNewPizza() {

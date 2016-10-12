@@ -12,12 +12,6 @@ public class Pizza {
 
     }
 
-    public Pizza(String name, double price, PizzaTypes type) {
-        this.name = name;
-        this.price = price;
-        this.type = type;
-    }
-
     /*Internal Objects*/
     public enum PizzaTypes {
         VEGETARIAN, SEA, MEAT;

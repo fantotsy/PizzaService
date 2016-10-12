@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)
-public @interface BenchMark {
+public @interface Benchmark {
     boolean value();
 }
