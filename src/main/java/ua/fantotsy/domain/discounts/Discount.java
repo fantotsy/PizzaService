@@ -12,7 +12,7 @@ public abstract class Discount {
         state = DiscountState.ACTIVE;
     }
 
-    private enum DiscountState {
+    public enum DiscountState {
         ACTIVE {
             @Override
             public DiscountState reverseState() {
@@ -45,4 +45,30 @@ public abstract class Discount {
         return state;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Discount discount = (Discount) o;
+
+        if (name != null ? !name.equals(discount.name) : discount.name != null) return false;
+        return state == discount.state;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Discount{" +
+                "name='" + name + '\'' +
+                ", state=" + state +
+                '}';
+    }
 }

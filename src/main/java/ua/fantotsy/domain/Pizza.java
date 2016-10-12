@@ -8,6 +8,10 @@ public class Pizza {
     private PizzaTypes type;
 
     /*Constructors*/
+    public Pizza(){
+
+    }
+
     public Pizza(String name, double price, PizzaTypes type) {
         this.name = name;
         this.price = price;

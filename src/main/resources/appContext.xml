@@ -8,19 +8,17 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean name="pizza" class="ua.fantotsy.infrastructure.MyFactoryBean"/>
-
     <bean class="ua.fantotsy.infrastructure.BenchmarkBeanPostProcessor"/>
 
-    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService">
+    <bean name="orderService" class="ua.fantotsy.services.order.SimpleOrderService" scope="prototype">
         <lookup-method name="createNewOrder" bean="order"/>
+        <lookup-method name="createNewAddress" bean="address"/>
+        <lookup-method name="createNewAccumulativeCard" bean="accumulativeCard"/>
+        <lookup-method name="createNewCustomer" bean="customer"/>
+        <lookup-method name="createNewPizza" bean="pizza"/>
     </bean>
 
-    <!--<bean name="accumulativeCardDiscount" class="ua.fantotsy.domain.discounts.AccumulativeCardDiscount"/>-->
-
-    <!--<bean name="theMostExpensivePizzaDiscount" class="ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount"/>-->
-
-    <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype" lazy-init="true">
+    <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype">
         <constructor-arg>
             <set>
                 <ref bean="accumulativeCardDiscount"/>
@@ -28,6 +26,14 @@
             </set>
         </constructor-arg>
     </bean>
+
+    <bean name="customer" class="ua.fantotsy.domain.Customer" scope="prototype"/>
+
+    <bean name="pizza" class="ua.fantotsy.domain.Pizza" scope="prototype"/>
+
+    <bean name="address" class="ua.fantotsy.domain.Address" scope="prototype"/>
+
+    <bean name="accumulativeCard" class="ua.fantotsy.domain.AccumulativeCard" scope="prototype"/>
 
     <context:component-scan base-package="ua.fantotsy.services"/>
     <context:component-scan base-package="ua.fantotsy.domain"/>

@@ -2,21 +2,29 @@ package ua.fantotsy.domain;
 
 public class AccumulativeCard {
     /*Fields*/
-    private Double balance;
+    private long id;
+    private double balance;
 
     /*Constructors*/
     public AccumulativeCard() {
-        balance = 0.0;
     }
 
     /*Methods*/
-    public void increaseAccumulativeCardBalance(double delta) {
+    void increaseAccumulativeCardBalance(double delta) {
         balance += delta;
     }
 
     /*Getters & Setters*/
-    public Double getBalance() {
+    public double getBalance() {
         return balance;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setBalance(Double balance) {
@@ -30,19 +38,20 @@ public class AccumulativeCard {
 
         AccumulativeCard that = (AccumulativeCard) o;
 
-        return balance != null ? balance.equals(that.balance) : that.balance == null;
+        return id == that.id;
 
     }
 
     @Override
     public int hashCode() {
-        return balance != null ? balance.hashCode() : 0;
+        return (int) (id ^ (id >>> 32));
     }
 
     @Override
     public String toString() {
         return "AccumulativeCard{" +
-                "balance=" + balance +
+                "id=" + id +
+                ", balance=" + balance +
                 '}';
     }
 }

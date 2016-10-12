@@ -13,9 +13,9 @@ public class AppRunner {
         System.out.println("Pizza Service");
         Context context = new ApplicationContext(new JavaConfig());
 
-        Customer customer = new Customer("Petya", new Address("City", "Street"), true);
+        //Customer customer = new Customer("Petya", new Address("City", "Street"), true);
         OrderService orderService = context.getBean("orderService");
-        Order order = orderService.placeNewOrder(customer, 1, 2, 3);
-        System.out.println(order);
+        //Order order = orderService.placeNewOrder(customer, 1, 2, 3);
+        //System.out.println(order);
     }
 }

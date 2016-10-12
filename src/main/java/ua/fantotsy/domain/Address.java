@@ -6,6 +6,10 @@ public class Address {
     private String street;
 
     /*Constructors*/
+    public Address(){
+
+    }
+
     public Address(String city, String street) {
         this.city = city;
         this.street = street;

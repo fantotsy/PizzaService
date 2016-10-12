@@ -25,15 +25,14 @@ public class SpringAppRunner {
         System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
 
         OrderService orderService = (OrderService) appContext.getBean("orderService");
-        Customer customer = new Customer("Vasya", new Address("Kyiv", "K18a"), true);
-        orderService.addNewCustomer(customer);
-        orderService.addNewPizza(new Pizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT));
-        Order order1 = orderService.placeNewOrder(customer, 1, 1, 1, 1, 1);
+        orderService.addNewPizza("Diabola", 300.0, Pizza.PizzaTypes.MEAT);
+        orderService.addNewCustomer("Vasya", "Kyiv", "K18a", true);
+
+        Order order1 = orderService.placeNewOrder(orderService.getCustomerById(1), 1, 1, 1, 1, 1);
         order1.pay();
-        Order order2 = orderService.placeNewOrder(customer, 1, 1);
+        Order order2 = orderService.placeNewOrder(orderService.getCustomerById(1), 1, 1);
         System.out.println("TOTAL: " + order1.getTotalPrice());
         System.out.println("TOTAL: " + order2.getTotalPrice());
-        //System.out.println(order2);
 
         repoContext.close();
         appContext.close();

@@ -1,5 +1,6 @@
 package ua.fantotsy.services.order;
 
+import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
@@ -21,9 +22,9 @@ public interface OrderService {
 
     int getNumberOfOrders();
 
-    void addNewPizza(Pizza newPizza);
+    void addNewPizza(String name, double price, Pizza.PizzaTypes type);
 
-    void addNewCustomer(Customer newCustomer);
+    void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard);
 
     void payOrderById(long id);
 

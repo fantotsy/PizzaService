@@ -17,11 +17,11 @@ public class SimpleOrderServiceTest {
 
     @Before
     public void setUp() {
-        Context context = new ApplicationContext(new JavaConfig());
-        orderService = context.getBean("orderService");
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.VEGETARIAN));
-        orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
-        orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
+//        Context context = new ApplicationContext(new JavaConfig());
+//        orderService = context.getBean("orderService");
+//        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.VEGETARIAN));
+//        orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
+//        orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
     }
 
     @Test(expected = RuntimeException.class)
@@ -43,7 +43,7 @@ public class SimpleOrderServiceTest {
     @Test
     public void testGetPizzaById() {
         Pizza pizza = new Pizza("Second", 200.0, Pizza.PizzaTypes.SEA);
-        orderService.addNewPizza(pizza);
+        //orderService.addNewPizza(pizza);
         Pizza actual = orderService.getPizzaById(2);
         assertEquals(pizza, actual);
     }

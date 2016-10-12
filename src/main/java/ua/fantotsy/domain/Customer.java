@@ -8,6 +8,10 @@ public class Customer {
     private AccumulativeCard accumulativeCard;
 
     /*Constructors*/
+    public Customer() {
+
+    }
+
     public Customer(String name, Address address, boolean hasAccumulativeCard) {
         this.name = name;
         this.address = address;
@@ -55,6 +59,10 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
+        this.accumulativeCard = accumulativeCard;
     }
 
     @Override

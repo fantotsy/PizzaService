@@ -19,10 +19,10 @@ public class OrderTest {
     @Before
     public void setUp() {
         Context context = new ApplicationContext(new JavaConfig());
-        orderService = context.getBean("orderService");
-        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.VEGETARIAN));
-        orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
-        orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
+//        orderService = context.getBean("orderService");
+//        orderService.addNewPizza(new Pizza("First", 100.0, Pizza.PizzaTypes.VEGETARIAN));
+//        orderService.addNewCustomer(new Customer("Vasya", new Address("Kyiv", "Kudryashova"), true));
+//        orderService.addNewCustomer(new Customer("Petya", new Address("Kyiv", "Kudryashova"), false));
     }
 
     @Test

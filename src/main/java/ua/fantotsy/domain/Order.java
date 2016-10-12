@@ -74,12 +74,12 @@ public class Order {
         public abstract Status previousStatus();
     }
 
-    /*Public cMethods*/
+    /*Public Methods*/
     public int getAmountOfPizzas() {
         return pizzas.size();
     }
 
-    public void countInitialPrice() {
+    private void countInitialPrice() {
         double result = 0.0;
         for (Pizza pizza : pizzas) {
             result += pizza.getPrice();
@@ -87,7 +87,7 @@ public class Order {
         setInitialPrice(result);
     }
 
-    public void countDiscount() {
+    private void countDiscount() {
         double maxDiscount = 0.0;
         for (Discount discount : activeDiscounts) {
             if (discount.canBeApplied(this)) {
@@ -139,27 +139,27 @@ public class Order {
         this.activeDiscounts = activeDiscounts;
     }
 
-    public Double getInitialPrice() {
+    public double getInitialPrice() {
         return payment.getInitialPrice();
     }
 
-    public void setInitialPrice(Double initialPrice) {
+    private void setInitialPrice(double initialPrice) {
         payment.setInitialPrice(initialPrice);
     }
 
-    public Double getDiscount() {
+    private double getDiscount() {
         return payment.getDiscount();
     }
 
-    public void setDiscount(Double discount) {
+    private void setDiscount(double discount) {
         payment.setDiscount(discount);
     }
 
-    public Double getTotalPrice() {
+    public double getTotalPrice() {
         return payment.getTotalPrice();
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    private void setTotalPrice(double totalPrice) {
         payment.setTotalPrice(totalPrice);
     }
 
@@ -191,10 +191,15 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order1 = (Order) o;
-        if (id != null ? !id.equals(order1.id) : order1.id != null) return false;
-        if (pizzas != null ? !pizzas.equals(order1.pizzas) : order1.pizzas != null) return false;
-        return customer != null ? customer.equals(order1.customer) : order1.customer == null;
+
+        Order order = (Order) o;
+
+        if (id != null ? !id.equals(order.id) : order.id != null) return false;
+        if (pizzas != null ? !pizzas.equals(order.pizzas) : order.pizzas != null) return false;
+        if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
+        if (payment != null ? !payment.equals(order.payment) : order.payment != null) return false;
+        return status == order.status;
+
     }
 
     @Override
@@ -202,15 +207,19 @@ public class Order {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (pizzas != null ? pizzas.hashCode() : 0);
         result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        result = 31 * result + (payment != null ? payment.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "ua.fantotsy.domain.Order{" +
+        return "Order{" +
                 "id=" + id +
-                ", order=" + pizzas +
+                ", pizzas=" + pizzas +
                 ", customer=" + customer +
+                ", payment=" + payment +
+                ", status=" + status +
                 '}';
     }
 }
