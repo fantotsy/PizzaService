@@ -1,10 +1,9 @@
-package domain;
+package ua.fantotsy.domain;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.services.order.OrderService;
 
 import static org.junit.Assert.assertEquals;
