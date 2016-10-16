@@ -2,59 +2,41 @@ package ua.fantotsy.domain;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.fantotsy.services.order.OrderService;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import ua.fantotsy.domain.discounts.AccumulativeCardDiscount;
+import ua.fantotsy.domain.discounts.Discount;
+import ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+@RunWith(MockitoJUnitRunner.class)
 public class OrderTest {
-    private final ConfigurableApplicationContext repoContext;
-    private final ConfigurableApplicationContext appContext;
-    private OrderService orderService;
     private final double eps = 0.00001;
-
-    public OrderTest() {
-        repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
-        appContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repoContext);
-    }
+    Order order;
 
     @Before
     public void setUp() {
-        orderService = (OrderService) appContext.getBean("orderService");
-        orderService.addNewPizza("Diabola", 100.0, Pizza.PizzaTypes.MEAT);
-        orderService.addNewCustomer("Vasya", "Kyiv", "K18a", true);
-        orderService.addNewCustomer("Vasya", "Kyiv", "K18a", false);
+        Set<Discount> discounts = new HashSet<Discount>() {{
+            add(new AccumulativeCardDiscount());
+            add(new TheMostExpensivePizzaDiscount());
+        }};
+        order = new Order(discounts);
+
+        Pizza pizza = new Pizza();
+        pizza.setPrice(100.0);
+        List<Pizza> pizzas = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            pizzas.add(pizza);
+        }
+        order.setPizzas(pizzas);
     }
 
     @Test
-    public void testGetTotalOrderPriceWithoutDiscountAndCard() {
-        orderService.placeNewOrder(orderService.getCustomerById(2), 1);
-        assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
-    }
+    public void testCountInitialPrice() {
 
-    @Test
-    public void testGetTotalOrderPriceWithDiscountWithoutCard() {
-        orderService.placeNewOrder(orderService.getCustomerById(2), 1, 1, 1, 1, 1);
-        assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
-    }
-
-    @Test
-    public void testGetTotalOrderPriceWithoutDiscountWithCard() {
-        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
-        orderService.payOrderById(1L);
-        assertEquals(100.0, orderService.getTotalOrderPriceById(1L), eps);
-        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
-        orderService.payOrderById(2L);
-        assertEquals(90.0, orderService.getTotalOrderPriceById(2L), eps);
-        orderService.placeNewOrder(orderService.getCustomerById(1), 1);
-        orderService.payOrderById(3L);
-        assertEquals(81.0, orderService.getTotalOrderPriceById(3L), eps);
-    }
-
-    @Test
-    public void testGetTotalOrderPriceWithDiscountWithCard() {
-        orderService.placeNewOrder(orderService.getCustomerById(2), 1, 1, 1, 1, 1);
-        assertEquals(350.0, orderService.getTotalOrderPriceById(1L), eps);
     }
 }
