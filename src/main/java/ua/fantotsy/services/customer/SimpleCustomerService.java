@@ -34,15 +34,12 @@ public class SimpleCustomerService implements CustomerService {
     public void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard) {
         Customer newCustomer = createNewCustomer();
         newCustomer.setName(name);
-
         Address address = addressService.addAndReturnNewAddress(city, street);
         newCustomer.setAddress(address);
-
         if (hasAccumulativeCard) {
             AccumulativeCard accumulativeCard = accumulativeCardService.addAndReturnNewAccumulativeCard();
             newCustomer.setAccumulativeCard(accumulativeCard);
         }
-
         customerRepository.addNewCustomer(newCustomer);
     }
 
