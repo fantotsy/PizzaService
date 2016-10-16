@@ -25,6 +25,9 @@ public class SimplePizzaService implements PizzaService {
     @Override
     @Benchmark(value = true)
     public void addNewPizza(String name, double price, Pizza.PizzaTypes type) {
+        if (price <= 0.0) {
+            throw new RuntimeException("Price is not available!");
+        }
         Pizza newPizza = createNewPizza();
         newPizza.setName(name);
         newPizza.setPrice(price);
