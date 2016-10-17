@@ -45,6 +45,18 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
+    public void addPizzaInOrderById(long orderId, long pizzaId) {
+        Pizza pizza = getPizzaById(pizzaId);
+        orderRepository.addPizzaInOrderById(orderId, pizza);
+    }
+
+    @Override
+    public void removePizzaFromOrderById(long orderId, long pizzaId) {
+        Pizza pizza = getPizzaById(pizzaId);
+        orderRepository.addPizzaInOrderById(orderId, pizza);
+    }
+
+    @Override
     public Pizza getPizzaById(long id) {
         return pizzaService.getPizzaById(id);
     }

@@ -2,6 +2,7 @@ package ua.fantotsy.repository.order;
 
 import org.springframework.stereotype.Repository;
 import ua.fantotsy.domain.Order;
+import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import java.util.ArrayList;
@@ -47,6 +48,16 @@ public class InMemoryOrderRepository implements OrderRepository {
     public void cancelOrderById(long id) {
         Order order = getOrderById(id);
         order.cancel();
+    }
+
+    @Override
+    public void addPizzaInOrderById(long orderId, Pizza pizza) {
+        getOrderById(orderId).addPizza(pizza);
+    }
+
+    @Override
+    public void removePizzaFromOrderById(long orderId, Pizza pizza) {
+        getOrderById(orderId).removePizza(pizza);
     }
 
     @Override

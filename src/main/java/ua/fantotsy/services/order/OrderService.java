@@ -14,6 +14,10 @@ public interface OrderService {
 
     Order placeNewOrder(Customer customer, Integer... pizzasId);
 
+    void addPizzaInOrderById(long orderId, long pizzaId);
+
+    void removePizzaFromOrderById(long orderId, long pizzaId);
+
     Pizza getPizzaById(long id);
 
     Customer getCustomerById(long id);
