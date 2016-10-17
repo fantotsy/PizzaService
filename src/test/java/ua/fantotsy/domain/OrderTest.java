@@ -17,6 +17,9 @@ import java.util.Set;
 public class OrderTest {
     private final double eps = 0.00001;
     Order order;
+    Pizza pizza1;
+    Pizza pizza2;
+    Pizza pizza3;
 
     @Before
     public void setUp() {
@@ -26,17 +29,35 @@ public class OrderTest {
         }};
         order = new Order(discounts);
 
-        Pizza pizza = new Pizza();
-        pizza.setPrice(100.0);
-        List<Pizza> pizzas = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            pizzas.add(pizza);
+        order.setPizzas(new ArrayList<>());
+
+        pizza1 = new Pizza();
+        pizza1.setPrice(100.0);
+
+        pizza2 = new Pizza();
+        pizza2.setPrice(200.0);
+
+        pizza3 = new Pizza();
+        pizza3.setPrice(300.0);
+
+        for (int i = 0; i < 2; i++) {
+            order.addPizza(pizza1);
+            order.addPizza(pizza2);
+            order.addPizza(pizza3);
         }
-        order.setPizzas(pizzas);
+
+        order.setCustomer(new Customer());
     }
 
     @Test
-    public void testCountInitialPrice() {
+    public void testCountTotalPriceCountsInitialPrice() {
+        order.countTotalPrice();
+        org.junit.Assert.assertEquals(1200.0, order.getInitialPrice(), eps);
+    }
 
+    @Test
+    public void testCountTotalPriceCountsDiscountWithCard() {
+        order.countTotalPrice();
+        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
     }
 }

@@ -39,12 +39,13 @@ public class TheMostExpensivePizzaDiscount extends Discount {
         } else {
             List<Pizza> result = new ArrayList<>();
             double maxPrice = getPizzaInOrderById(0).getPrice();
-            for (Pizza pizza : getPizzasFromOrder()) {
-                if (pizza.getPrice() < maxPrice) {
+            List<Pizza> pizzas = getPizzasFromOrder();
+            for (Pizza pizza : pizzas) {
+                if (pizza.getPrice() > maxPrice) {
                     maxPrice = pizza.getPrice();
                 }
             }
-            for (Pizza pizza : getPizzasFromOrder()) {
+            for (Pizza pizza : pizzas) {
                 if (pizza.getPrice() == maxPrice) {
                     result.add(pizza);
                 }

@@ -75,6 +75,14 @@ public class Order {
     }
 
     /*Public Methods*/
+    public void addPizza(Pizza pizza) {
+        pizzas.add(pizza);
+    }
+
+    public void removePizza(Pizza pizza) {
+        pizzas.remove(pizza);
+    }
+
     public int getAmountOfPizzas() {
         return pizzas.size();
     }
@@ -176,7 +184,7 @@ public class Order {
         payment.setAppliedDiscount(appliedDiscount);
     }
 
-    private double getDiscount() {
+    public double getDiscount() {
         return payment.getDiscount();
     }
 
