@@ -53,7 +53,7 @@ public class SimpleOrderService implements OrderService {
     @Override
     public void removePizzaFromOrderById(long orderId, long pizzaId) {
         Pizza pizza = getPizzaById(pizzaId);
-        orderRepository.addPizzaInOrderById(orderId, pizza);
+        orderRepository.removePizzaFromOrderById(orderId, pizza);
     }
 
     @Override
