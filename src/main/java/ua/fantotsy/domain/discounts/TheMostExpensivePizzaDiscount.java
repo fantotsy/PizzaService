@@ -5,8 +5,7 @@ import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class TheMostExpensivePizzaDiscount extends Discount {
@@ -21,10 +20,10 @@ public class TheMostExpensivePizzaDiscount extends Discount {
 
     @Override
     public double getDiscount(Order order) {
-        List<Pizza> theMostExpensivePizzas = getTheMostExpensivePizzas();
+        Map<Pizza, Integer> theMostExpensivePizzas = getTheMostExpensivePizzas();
         double discount = 0;
-        for (Pizza pizza : theMostExpensivePizzas) {
-            discount += Utils.getPercentageOfNumber(pizza.getPrice(), PIZZA_PRICE_PERCENTAGE);
+        for (Map.Entry<Pizza, Integer> pizza : theMostExpensivePizzas.entrySet()) {
+            discount += (Utils.getPercentageOfNumber(pizza.getKey().getPrice(), PIZZA_PRICE_PERCENTAGE)) * pizza.getValue();
         }
         return discount;
     }
@@ -33,21 +32,22 @@ public class TheMostExpensivePizzaDiscount extends Discount {
         return (order.getAmountOfPizzas() > MIN_AMOUNT_OF_PIZZAS);
     }
 
-    private List<Pizza> getTheMostExpensivePizzas() {
+    private Map<Pizza, Integer> getTheMostExpensivePizzas() {
         if (isEmpty()) {
             throw new RuntimeException("Order is empty.");
         } else {
-            List<Pizza> result = new ArrayList<>();
-            double maxPrice = getPizzaInOrderById(0).getPrice();
-            List<Pizza> pizzas = getPizzasFromOrder();
-            for (Pizza pizza : pizzas) {
-                if (pizza.getPrice() > maxPrice) {
-                    maxPrice = pizza.getPrice();
+            Map<Pizza, Integer> result = new HashMap<>();
+            double maxPrice = 0.0;
+            Map<Pizza, Integer> pizzas = getPizzasFromOrder();
+            for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
+                Pizza currentPizza = pizza.getKey();
+                if (currentPizza.getPrice() > maxPrice) {
+                    maxPrice = currentPizza.getPrice();
                 }
             }
-            for (Pizza pizza : pizzas) {
-                if (pizza.getPrice() == maxPrice) {
-                    result.add(pizza);
+            for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
+                if (pizza.getKey().getPrice() == maxPrice) {
+                    result.put(pizza.getKey(), pizza.getValue());
                 }
             }
             return result;
@@ -58,11 +58,11 @@ public class TheMostExpensivePizzaDiscount extends Discount {
         return order.isEmpty();
     }
 
-    private Pizza getPizzaInOrderById(int id) {
-        return order.getPizzas().get(id);
+    private Pizza getPizzaInOrderById(Long id) {
+        return order.getPizzaById(id);
     }
 
-    private List<Pizza> getPizzasFromOrder() {
+    private Map<Pizza, Integer> getPizzasFromOrder() {
         return order.getPizzas();
     }
 }

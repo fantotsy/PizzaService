@@ -2,14 +2,23 @@ package ua.fantotsy.domain;
 
 import ua.fantotsy.domain.discounts.Discount;
 
+import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+@Entity
+@Table(name = "order")
 public class Order {
     /*Fields*/
+    @Id
+    @GeneratedValue
     private Long id;
-    private List<Pizza> pizzas;
+    private Map<Pizza, Integer> pizzas;
+    @ManyToOne
     private Customer customer;
+    @OneToOne
     private Payment payment;
     private Status status;
     private Set<Discount> activeDiscounts;
@@ -17,6 +26,7 @@ public class Order {
     /*Constructors*/
     public Order(Set<Discount> discounts) {
         status = Status.NEW;
+        pizzas = new HashMap<>();
         payment = new Payment();
         removeInactiveDiscounts(discounts);
         activeDiscounts = discounts;
@@ -76,15 +86,41 @@ public class Order {
 
     /*Public Methods*/
     public void addPizza(Pizza pizza) {
-        pizzas.add(pizza);
+        int initialQuantity = 0;
+        if (pizzas.containsKey(pizza)) {
+            initialQuantity = pizzas.get(pizza);
+        }
+        pizzas.put(pizza, ++initialQuantity);
     }
 
     public void removePizza(Pizza pizza) {
-        pizzas.remove(pizza);
+        if (!pizzas.containsKey(pizza)) {
+            throw new RuntimeException("Such pizza does not exist in order");
+        } else {
+            int initialQuantity = pizzas.get(pizza);
+            if (initialQuantity > 1) {
+                pizzas.put(pizza, --initialQuantity);
+            } else {
+                pizzas.remove(pizza);
+            }
+        }
     }
 
     public int getAmountOfPizzas() {
-        return pizzas.size();
+        int result = 0;
+        for(Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()){
+            result += pizza.getValue();
+        }
+        return result;
+    }
+
+    public Pizza getPizzaById(Long id) {
+        for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
+            if ((pizza.getKey().getId()).equals(id)) {
+                return pizza.getKey();
+            }
+        }
+        throw new RuntimeException("Pizza is not found.");
     }
 
     public void countTotalPrice() {
@@ -115,8 +151,8 @@ public class Order {
     /*Private Methods*/
     private void countInitialPrice() {
         double result = 0.0;
-        for (Pizza pizza : pizzas) {
-            result += pizza.getPrice();
+        for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
+            result += (pizza.getKey().getPrice() * pizza.getValue());
         }
         setInitialPrice(result);
     }
@@ -152,12 +188,14 @@ public class Order {
         this.id = id;
     }
 
-    public List<Pizza> getPizzas() {
+    public Map<Pizza, Integer> getPizzas() {
         return pizzas;
     }
 
     public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = pizzas;
+        for(Pizza pizza : pizzas){
+            addPizza(pizza);
+        }
     }
 
     public Customer getCustomer() {
@@ -222,14 +260,14 @@ public class Order {
         info.append("ORDER #" + id + ":\n");
         info.append("CUSTOMER:\n" + customer);
         info.append("PIZZAS:\n");
-        for (int i = 0; i < pizzas.size(); i++) {
-            info.append(pizzas.get(i));
-            if (i < (pizzas.size() - 1)) {
-                info.append("\n\t----------\n");
-            } else {
-                info.append("\n");
-            }
-        }
+//        for (int i = 0; i < pizzas.size(); i++) {
+//            info.append(pizzas.get(i));
+//            if (i < (pizzas.size() - 1)) {
+//                info.append("\n\t----------\n");
+//            } else {
+//                info.append("\n");
+//            }
+//        }
         info.append("PAYMENT:\n" + payment);
         return info.toString();
     }

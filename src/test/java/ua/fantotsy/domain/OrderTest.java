@@ -30,15 +30,16 @@ public class OrderTest {
         }};
         order = new Order(discounts);
 
-        order.setPizzas(new ArrayList<>());
-
         pizza1 = new Pizza();
+        pizza1.setId(1L);
         pizza1.setPrice(100.0);
 
         pizza2 = new Pizza();
+        pizza2.setId(2L);
         pizza2.setPrice(200.0);
 
         pizza3 = new Pizza();
+        pizza3.setId(3L);
         pizza3.setPrice(300.0);
 
         for (int i = 0; i < 2; i++) {

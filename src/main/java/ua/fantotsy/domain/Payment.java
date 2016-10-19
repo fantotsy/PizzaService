@@ -3,10 +3,19 @@ package ua.fantotsy.domain;
 import ua.fantotsy.domain.discounts.Discount;
 
 class Payment {
+    private Long id;
     private double initialPrice;
     private Discount appliedDiscount;
     private double discount;
     private double totalPrice;
+
+    Long getId() {
+        return id;
+    }
+
+    void setId(Long id) {
+        this.id = id;
+    }
 
     double getInitialPrice() {
         return initialPrice;

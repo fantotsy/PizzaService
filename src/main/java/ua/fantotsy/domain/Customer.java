@@ -3,13 +3,22 @@ package ua.fantotsy.domain;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "customer")
 @Component
 @Scope(scopeName = "prototype")
 public class Customer {
     /*Fields*/
+    @Id
+    @GeneratedValue
     private Long id;
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
+    @OneToOne
     private AccumulativeCard accumulativeCard;
 
     /*Constructors*/

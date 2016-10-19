@@ -3,18 +3,21 @@ package ua.fantotsy.domain;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "pizza")
 @Component
 @Scope(scopeName = "prototype")
 public class Pizza implements Serializable {
     /*Fields*/
     @Id
+    @GeneratedValue
     private Long id;
+    @Column(name = "name", nullable = false, length = 20, unique = true)
     private String name;
+    @Column(name = "price", nullable = false)
     private double price;
     private PizzaTypes type;
 

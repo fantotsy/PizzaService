@@ -3,12 +3,21 @@ package ua.fantotsy.domain;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "address")
 @Component
 @Scope(scopeName = "prototype")
-public class Address {
+public class Address implements Serializable {
     /*Fields*/
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column(name = "city", nullable = false, length = 20)
     private String city;
+    @Column(name = "street", nullable = false, length = 20)
     private String street;
 
     /*Constructors*/
