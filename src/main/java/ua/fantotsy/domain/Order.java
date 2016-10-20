@@ -14,10 +14,11 @@ public class Order {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     private Map<Pizza, Integer> pizzas;
-    @ManyToOne
     private Customer customer;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Payment payment;
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -87,7 +88,7 @@ public class Order {
 
     /*Public Methods*/
     public void insertPizzas(List<Pizza> pizzas) {
-        for(Pizza pizza : pizzas){
+        for (Pizza pizza : pizzas) {
             addPizza(pizza);
         }
     }
@@ -115,7 +116,7 @@ public class Order {
 
     public int getAmountOfPizzas() {
         int result = 0;
-        for(Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()){
+        for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
             result += pizza.getValue();
         }
         return result;
@@ -199,7 +200,7 @@ public class Order {
         return pizzas;
     }
 
-    public void setPizzas(Map<Pizza, Integer> pizzas){
+    public void setPizzas(Map<Pizza, Integer> pizzas) {
         this.pizzas = pizzas;
     }
 

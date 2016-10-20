@@ -13,12 +13,14 @@ public class Customer {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "name", nullable = false, length = 30)
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL)
+
     private Address address;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "accumulative_card_id")
     private AccumulativeCard accumulativeCard;
 
     /*Constructors*/

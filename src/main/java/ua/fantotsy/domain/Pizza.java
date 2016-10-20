@@ -14,6 +14,7 @@ public class Pizza implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "name", nullable = false, length = 20, unique = true)
     private String name;
