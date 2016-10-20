@@ -7,13 +7,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 @Component
 @Scope(scopeName = "prototype")
 public class Address implements Serializable {
     /*Fields*/
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "city", nullable = false, length = 20)
     private String city;
@@ -23,6 +23,12 @@ public class Address implements Serializable {
     /*Constructors*/
     public Address() {
 
+    }
+
+    public Address(Long id, String city, String street) {
+        this.id = id;
+        this.city = city;
+        this.street = street;
     }
 
     /*Getters & Setters*/

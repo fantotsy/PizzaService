@@ -9,18 +9,19 @@ import java.util.Map;
 import java.util.Set;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     /*Fields*/
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Map<Pizza, Integer> pizzas;
     @ManyToOne
     private Customer customer;
-    @OneToOne
     private Payment payment;
+    @Enumerated(EnumType.STRING)
     private Status status;
+    @Transient
     private Set<Discount> activeDiscounts;
 
     /*Constructors*/
@@ -85,6 +86,12 @@ public class Order {
     }
 
     /*Public Methods*/
+    public void insertPizzas(List<Pizza> pizzas) {
+        for(Pizza pizza : pizzas){
+            addPizza(pizza);
+        }
+    }
+
     public void addPizza(Pizza pizza) {
         int initialQuantity = 0;
         if (pizzas.containsKey(pizza)) {
@@ -192,10 +199,8 @@ public class Order {
         return pizzas;
     }
 
-    public void setPizzas(List<Pizza> pizzas) {
-        for(Pizza pizza : pizzas){
-            addPizza(pizza);
-        }
+    public void setPizzas(Map<Pizza, Integer> pizzas){
+        this.pizzas = pizzas;
     }
 
     public Customer getCustomer() {

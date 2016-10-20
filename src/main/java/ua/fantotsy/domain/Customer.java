@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 @Component
 @Scope(scopeName = "prototype")
 public class Customer {
     /*Fields*/
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name", nullable = false, length = 30)
     private String name;

@@ -7,14 +7,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "accumulative_card")
+@Table(name = "accumulative_cards")
 @Component
 @Scope(scopeName = "prototype")
 public class AccumulativeCard implements Serializable {
     /*Fields*/
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "balance", nullable = false)
     private double balance;
 
     /*Constructors*/

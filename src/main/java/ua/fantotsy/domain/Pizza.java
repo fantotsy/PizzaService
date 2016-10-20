@@ -7,23 +7,31 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "pizza")
+@Table(name = "pizzas")
 @Component
 @Scope(scopeName = "prototype")
 public class Pizza implements Serializable {
     /*Fields*/
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name", nullable = false, length = 20, unique = true)
     private String name;
     @Column(name = "price", nullable = false)
-    private double price;
+    private Double price;
+    @Enumerated(EnumType.STRING)
     private PizzaTypes type;
 
     /*Constructors*/
-    public Pizza() {
+    protected Pizza() {
 
+    }
+
+    public Pizza(Long id, String name, double price, PizzaTypes type) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.type = type;
     }
 
     /*Internal Objects*/
@@ -48,11 +56,11 @@ public class Pizza implements Serializable {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

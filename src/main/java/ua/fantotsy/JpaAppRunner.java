@@ -12,11 +12,7 @@ public class JpaAppRunner {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Pizza pizza = new Pizza();
-        pizza.setId(4L);
-        pizza.setPrice(200.0);
-        pizza.setType(Pizza.PizzaTypes.MEAT);
-        pizza.setName("Diabola");
+        Pizza pizza = new Pizza(4L, "Diabola", 200.0, Pizza.PizzaTypes.MEAT);
 
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();

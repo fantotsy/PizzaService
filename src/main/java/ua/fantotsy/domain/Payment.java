@@ -2,12 +2,21 @@ package ua.fantotsy.domain;
 
 import ua.fantotsy.domain.discounts.Discount;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "payments")
 class Payment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double initialPrice;
+    @Column(name = "initial_price", nullable = false)
+    private Double initialPrice;
     private Discount appliedDiscount;
-    private double discount;
-    private double totalPrice;
+    @Column(name = "discount", nullable = false)
+    private Double discount;
+    @Column(name = "total_price", nullable = false)
+    private Double totalPrice;
 
     Long getId() {
         return id;
@@ -17,11 +26,11 @@ class Payment {
         this.id = id;
     }
 
-    double getInitialPrice() {
+    Double getInitialPrice() {
         return initialPrice;
     }
 
-    void setInitialPrice(double initialPrice) {
+    void setInitialPrice(Double initialPrice) {
         this.initialPrice = initialPrice;
     }
 
@@ -33,19 +42,19 @@ class Payment {
         this.appliedDiscount = appliedDiscount;
     }
 
-    double getDiscount() {
+    Double getDiscount() {
         return discount;
     }
 
-    void setDiscount(double discount) {
+    void setDiscount(Double discount) {
         this.discount = discount;
     }
 
-    double getTotalPrice() {
+    Double getTotalPrice() {
         return totalPrice;
     }
 
-    void setTotalPrice(double totalPrice) {
+    void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
