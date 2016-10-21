@@ -274,14 +274,11 @@ public class Order {
         info.append("ORDER #" + id + ":\n");
         info.append("CUSTOMER:\n" + customer);
         info.append("PIZZAS:\n");
-//        for (int i = 0; i < pizzas.size(); i++) {
-//            info.append(pizzas.get(i));
-//            if (i < (pizzas.size() - 1)) {
-//                info.append("\n\t----------\n");
-//            } else {
-//                info.append("\n");
-//            }
-//        }
+        for (Map.Entry<Pizza, Integer> entry : pizzas.entrySet()) {
+            info.append("\t" + entry.getKey().getName() + ": " + entry.getValue() + "x");
+            info.append("\n\t----------\n");
+        }
+        info.append("\n");
         info.append("PAYMENT:\n" + payment);
         return info.toString();
     }
