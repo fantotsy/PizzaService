@@ -3,10 +3,7 @@ package ua.fantotsy.domain;
 import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -34,12 +31,26 @@ public class Order {
     private Set<Discount> activeDiscounts;
 
     /*Constructors*/
-    public Order(Set<Discount> discounts) {
+    public Order() {
         status = Status.NEW;
         pizzas = new HashMap<>();
         payment = new Payment();
+        activeDiscounts = new HashSet<>();
+    }
+
+    public Order(Set<Discount> discounts) {
+        this();
         removeInactiveDiscounts(discounts);
         activeDiscounts = discounts;
+    }
+
+    public Order(Long id, Map<Pizza, Integer> pizzas, Customer customer, Payment payment, Status status, Set<Discount> activeDiscounts) {
+        this.id = id;
+        this.pizzas = pizzas;
+        this.customer = customer;
+        this.payment = payment;
+        this.status = status;
+        this.activeDiscounts = activeDiscounts;
     }
 
     /*Internal Objects*/

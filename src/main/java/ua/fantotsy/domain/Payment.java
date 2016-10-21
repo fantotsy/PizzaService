@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "payments")
 class Payment {
+    /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -20,6 +21,21 @@ class Payment {
     private Double discount;
     @Column(name = "total_price", nullable = false)
     private Double totalPrice;
+
+    /*Constructors*/
+    public Payment() {
+
+    }
+
+    public Payment(Long id, Double initialPrice, Discount appliedDiscount, Double discount, Double totalPrice) {
+        this.id = id;
+        this.initialPrice = initialPrice;
+        this.appliedDiscount = appliedDiscount;
+        this.discount = discount;
+        this.totalPrice = totalPrice;
+    }
+
+    /*Getters & Setters*/
 
     Long getId() {
         return id;

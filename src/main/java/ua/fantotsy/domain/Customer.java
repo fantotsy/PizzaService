@@ -33,6 +33,13 @@ public class Customer {
 
     }
 
+    public Customer(Long id, String name, Address address, AccumulativeCard accumulativeCard) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.accumulativeCard = accumulativeCard;
+    }
+
     /*Methods*/
     public double getCardBalance() {
         if (hasAccumulativeCard()) {

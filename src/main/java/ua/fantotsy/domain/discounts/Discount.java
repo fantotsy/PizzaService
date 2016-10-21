@@ -18,9 +18,14 @@ public abstract class Discount {
     protected Order order;
 
     /*Constructors*/
-    Discount() {
+    public Discount() {
         name = this.getClass().getSimpleName();
         state = DiscountState.ACTIVE;
+    }
+
+    public Discount(String name, DiscountState state) {
+        this.name = name;
+        this.state = state;
     }
 
     /*Internal Objects*/
