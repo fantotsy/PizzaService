@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -12,16 +14,19 @@ import javax.persistence.*;
 public class Customer {
     /*Fields*/
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "name", nullable = false, length = 30)
     private String name;
-
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "accumulative_card_id")
+    @JoinColumn(name = "accumulative_card_id")
     private AccumulativeCard accumulativeCard;
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
 
     /*Constructors*/
     public Customer() {
@@ -75,6 +80,14 @@ public class Customer {
 
     public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
         this.accumulativeCard = accumulativeCard;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

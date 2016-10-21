@@ -13,14 +13,22 @@ import java.util.Set;
 public class Order {
     /*Fields*/
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+    @ElementCollection
+    @CollectionTable(name = "pizzas_quantities", joinColumns = @JoinColumn(name = "order_id", nullable = false))
+    @MapKeyJoinColumn(name = "pizza_id")
+    @Column(name = "quantity", nullable = false)
     private Map<Pizza, Integer> pizzas;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "payment_id", nullable = false)
     private Payment payment;
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
     private Status status;
     @Transient
     private Set<Discount> activeDiscounts;

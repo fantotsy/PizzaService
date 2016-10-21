@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Pizza implements Serializable {
     /*Fields*/
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "name", nullable = false, length = 20, unique = true)
@@ -21,6 +21,7 @@ public class Pizza implements Serializable {
     @Column(name = "price", nullable = false)
     private Double price;
     @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false, length = 20)
     private PizzaTypes type;
 
     /*Constructors*/

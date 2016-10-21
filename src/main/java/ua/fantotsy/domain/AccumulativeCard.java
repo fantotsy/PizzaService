@@ -13,11 +13,13 @@ import java.io.Serializable;
 public class AccumulativeCard implements Serializable {
     /*Fields*/
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "balance", nullable = false)
     private double balance;
+    @OneToOne(mappedBy = "accumulativeCard")
+    private Customer customer;
 
     /*Constructors*/
     public AccumulativeCard() {
@@ -44,6 +46,14 @@ public class AccumulativeCard implements Serializable {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override

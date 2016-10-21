@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "addresses")
@@ -13,13 +14,15 @@ import java.io.Serializable;
 public class Address implements Serializable {
     /*Fields*/
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "city", nullable = false, length = 20)
     private String city;
     @Column(name = "street", nullable = false, length = 20)
     private String street;
+    @OneToMany(mappedBy = "address")
+    private List<Customer> customers;
 
     /*Constructors*/
     public Address() {
@@ -55,6 +58,14 @@ public class Address implements Serializable {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 
     @Override

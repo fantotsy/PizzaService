@@ -8,11 +8,13 @@ import javax.persistence.*;
 @Table(name = "payments")
 class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "initial_price", nullable = false)
     private Double initialPrice;
+    @ManyToOne
+    @JoinColumn(name = "discount_name", nullable = false)
     private Discount appliedDiscount;
     @Column(name = "discount", nullable = false)
     private Double discount;
