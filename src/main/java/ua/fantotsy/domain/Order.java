@@ -18,11 +18,10 @@ public class Order {
     @MapKeyJoinColumn(name = "pizza_id")
     @Column(name = "quantity", nullable = false)
     private Map<Pizza, Integer> pizzas;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "payment_id", nullable = false)
+    @Embedded
     private Payment payment;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
@@ -44,12 +43,10 @@ public class Order {
         activeDiscounts = discounts;
     }
 
-    public Order(Long id, Map<Pizza, Integer> pizzas, Customer customer, Payment payment, Status status, Set<Discount> activeDiscounts) {
-        this.id = id;
+    public Order(Map<Pizza, Integer> pizzas, Customer customer, Set<Discount> activeDiscounts) {
+        this();
         this.pizzas = pizzas;
         this.customer = customer;
-        this.payment = payment;
-        this.status = status;
         this.activeDiscounts = activeDiscounts;
     }
 

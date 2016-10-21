@@ -4,22 +4,18 @@ import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 @Table(name = "payments")
 class Payment {
     /*Fields*/
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
-    @Column(name = "initial_price", nullable = false)
+    @Column(name = "initial_price")
     private Double initialPrice;
-    @ManyToOne
-    @JoinColumn(name = "discount_name", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "discount_name")
     private Discount appliedDiscount;
-    @Column(name = "discount", nullable = false)
+    @Column(name = "discount")
     private Double discount;
-    @Column(name = "total_price", nullable = false)
+    @Column(name = "total_price")
     private Double totalPrice;
 
     /*Constructors*/
@@ -27,8 +23,7 @@ class Payment {
 
     }
 
-    public Payment(Long id, Double initialPrice, Discount appliedDiscount, Double discount, Double totalPrice) {
-        this.id = id;
+    public Payment(Double initialPrice, Discount appliedDiscount, Double discount, Double totalPrice) {
         this.initialPrice = initialPrice;
         this.appliedDiscount = appliedDiscount;
         this.discount = discount;
@@ -37,13 +32,13 @@ class Payment {
 
     /*Getters & Setters*/
 
-    Long getId() {
-        return id;
-    }
-
-    void setId(Long id) {
-        this.id = id;
-    }
+//    Long getId() {
+//        return id;
+//    }
+//
+//    void setId(Long id) {
+//        this.id = id;
+//    }
 
     Double getInitialPrice() {
         return initialPrice;

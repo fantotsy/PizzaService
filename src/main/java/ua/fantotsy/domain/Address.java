@@ -29,8 +29,7 @@ public class Address implements Serializable {
 
     }
 
-    public Address(Long id, String city, String street) {
-        this.id = id;
+    public Address(String city, String street) {
         this.city = city;
         this.street = street;
     }

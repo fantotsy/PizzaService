@@ -26,11 +26,6 @@ public class AccumulativeCard implements Serializable {
 
     }
 
-    public AccumulativeCard(Long id, double balance) {
-        this.id = id;
-        this.balance = balance;
-    }
-
     /*Methods*/
     void increaseAccumulativeCardBalance(double delta) {
         balance += delta;

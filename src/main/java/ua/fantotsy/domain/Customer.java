@@ -19,7 +19,7 @@ public class Customer {
     private Long id;
     @Column(name = "name", nullable = false, length = 30)
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -33,8 +33,7 @@ public class Customer {
 
     }
 
-    public Customer(Long id, String name, Address address, AccumulativeCard accumulativeCard) {
-        this.id = id;
+    public Customer(String name, Address address, AccumulativeCard accumulativeCard) {
         this.name = name;
         this.address = address;
         this.accumulativeCard = accumulativeCard;

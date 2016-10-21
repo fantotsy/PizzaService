@@ -29,8 +29,7 @@ public class Pizza implements Serializable {
 
     }
 
-    public Pizza(Long id, String name, double price, PizzaTypes type) {
-        this.id = id;
+    public Pizza(String name, double price, PizzaTypes type) {
         this.name = name;
         this.price = price;
         this.type = type;
