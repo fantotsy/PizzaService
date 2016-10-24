@@ -70,17 +70,20 @@ public class Address implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Address)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Address address = (Address) o;
 
-        return id == address.id;
+        if (city != null ? !city.equals(address.city) : address.city != null) return false;
+        return street != null ? street.equals(address.street) : address.street == null;
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = city != null ? city.hashCode() : 0;
+        result = 31 * result + (street != null ? street.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -99,17 +99,22 @@ public class Customer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Customer customer = (Customer) o;
 
-        return id != null ? id.equals(customer.id) : customer.id == null;
+        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
+        return accumulativeCard != null ? accumulativeCard.equals(customer.accumulativeCard) : customer.accumulativeCard == null;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (accumulativeCard != null ? accumulativeCard.hashCode() : 0);
+        return result;
     }
 
     @Override

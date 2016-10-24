@@ -76,17 +76,31 @@ public class Pizza implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Pizza)) return false;
+
+        if (o == null || getClass() != o.getClass()) {
+            System.out.println(">><<"); //TODO: out
+            return false;
+        }
+
+        System.out.println("EXECUTED"); //TODO: out
 
         Pizza pizza = (Pizza) o;
 
-        return id != null ? id.equals(pizza.id) : pizza.id == null;
+        //if (id != null ? !id.equals(pizza.id) : pizza.id != null) return false;
+        if (name != null ? !name.equals(pizza.name) : pizza.name != null) return false;
+        if (price != null ? !price.equals(pizza.price) : pizza.price != null) return false;
+        return type == pizza.type;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        System.out.println(">>!!HASH!!<<"); //TODO: out
+        //int result = id != null ? id.hashCode() : 0;
+        int result = (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
     }
 
     @Override

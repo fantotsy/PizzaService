@@ -3,6 +3,7 @@ package ua.fantotsy.domain;
 import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -118,6 +119,17 @@ public class Order {
     }
 
     public void removePizza(Pizza pizza) {
+//        System.out.println(pizzas.get(pizza));
+        for(Map.Entry<Pizza, Integer> entry : pizzas.entrySet()){
+            System.out.println("Pizza 1: " + entry.getKey());
+            System.out.println("Hash 1: " + entry.getKey().hashCode());
+            System.out.println("Pizza 2: " + pizza);
+            System.out.println("Hash 2: " + pizza.hashCode());
+            System.out.println("Hash equals: " + (entry.getKey().hashCode() == pizza.hashCode()));
+            System.out.println("Equals: " + entry.getKey().equals(pizza));
+            System.out.println(pizzas.containsKey(pizza));
+        }
+        System.out.println(pizzas.containsKey(pizza));
         if (!pizzas.containsKey(pizza)) {
             throw new RuntimeException("Such pizza does not exist in order");
         } else {
@@ -158,6 +170,7 @@ public class Order {
     }
 
     public void confirm() {
+        countTotalPrice();
         status = status.nextStatus();
     }
 
@@ -166,6 +179,7 @@ public class Order {
             customer.increaseAccumulativeCardBalance(getTotalPrice());
         }
         status = status.nextStatus();
+        setLocalDateTime(LocalDateTime.now());
     }
 
     public boolean isEmpty() {
@@ -260,20 +274,35 @@ public class Order {
         payment.setTotalPrice(totalPrice);
     }
 
+    public LocalDateTime getDateTime() {
+        return payment.getDateTime();
+    }
+
+    private void setLocalDateTime(LocalDateTime dateTime) {
+        payment.setDateTime(dateTime);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Order)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Order order = (Order) o;
 
-        return id != null ? id.equals(order.id) : order.id == null;
+        if (pizzas != null ? !pizzas.equals(order.pizzas) : order.pizzas != null) return false;
+        if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
+        if (payment != null ? !payment.equals(order.payment) : order.payment != null) return false;
+        return status == order.status;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = pizzas != null ? pizzas.hashCode() : 0;
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        result = 31 * result + (payment != null ? payment.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 
     @Override

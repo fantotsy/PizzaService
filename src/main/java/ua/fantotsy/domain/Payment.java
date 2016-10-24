@@ -3,6 +3,9 @@ package ua.fantotsy.domain;
 import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Embeddable
 @Table(name = "payments")
@@ -17,28 +20,23 @@ class Payment {
     private Double discount;
     @Column(name = "total_price")
     private Double totalPrice;
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
 
     /*Constructors*/
     public Payment() {
 
     }
 
-    public Payment(Double initialPrice, Discount appliedDiscount, Double discount, Double totalPrice) {
+    public Payment(Double initialPrice, Discount appliedDiscount, Double discount, Double totalPrice, LocalDateTime dateTime) {
         this.initialPrice = initialPrice;
         this.appliedDiscount = appliedDiscount;
         this.discount = discount;
         this.totalPrice = totalPrice;
+        this.dateTime = dateTime;
     }
 
     /*Getters & Setters*/
-
-//    Long getId() {
-//        return id;
-//    }
-//
-//    void setId(Long id) {
-//        this.id = id;
-//    }
 
     Double getInitialPrice() {
         return initialPrice;
@@ -72,31 +70,38 @@ class Payment {
         this.totalPrice = totalPrice;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Payment)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Payment payment = (Payment) o;
 
-        if (Double.compare(payment.initialPrice, initialPrice) != 0) return false;
-        if (Double.compare(payment.discount, discount) != 0) return false;
-        if (Double.compare(payment.totalPrice, totalPrice) != 0) return false;
-        return appliedDiscount != null ? appliedDiscount.equals(payment.appliedDiscount) : payment.appliedDiscount == null;
+        if (initialPrice != null ? !initialPrice.equals(payment.initialPrice) : payment.initialPrice != null)
+            return false;
+        if (appliedDiscount != null ? !appliedDiscount.equals(payment.appliedDiscount) : payment.appliedDiscount != null)
+            return false;
+        if (discount != null ? !discount.equals(payment.discount) : payment.discount != null) return false;
+        if (totalPrice != null ? !totalPrice.equals(payment.totalPrice) : payment.totalPrice != null) return false;
+        return dateTime != null ? dateTime.equals(payment.dateTime) : payment.dateTime == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(initialPrice);
-        result = (int) (temp ^ (temp >>> 32));
+        int result = initialPrice != null ? initialPrice.hashCode() : 0;
         result = 31 * result + (appliedDiscount != null ? appliedDiscount.hashCode() : 0);
-        temp = Double.doubleToLongBits(discount);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(totalPrice);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (discount != null ? discount.hashCode() : 0);
+        result = 31 * result + (totalPrice != null ? totalPrice.hashCode() : 0);
+        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
         return result;
     }
 

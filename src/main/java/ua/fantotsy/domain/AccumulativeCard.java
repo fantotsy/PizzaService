@@ -16,35 +16,50 @@ public class AccumulativeCard implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "number", nullable = false, unique = true, length = 16)
+    private String number;
     @Column(name = "balance", nullable = false)
-    private double balance;
+    private Double balance;
     @OneToOne(mappedBy = "accumulativeCard")
     private Customer customer;
 
     /*Constructors*/
     public AccumulativeCard() {
+        balance = 0.0;
+    }
 
+    public AccumulativeCard(String number) {
+        this();
+        this.number = number;
     }
 
     /*Methods*/
-    void increaseAccumulativeCardBalance(double delta) {
+    void increaseAccumulativeCardBalance(Double delta) {
         balance += delta;
     }
 
     /*Getters & Setters*/
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public double getBalance() {
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
@@ -59,17 +74,23 @@ public class AccumulativeCard implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AccumulativeCard)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         AccumulativeCard that = (AccumulativeCard) o;
 
-        return id == that.id;
+        if (Double.compare(that.balance, balance) != 0) return false;
+        return number != null ? number.equals(that.number) : that.number == null;
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result;
+        long temp;
+        result = number != null ? number.hashCode() : 0;
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     @Override

@@ -33,11 +33,11 @@ public class JpaAppRunner {
 
         Address address = new Address("Kyiv", "K18a");
 
-        Customer customer1 = new Customer("Vasya", address, new AccumulativeCard());
-        Customer customer2 = new Customer("Petya", address, new AccumulativeCard());
-        Customer customer3 = new Customer("Fedya", address, new AccumulativeCard());
+        Customer customer1 = new Customer("Vasya", address, new AccumulativeCard("123456788765432"));
+        Customer customer2 = new Customer("Petya", address, new AccumulativeCard("1234567887654321"));
+        Customer customer3 = new Customer("Fedya", address, new AccumulativeCard("1212121212121212"));
 
-        Set<Discount> discounts = new HashSet<Discount>(){{
+        Set<Discount> discounts = new HashSet<Discount>() {{
             add(new TheMostExpensivePizzaDiscount());
             add(new AccumulativeCardDiscount());
         }};
@@ -49,21 +49,64 @@ public class JpaAppRunner {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        entityManager.persist(pizza1);
-        entityManager.persist(pizza2);
-        entityManager.persist(pizza3);
+        persistPizzas(entityManager, pizza1, pizza2, pizza3);
 
-        entityManager.persist(order1);
-        entityManager.persist(order2);
-        entityManager.persist(order3);
+        persistOrders(entityManager, order1, order2, order3);
+
+        removePizza(order1, pizza1);
+
+        confirmOrder(order1);
+        payOrder(order1);
 
         entityTransaction.commit();
-        entityManager.clear();//To search in database even if there is such object in context.
 
-        //Pizza foundPizza = entityManager.find(Pizza.class, 4L);
-        //System.out.println(pizza == foundPizza);
+        Pizza pizza4 = new Pizza("Diabola", 200.0, Pizza.PizzaTypes.MEAT);
+        pizza4.setId(1L);
+
+        Pizza pizza5 = new Pizza("fgbb", 200.0, Pizza.PizzaTypes.MEAT);
+        pizza5.setId(1L);
+
+
+        Pizza p = entityManager.find(Pizza.class, 1L);
+        System.out.println("1vs4: " + p.equals(pizza4));
+        System.out.println("1vs5: " + p.equals(pizza5));
+        entityTransaction.begin();
+
+        confirmOrder(order2);
+        payOrder(order2);
+
+        entityTransaction.commit();
+
+        Pizza foundPizza = entityManager.find(Pizza.class, 1L);
+        System.out.println(pizza1);
+        System.out.println(foundPizza);
+        System.out.println(pizza1.equals(foundPizza));
 
         entityManager.close();
         entityManagerFactory.close();
+    }
+
+    private static void persistPizzas(EntityManager entityManager, Pizza... pizzas) {
+        for (Pizza pizza : pizzas) {
+            entityManager.persist(pizza);
+        }
+    }
+
+    private static void persistOrders(EntityManager entityManager, Order... orders) {
+        for (Order order : orders) {
+            entityManager.persist(order);
+        }
+    }
+
+    private static void confirmOrder(Order order) {
+        order.confirm();
+    }
+
+    private static void payOrder(Order order) {
+        order.pay();
+    }
+
+    private static void removePizza(Order order, Pizza pizza){
+        order.removePizza(pizza);
     }
 }

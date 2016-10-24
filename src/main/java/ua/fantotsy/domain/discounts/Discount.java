@@ -9,7 +9,7 @@ import javax.persistence.*;
 public abstract class Discount {
     /*Fields*/
     @Id
-    @Column(name = "name", nullable = false, length = 20)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "state", nullable = false)
