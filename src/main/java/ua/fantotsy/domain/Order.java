@@ -119,17 +119,6 @@ public class Order {
     }
 
     public void removePizza(Pizza pizza) {
-//        System.out.println(pizzas.get(pizza));
-        for(Map.Entry<Pizza, Integer> entry : pizzas.entrySet()){
-            System.out.println("Pizza 1: " + entry.getKey());
-            System.out.println("Hash 1: " + entry.getKey().hashCode());
-            System.out.println("Pizza 2: " + pizza);
-            System.out.println("Hash 2: " + pizza.hashCode());
-            System.out.println("Hash equals: " + (entry.getKey().hashCode() == pizza.hashCode()));
-            System.out.println("Equals: " + entry.getKey().equals(pizza));
-            System.out.println(pizzas.containsKey(pizza));
-        }
-        System.out.println(pizzas.containsKey(pizza));
         if (!pizzas.containsKey(pizza)) {
             throw new RuntimeException("Such pizza does not exist in order");
         } else {
@@ -286,14 +275,11 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Order order = (Order) o;
-
         if (pizzas != null ? !pizzas.equals(order.pizzas) : order.pizzas != null) return false;
         if (customer != null ? !customer.equals(order.customer) : order.customer != null) return false;
         if (payment != null ? !payment.equals(order.payment) : order.payment != null) return false;
         return status == order.status;
-
     }
 
     @Override

@@ -82,9 +82,7 @@ class Payment {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Payment payment = (Payment) o;
-
         if (initialPrice != null ? !initialPrice.equals(payment.initialPrice) : payment.initialPrice != null)
             return false;
         if (appliedDiscount != null ? !appliedDiscount.equals(payment.appliedDiscount) : payment.appliedDiscount != null)
@@ -92,7 +90,6 @@ class Payment {
         if (discount != null ? !discount.equals(payment.discount) : payment.discount != null) return false;
         if (totalPrice != null ? !totalPrice.equals(payment.totalPrice) : payment.totalPrice != null) return false;
         return dateTime != null ? dateTime.equals(payment.dateTime) : payment.dateTime == null;
-
     }
 
     @Override

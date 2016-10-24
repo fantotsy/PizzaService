@@ -75,12 +75,9 @@ public class AccumulativeCard implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AccumulativeCard that = (AccumulativeCard) o;
-
         if (Double.compare(that.balance, balance) != 0) return false;
         return number != null ? number.equals(that.number) : that.number == null;
-
     }
 
     @Override

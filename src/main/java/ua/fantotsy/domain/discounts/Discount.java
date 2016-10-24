@@ -69,11 +69,8 @@ public abstract class Discount {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Discount)) return false;
-
         Discount discount = (Discount) o;
-
         return name != null ? name.equals(discount.name) : discount.name == null;
-
     }
 
     @Override

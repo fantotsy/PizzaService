@@ -25,7 +25,17 @@ public class JpaAppRunner {
         Pizza pizza2 = new Pizza("Neapolitana", 300.0, Pizza.PizzaTypes.VEGETARIAN);
         Pizza pizza3 = new Pizza("Hawaii", 400.0, Pizza.PizzaTypes.SEA);
 
-        Map<Pizza, Integer> pizzas = new HashMap<Pizza, Integer>() {{
+        Map<Pizza, Integer> pizzas1 = new HashMap<Pizza, Integer>() {{
+            put(pizza1, 2);
+            put(pizza2, 3);
+            put(pizza3, 4);
+        }};
+        Map<Pizza, Integer> pizzas2 = new HashMap<Pizza, Integer>() {{
+            put(pizza1, 2);
+            put(pizza2, 3);
+            put(pizza3, 4);
+        }};
+        Map<Pizza, Integer> pizzas3 = new HashMap<Pizza, Integer>() {{
             put(pizza1, 2);
             put(pizza2, 3);
             put(pizza3, 4);
@@ -42,9 +52,9 @@ public class JpaAppRunner {
             add(new AccumulativeCardDiscount());
         }};
 
-        Order order1 = new Order(pizzas, customer1, discounts);
-        Order order2 = new Order(pizzas, customer2, discounts);
-        Order order3 = new Order(pizzas, customer3, discounts);
+        Order order1 = new Order(pizzas1, customer1, discounts);
+        Order order2 = new Order(pizzas2, customer2, discounts);
+        Order order3 = new Order(pizzas3, customer3, discounts);
 
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -53,34 +63,18 @@ public class JpaAppRunner {
 
         persistOrders(entityManager, order1, order2, order3);
 
-        removePizza(order1, pizza1);
-
         confirmOrder(order1);
         payOrder(order1);
 
         entityTransaction.commit();
 
-        Pizza pizza4 = new Pizza("Diabola", 200.0, Pizza.PizzaTypes.MEAT);
-        pizza4.setId(1L);
-
-        Pizza pizza5 = new Pizza("fgbb", 200.0, Pizza.PizzaTypes.MEAT);
-        pizza5.setId(1L);
-
-
-        Pizza p = entityManager.find(Pizza.class, 1L);
-        System.out.println("1vs4: " + p.equals(pizza4));
-        System.out.println("1vs5: " + p.equals(pizza5));
         entityTransaction.begin();
 
-        confirmOrder(order2);
-        payOrder(order2);
+        Order order = entityManager.find(Order.class, 4L);
+        Pizza p = entityManager.find(Pizza.class, 1L);
+        removePizza(order, pizza1);
 
         entityTransaction.commit();
-
-        Pizza foundPizza = entityManager.find(Pizza.class, 1L);
-        System.out.println(pizza1);
-        System.out.println(foundPizza);
-        System.out.println(pizza1.equals(foundPizza));
 
         entityManager.close();
         entityManagerFactory.close();

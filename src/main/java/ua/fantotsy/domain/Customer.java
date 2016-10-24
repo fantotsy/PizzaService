@@ -100,13 +100,10 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Customer customer = (Customer) o;
-
         if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
         if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
         return accumulativeCard != null ? accumulativeCard.equals(customer.accumulativeCard) : customer.accumulativeCard == null;
-
     }
 
     @Override
