@@ -22,7 +22,7 @@ public class Customer {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "accumulative_card_id")
     private AccumulativeCard accumulativeCard;
     @OneToMany(mappedBy = "customer")
