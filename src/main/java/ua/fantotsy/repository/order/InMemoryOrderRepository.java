@@ -39,25 +39,38 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void payOrderById(Long id) {
+    public Order confirmById(Long id) {
+        Order order = findById(id);
+        order.confirm();
+        return order;
+    }
+
+    @Override
+    public Order payById(Long id) {
         Order order = findById(id);
         order.pay();
+        return order;
     }
 
     @Override
-    public void cancelOrderById(Long id) {
+    public Order cancelById(Long id) {
         Order order = findById(id);
         order.cancel();
+        return order;
     }
 
     @Override
-    public void addPizzaInOrderById(Long orderId, Pizza pizza) {
-        findById(orderId).addPizza(pizza);
+    public Order addPizzaByOrderId(Long orderId, Pizza pizza) {
+        Order order = findById(orderId);
+        order.addPizza(pizza);
+        return order;
     }
 
     @Override
-    public void removePizzaFromOrderById(Long orderId, Pizza pizza) {
-        findById(orderId).removePizza(pizza);
+    public Order removePizzaByOrderId(Long orderId, Pizza pizza) {
+        Order order = findById(orderId);
+        order.removePizza(pizza);
+        return order;
     }
 
     @Override

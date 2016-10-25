@@ -5,17 +5,19 @@ import ua.fantotsy.domain.Pizza;
 
 public interface OrderRepository {
 
-    Order save(Order order);
-
     Order findById(Long id);
 
-    void payOrderById(Long id);
+    Order save(Order order);
 
-    void cancelOrderById(Long id);
+    Order confirmById(Long id);
 
-    void addPizzaInOrderById(Long orderId, Pizza pizza);
+    Order payById(Long id);
 
-    void removePizzaFromOrderById(Long orderId, Pizza pizza);
+    Order cancelById(Long id);
+
+    Order addPizzaByOrderId(Long orderId, Pizza pizza);
+
+    Order removePizzaByOrderId(Long orderId, Pizza pizza);
 
     int getNumberOfOrders();
 }

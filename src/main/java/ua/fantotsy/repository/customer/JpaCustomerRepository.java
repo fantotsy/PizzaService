@@ -1,10 +1,13 @@
 package ua.fantotsy.repository.customer;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.Customer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@Repository("customerRepository")
 public class JpaCustomerRepository implements CustomerRepository {
     @PersistenceContext
     private EntityManager entityManager;
@@ -15,6 +18,7 @@ public class JpaCustomerRepository implements CustomerRepository {
     }
 
     @Override
+    @Transactional
     public Customer save(Customer customer) {
         return entityManager.merge(customer);
     }

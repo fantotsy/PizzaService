@@ -47,13 +47,13 @@ public class SimpleOrderService implements OrderService {
     @Override
     public void addPizzaInOrderById(long orderId, long pizzaId) {
         Pizza pizza = getPizzaById(pizzaId);
-        orderRepository.addPizzaInOrderById(orderId, pizza);
+        orderRepository.addPizzaByOrderId(orderId, pizza);
     }
 
     @Override
     public void removePizzaFromOrderById(long orderId, long pizzaId) {
         Pizza pizza = getPizzaById(pizzaId);
-        orderRepository.removePizzaFromOrderById(orderId, pizza);
+        orderRepository.removePizzaByOrderId(orderId, pizza);
     }
 
     @Override
@@ -88,12 +88,12 @@ public class SimpleOrderService implements OrderService {
 
     @Override
     public void payOrderById(long id) {
-        orderRepository.payOrderById(id);
+        orderRepository.payById(id);
     }
 
     @Override
     public void cancelOrderById(long id) {
-        orderRepository.cancelOrderById(id);
+        orderRepository.cancelById(id);
     }
 
     @Override
