@@ -29,11 +29,11 @@
     <bean name="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--        <property name="persistenceUnitName" value="HiberantePostgreSQL" />-->
+        <!--<property name="persistenceUnitName" value="HiberantePostgreSQL" />-->
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
-        <property name="packagesToScan" value="ua.rd.pizzaservice.domain"/>
+        <property name="packagesToScan" value="ua.fantotsy.domain"/>
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>

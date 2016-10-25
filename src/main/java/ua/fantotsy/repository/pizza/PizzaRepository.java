@@ -9,4 +9,6 @@ public interface PizzaRepository {
     Pizza getPizzaById(long id);
 
     void addNewPizza(Pizza newPizza);
+
+    Pizza save(Pizza pizza);
 }

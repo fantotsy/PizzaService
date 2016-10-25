@@ -41,6 +41,11 @@ public class InMemoryPizzaRepository implements PizzaRepository {
         pizzas.add(newPizza);
     }
 
+    @Override
+    public Pizza save(Pizza pizza) {
+        return null;
+    }
+
     /*Private Methods*/
     private long getNextId() {
         return (pizzas.size() + 1);
