@@ -2,11 +2,8 @@ package ua.fantotsy;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
-import ua.fantotsy.repository.pizza.JpaPizzaRepository;
 import ua.fantotsy.repository.pizza.PizzaRepository;
-import ua.fantotsy.services.order.OrderService;
 
 import java.util.Arrays;
 

@@ -25,7 +25,7 @@ public class Pizza implements Serializable {
     private PizzaTypes type;
 
     /*Constructors*/
-    public Pizza() {
+    protected Pizza() {
 
     }
 
