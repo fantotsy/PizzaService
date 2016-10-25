@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.domain.Customer;
-import ua.fantotsy.repository.address.AddressRepository;
 import ua.fantotsy.repository.customer.CustomerRepository;
 import ua.fantotsy.services.accumulativeCard.AccumulativeCardService;
 import ua.fantotsy.services.address.AddressService;
@@ -51,12 +50,12 @@ public class SimpleCustomerServiceTest {
     @Test
     public void testAddNewCustomerAddsCustomerWithAccumulativeCard() {
         customerService.addNewCustomer("Name", "City", "Street", true);
-        verify(customerRepositoryMock).addNewCustomer(customerMock);
+        verify(customerRepositoryMock).save(customerMock);
     }
 
     @Test
     public void testAddNewCustomerAddsCustomerWithoutAccumulativeCard() {
         customerService.addNewCustomer("Name", "City", "Street", false);
-        verify(customerRepositoryMock).addNewCustomer(customerMock);
+        verify(customerRepositoryMock).save(customerMock);
     }
 }

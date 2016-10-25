@@ -4,7 +4,7 @@ import ua.fantotsy.domain.Customer;
 
 public interface CustomerRepository {
 
-    Customer getCustomerById(long id);
+    Customer findById(Long id);
 
-    void addNewCustomer(Customer customer);
+    Customer save(Customer customer);
 }

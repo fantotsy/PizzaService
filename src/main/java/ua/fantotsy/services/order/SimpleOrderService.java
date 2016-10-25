@@ -8,9 +8,7 @@ import ua.fantotsy.services.customer.CustomerService;
 import ua.fantotsy.services.pizza.PizzaService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SimpleOrderService implements OrderService {
     /*Fields*/
@@ -41,7 +39,7 @@ public class SimpleOrderService implements OrderService {
             newOrder.setCustomer(customer);
             newOrder.insertPizzas(pizzas);
             newOrder.countTotalPrice();
-            orderRepository.saveOrder(newOrder);
+            orderRepository.save(newOrder);
             return newOrder;
         }
     }
@@ -70,7 +68,7 @@ public class SimpleOrderService implements OrderService {
 
     @Override
     public void saveOrder(Order newOrder) {
-        orderRepository.saveOrder(newOrder);
+        orderRepository.save(newOrder);
     }
 
     @Override
@@ -100,7 +98,7 @@ public class SimpleOrderService implements OrderService {
 
     @Override
     public double getTotalOrderPriceById(long id) {
-        return orderRepository.getOrderById(id).getTotalPrice();
+        return orderRepository.findById(id).getTotalPrice();
     }
 
     /*Private & Protected Methods*/

@@ -1,7 +1,6 @@
 package ua.fantotsy.services.pizza;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.repository.pizza.PizzaRepository;
@@ -19,7 +18,7 @@ public class SimplePizzaService implements PizzaService {
     /*Public Methods*/
     @Override
     public Pizza getPizzaById(long id) {
-        return pizzaRepository.getPizzaById(id);
+        return pizzaRepository.findById(id);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class SimplePizzaService implements PizzaService {
         newPizza.setName(name);
         newPizza.setPrice(price);
         newPizza.setType(type);
-        pizzaRepository.addNewPizza(newPizza);
+        pizzaRepository.save(newPizza);
     }
 
     /*Private & Protected Methods*/

@@ -24,10 +24,10 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     @Override
-    public Pizza getPizzaById(long id) {
+    public Pizza findById(Long id) {
         if (pizzas.size() > 0) {
             for (Pizza pizza : pizzas) {
-                if (pizza.getId() == id) {
+                if (pizza.getId().equals(id)) {
                     return pizza;
                 }
             }
@@ -36,14 +36,10 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     @Override
-    public void addNewPizza(Pizza newPizza) {
-        newPizza.setId(getNextId());
-        pizzas.add(newPizza);
-    }
-
-    @Override
     public Pizza save(Pizza pizza) {
-        return null;
+        pizza.setId(getNextId());
+        pizzas.add(pizza);
+        return pizza;
     }
 
     /*Private Methods*/

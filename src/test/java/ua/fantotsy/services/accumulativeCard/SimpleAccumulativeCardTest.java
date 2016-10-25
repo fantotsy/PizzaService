@@ -27,6 +27,6 @@ public class SimpleAccumulativeCardTest {
     @Test
     public void testAddAndReturnNewAccumulativeCardAddsCard() {
         accumulativeCardService.addAndReturnNewAccumulativeCard();
-        verify(accumulativeCardRepositoryMock).addNewAccumulativeCard(accumulativeCardMock);
+        verify(accumulativeCardRepositoryMock).save(accumulativeCardMock);
     }
 }

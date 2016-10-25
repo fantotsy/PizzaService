@@ -13,13 +13,8 @@ public class JpaPizzaRepository implements PizzaRepository {
     private EntityManager entityManager;
 
     @Override
-    public Pizza getPizzaById(long id) {
+    public Pizza findById(Long id) {
         return entityManager.find(Pizza.class, id);
-    }
-
-    @Override
-    public void addNewPizza(Pizza newPizza) {
-
     }
 
     @Override

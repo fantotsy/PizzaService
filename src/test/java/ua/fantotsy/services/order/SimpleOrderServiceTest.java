@@ -53,6 +53,6 @@ public class SimpleOrderServiceTest {
     public void testPlaceNewOrderSavesOrder() {
         doReturn(orderMock).when(orderService).createNewOrder();
         orderService.placeNewOrder(customerMock, 1, 1, 1);
-        verify(orderRepositoryMock).saveOrder(orderMock);
+        verify(orderRepositoryMock).save(orderMock);
     }
 }

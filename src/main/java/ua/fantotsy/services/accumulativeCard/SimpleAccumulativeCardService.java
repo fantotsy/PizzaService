@@ -17,13 +17,13 @@ public class SimpleAccumulativeCardService implements AccumulativeCardService {
     /*Public Methods*/
     @Override
     public AccumulativeCard getAccumulativeCardById(long id) {
-        return accumulativeCardRepository.getAccumulativeCardById(id);
+        return accumulativeCardRepository.findById(id);
     }
 
     @Override
     public AccumulativeCard addAndReturnNewAccumulativeCard() {
         AccumulativeCard accumulativeCard = createNewAccumulativeCard();
-        accumulativeCardRepository.addNewAccumulativeCard(accumulativeCard);
+        accumulativeCardRepository.save(accumulativeCard);
         return accumulativeCard;
     }
 

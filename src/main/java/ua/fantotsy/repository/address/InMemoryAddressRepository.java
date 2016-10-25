@@ -18,10 +18,10 @@ public class InMemoryAddressRepository implements AddressRepository {
 
     /*Public Methods*/
     @Override
-    public Address getAddressById(long id) {
+    public Address findById(Long id) {
         if (addresses.size() > 0) {
             for (Address address : addresses) {
-                if (address.getId() == id) {
+                if (address.getId().equals(id)) {
                     return address;
                 }
             }
@@ -30,9 +30,10 @@ public class InMemoryAddressRepository implements AddressRepository {
     }
 
     @Override
-    public void addNewAddress(Address address) {
+    public Address save(Address address) {
         address.setId(getNextId());
         addresses.add(address);
+        return address;
     }
 
     /*Private Methods*/

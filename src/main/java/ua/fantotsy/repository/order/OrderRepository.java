@@ -3,21 +3,19 @@ package ua.fantotsy.repository.order;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 
-import java.util.List;
-
 public interface OrderRepository {
 
-    Order saveOrder(Order order);
+    Order save(Order order);
 
-    Order getOrderById(long id);
+    Order findById(Long id);
 
-    void payOrderById(long id);
+    void payOrderById(Long id);
 
-    void cancelOrderById(long id);
+    void cancelOrderById(Long id);
 
-    void addPizzaInOrderById(long orderId, Pizza pizza);
+    void addPizzaInOrderById(Long orderId, Pizza pizza);
 
-    void removePizzaFromOrderById(long orderId, Pizza pizza);
+    void removePizzaFromOrderById(Long orderId, Pizza pizza);
 
     int getNumberOfOrders();
 }

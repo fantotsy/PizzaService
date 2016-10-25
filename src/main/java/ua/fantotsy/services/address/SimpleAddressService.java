@@ -17,7 +17,7 @@ public class SimpleAddressService implements AddressService {
     /*Public Methods*/
     @Override
     public Address getAddressById(long id) {
-        return addressRepository.getAddressById(id);
+        return addressRepository.findById(id);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class SimpleAddressService implements AddressService {
         Address address = createNewAddress();
         address.setCity(city);
         address.setStreet(street);
-        addressRepository.addNewAddress(address);
+        addressRepository.save(address);
         return address;
     }
 

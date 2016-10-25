@@ -21,7 +21,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     /*Public Methods*/
     @Benchmark(value = false)
     @Override
-    public Order saveOrder(Order order) {
+    public Order save(Order order) {
         order.setId(getNextId());
         orders.add(order);
         order.confirm();
@@ -29,9 +29,9 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Order getOrderById(long id) {
+    public Order findById(Long id) {
         for (Order order : orders) {
-            if (order.getId() == id) {
+            if (order.getId().equals(id)) {
                 return order;
             }
         }
@@ -39,25 +39,25 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void payOrderById(long id) {
-        Order order = getOrderById(id);
+    public void payOrderById(Long id) {
+        Order order = findById(id);
         order.pay();
     }
 
     @Override
-    public void cancelOrderById(long id) {
-        Order order = getOrderById(id);
+    public void cancelOrderById(Long id) {
+        Order order = findById(id);
         order.cancel();
     }
 
     @Override
-    public void addPizzaInOrderById(long orderId, Pizza pizza) {
-        getOrderById(orderId).addPizza(pizza);
+    public void addPizzaInOrderById(Long orderId, Pizza pizza) {
+        findById(orderId).addPizza(pizza);
     }
 
     @Override
-    public void removePizzaFromOrderById(long orderId, Pizza pizza) {
-        getOrderById(orderId).removePizza(pizza);
+    public void removePizzaFromOrderById(Long orderId, Pizza pizza) {
+        findById(orderId).removePizza(pizza);
     }
 
     @Override

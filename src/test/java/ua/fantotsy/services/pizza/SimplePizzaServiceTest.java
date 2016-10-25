@@ -32,6 +32,6 @@ public class SimplePizzaServiceTest {
     public void testAddNewPizzaAddsPizza() {
         doReturn(pizzaMock).when(pizzaService).createNewPizza();
         pizzaService.addNewPizza("Name", 100.0, Pizza.PizzaTypes.SEA);
-        verify(pizzaRepositoryMock).addNewPizza(pizzaMock);
+        verify(pizzaRepositoryMock).save(pizzaMock);
     }
 }

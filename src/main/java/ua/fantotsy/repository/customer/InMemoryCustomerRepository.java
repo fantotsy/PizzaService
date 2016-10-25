@@ -18,10 +18,10 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     /*Public Methods*/
     @Override
-    public Customer getCustomerById(long id) {
+    public Customer findById(Long id) {
         if (customers.size() > 0) {
             for (Customer customer : customers) {
-                if (customer.getId() == id) {
+                if (customer.getId().equals(id)) {
                     return customer;
                 }
             }
@@ -30,9 +30,10 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public void addNewCustomer(Customer customer) {
+    public Customer save(Customer customer) {
         customer.setId(getNextId());
         customers.add(customer);
+        return customer;
     }
 
     /*Private Methods*/

@@ -18,10 +18,10 @@ public class InMemoryAccumulativeCardRepository implements AccumulativeCardRepos
 
     /*Public Methods*/
     @Override
-    public AccumulativeCard getAccumulativeCardById(long id) {
+    public AccumulativeCard findById(Long id) {
         if (accumulativeCards.size() > 0) {
             for (AccumulativeCard accumulativeCard : accumulativeCards) {
-                if (accumulativeCard.getId() == id) {
+                if (accumulativeCard.getId().equals(id)) {
                     return accumulativeCard;
                 }
             }
@@ -30,9 +30,10 @@ public class InMemoryAccumulativeCardRepository implements AccumulativeCardRepos
     }
 
     @Override
-    public void addNewAccumulativeCard(AccumulativeCard accumulativeCard) {
+    public AccumulativeCard save(AccumulativeCard accumulativeCard) {
         accumulativeCard.setId(getNextId());
         accumulativeCards.add(accumulativeCard);
+        return accumulativeCard;
     }
 
     /*Private Methods*/

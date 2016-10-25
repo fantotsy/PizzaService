@@ -4,7 +4,7 @@ import ua.fantotsy.domain.Address;
 
 public interface AddressRepository {
 
-    Address getAddressById(long id);
+    Address findById(Long id);
 
-    void addNewAddress(Address customer);
+    Address save(Address address);
 }

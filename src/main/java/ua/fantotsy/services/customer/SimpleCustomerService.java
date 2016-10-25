@@ -1,7 +1,6 @@
 package ua.fantotsy.services.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
@@ -27,7 +26,7 @@ public class SimpleCustomerService implements CustomerService {
     /*Public Methods*/
     @Override
     public Customer getCustomerById(long id) {
-        return customerRepository.getCustomerById(id);
+        return customerRepository.findById(id);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class SimpleCustomerService implements CustomerService {
             AccumulativeCard accumulativeCard = accumulativeCardService.addAndReturnNewAccumulativeCard();
             newCustomer.setAccumulativeCard(accumulativeCard);
         }
-        customerRepository.addNewCustomer(newCustomer);
+        customerRepository.save(newCustomer);
     }
 
     /*Private & Protected Methods*/
