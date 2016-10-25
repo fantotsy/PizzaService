@@ -21,7 +21,7 @@ public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
     private AccumulativeCardRepository accumulativeCardRepository;
 
     @Test
-    public void testFind() {
+    public void testFindCustomerById() {
 
     }
 

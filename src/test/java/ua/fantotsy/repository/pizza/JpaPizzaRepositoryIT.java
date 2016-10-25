@@ -13,7 +13,7 @@ public class JpaPizzaRepositoryIT extends RepositoryTestConfig {
     private PizzaRepository pizzaRepository;
 
     @Test
-    public void testFind() {
+    public void testFindPizzaById() {
 
     }
 

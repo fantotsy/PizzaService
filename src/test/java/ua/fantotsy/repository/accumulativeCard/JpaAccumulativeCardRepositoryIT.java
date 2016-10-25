@@ -12,12 +12,12 @@ public class JpaAccumulativeCardRepositoryIT extends RepositoryTestConfig {
     private AccumulativeCardRepository accumulativeCardRepository;
 
     @Test
-    public void testFind() {
+    public void testFindAccumulativeCardById() {
 
     }
 
     @Test
-    public void testSavePizza() {
+    public void testSaveAccumulativeCard() {
         AccumulativeCard accumulativeCard = new AccumulativeCard("1234567887654321");
         accumulativeCard = accumulativeCardRepository.save(accumulativeCard);
         assertNotNull(accumulativeCard.getId());

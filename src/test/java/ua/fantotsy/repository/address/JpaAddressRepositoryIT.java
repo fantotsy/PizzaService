@@ -12,12 +12,12 @@ public class JpaAddressRepositoryIT extends RepositoryTestConfig {
     private AddressRepository addressRepository;
 
     @Test
-    public void testFind() {
+    public void testFindAddressById() {
 
     }
 
     @Test
-    public void testSavePizza() {
+    public void testSaveAddress() {
         Address address = new Address("City", "Street");
         address = addressRepository.save(address);
         assertNotNull(address.getId());
