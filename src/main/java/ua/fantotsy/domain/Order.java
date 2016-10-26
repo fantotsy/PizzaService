@@ -19,7 +19,7 @@ public class Order {
     @MapKeyJoinColumn(name = "pizza_id")
     @Column(name = "quantity", nullable = false)
     private Map<Pizza, Integer> pizzas;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @Embedded
