@@ -16,8 +16,8 @@ public class AccumulativeCard implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "number", nullable = false, unique = true, length = 16)
-    private String number;
+    @Column(name = "number", nullable = false, length = 5)
+    private Long number;
     @Column(name = "balance", nullable = false)
     private Double balance;
     @OneToOne(mappedBy = "accumulativeCard", fetch = FetchType.LAZY)
@@ -26,9 +26,10 @@ public class AccumulativeCard implements Serializable {
     /*Constructors*/
     public AccumulativeCard() {
         balance = 0.0;
+        number = 10000L;
     }
 
-    public AccumulativeCard(String number) {
+    public AccumulativeCard(Long number) {
         this();
         this.number = number;
     }
@@ -47,11 +48,11 @@ public class AccumulativeCard implements Serializable {
         this.id = id;
     }
 
-    public String getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
@@ -75,19 +76,16 @@ public class AccumulativeCard implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         AccumulativeCard that = (AccumulativeCard) o;
-        if (Double.compare(that.balance, balance) != 0) return false;
+
         return number != null ? number.equals(that.number) : that.number == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = number != null ? number.hashCode() : 0;
-        temp = Double.doubleToLongBits(balance);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return number != null ? number.hashCode() : 0;
     }
 
     @Override

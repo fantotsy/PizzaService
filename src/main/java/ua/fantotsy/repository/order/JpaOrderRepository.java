@@ -19,6 +19,18 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
+    public Integer getAmountOfPizzasByOrderId(Long orderId) {
+        Order order = findById(orderId);
+        return order.getAmountOfPizzas();
+    }
+
+    @Override
+    public Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId) {
+        Order order = findById(orderId);
+        return order.getPizzaById(pizzaId);
+    }
+
+    @Override
     @Transactional
     public Order save(Order order) {
         return entityManager.merge(order);

@@ -21,7 +21,7 @@ public class Address implements Serializable {
     private String city;
     @Column(name = "street", nullable = false, length = 20)
     private String street;
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
     private List<Customer> customers;
     @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
     private List<Order> orders;

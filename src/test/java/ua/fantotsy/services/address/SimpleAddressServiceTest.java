@@ -26,7 +26,7 @@ public class SimpleAddressServiceTest {
 
     @Test
     public void testAddAndReturnNewAddressAddsAddress() {
-        addressService.addAndReturnNewAddress("City", "Street");
+        addressService.addNewAddress("City", "Street");
         verify(addressRepositoryMock).save(addressMock);
     }
 }

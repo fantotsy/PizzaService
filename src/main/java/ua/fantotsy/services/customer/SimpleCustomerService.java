@@ -32,16 +32,17 @@ public class SimpleCustomerService implements CustomerService {
 
     @Override
     @Transactional
-    public void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard) {
+    public Customer addNewCustomer(String name, String city, String street, Boolean hasAccumulativeCard) {
         Customer newCustomer = createNewCustomer();
         newCustomer.setName(name);
-        Address address = addressService.addAndReturnNewAddress(city, street);
+        Address address = addressService.addNewAddress(city, street);
         newCustomer.setAddress(address);
         if (hasAccumulativeCard) {
-            AccumulativeCard accumulativeCard = accumulativeCardService.addAndReturnNewAccumulativeCard();
+            AccumulativeCard accumulativeCard = accumulativeCardService.addNewAccumulativeCard();
             newCustomer.setAccumulativeCard(accumulativeCard);
         }
-        customerRepository.save(newCustomer);
+        newCustomer = customerRepository.save(newCustomer);
+        return newCustomer;
     }
 
     /*Private & Protected Methods*/

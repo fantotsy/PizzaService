@@ -41,9 +41,9 @@ public class JpaAppRunner {
 
         Address address = new Address("Kyiv", "K18a");
 
-        Customer customer1 = new Customer("Vasya", address, new AccumulativeCard("123456788765432"));
-        Customer customer2 = new Customer("Petya", address, new AccumulativeCard("1234567887654321"));
-        Customer customer3 = new Customer("Fedya", address, new AccumulativeCard("1212121212121212"));
+        Customer customer1 = new Customer("Vasya", address, new AccumulativeCard(12345L));
+        Customer customer2 = new Customer("Petya", address, new AccumulativeCard(23456L));
+        Customer customer3 = new Customer("Fedya", address, new AccumulativeCard(12121L));
 
         Set<Discount> discounts = new HashSet<Discount>() {{
             add(new TheMostExpensivePizzaDiscount());

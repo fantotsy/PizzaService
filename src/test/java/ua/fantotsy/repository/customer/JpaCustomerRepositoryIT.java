@@ -28,7 +28,7 @@ public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
     @Test
     public void testSaveCustomer() {
         Address address = addressRepository.save(new Address("City", "Street"));
-        AccumulativeCard accumulativeCard = accumulativeCardRepository.save(new AccumulativeCard("1234567887654321"));
+        AccumulativeCard accumulativeCard = accumulativeCardRepository.save(new AccumulativeCard(12345L));
         Customer customer = new Customer("Name", address, accumulativeCard);
         customer = customerRepository.save(customer);
         assertNotNull(customer.getId());

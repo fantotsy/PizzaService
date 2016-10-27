@@ -1,6 +1,7 @@
 package ua.fantotsy.services.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.*;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.repository.order.OrderRepository;
@@ -26,8 +27,9 @@ public class SimpleOrderService implements OrderService {
 
     /*Public Methods*/
     @Override
-    @Benchmark(value = true)
-    public Order addNewOrder(Customer customer, Long... pizzasId) {
+    @Benchmark(value = false)
+    @Transactional
+    public Order addNewOrderByCustomerIdAndPizzaIds(Long customerId, Long... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
             throw new RuntimeException("Not allowed amount of pizzas!");
         } else {
@@ -35,25 +37,55 @@ public class SimpleOrderService implements OrderService {
             for (Long id : pizzasId) {
                 pizzas.add(getPizzaById(id));
             }
+            Customer customer = customerService.getCustomerById(customerId);
             Order newOrder = createNewOrder();
             newOrder.setCustomer(customer);
             newOrder.insertPizzas(pizzas);
-            newOrder.countTotalPrice();
-            orderRepository.save(newOrder);
+            newOrder = orderRepository.save(newOrder);
             return newOrder;
         }
     }
 
     @Override
-    public void addPizzaInOrderById(Long orderId, Long pizzaId) {
-        Pizza pizza = getPizzaById(pizzaId);
-        orderRepository.addPizzaByOrderId(orderId, pizza);
+    public Integer getAmountOfPizzasByOrderId(Long orderId) {
+        return orderRepository.getAmountOfPizzasByOrderId(orderId);
     }
 
     @Override
-    public void removePizzaFromOrderById(Long orderId, Long pizzaId) {
+    public Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId) {
+        return orderRepository.getPizzaByIdInOrderById(orderId, pizzaId);
+    }
+
+    @Override
+    @Transactional
+    public Order confirmOrderById(Long orderId) {
+        return orderRepository.confirmById(orderId);
+    }
+
+    @Override
+    @Transactional
+    public Order payOrderById(Long id) {
+        return orderRepository.payById(id);
+    }
+
+    @Override
+    @Transactional
+    public Order cancelOrderById(Long id) {
+        return orderRepository.cancelById(id);
+    }
+
+    @Override
+    @Transactional
+    public Order addPizzaByOrderId(Long orderId, Long pizzaId) {
         Pizza pizza = getPizzaById(pizzaId);
-        orderRepository.removePizzaByOrderId(orderId, pizza);
+        return orderRepository.addPizzaByOrderId(orderId, pizza);
+    }
+
+    @Override
+    @Transactional
+    public Order removePizzaByOrderId(Long orderId, Long pizzaId) {
+        Pizza pizza = getPizzaById(pizzaId);
+        return orderRepository.removePizzaByOrderId(orderId, pizza);
     }
 
     @Override
@@ -67,16 +99,12 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public void saveOrder(Order newOrder) {
-        orderRepository.save(newOrder);
-    }
-
-    @Override
     public Integer getNumberOfOrders() {
         return orderRepository.getNumberOfOrders();
     }
 
     @Override
+
     public void addNewPizza(String name, Double price, Pizza.PizzaType type) {
         pizzaService.addNewPizza(name, price, type);
     }
@@ -84,21 +112,6 @@ public class SimpleOrderService implements OrderService {
     @Override
     public void addNewCustomer(String name, String city, String street, Boolean hasAccumulativeCard) {
         customerService.addNewCustomer(name, city, street, hasAccumulativeCard);
-    }
-
-    @Override
-    public void payOrderById(Long id) {
-        orderRepository.payById(id);
-    }
-
-    @Override
-    public void cancelOrderById(Long id) {
-        orderRepository.cancelById(id);
-    }
-
-    @Override
-    public Double getTotalOrderPriceById(Long id) {
-        return orderRepository.findById(id).getTotalPrice();
     }
 
     /*Private & Protected Methods*/

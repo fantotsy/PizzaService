@@ -19,15 +19,6 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     /*Public Methods*/
-    @Benchmark(value = false)
-    @Override
-    public Order save(Order order) {
-        order.setId(getNextId());
-        orders.add(order);
-        order.confirm();
-        return order;
-    }
-
     @Override
     public Order findById(Long id) {
         for (Order order : orders) {
@@ -36,6 +27,27 @@ public class InMemoryOrderRepository implements OrderRepository {
             }
         }
         throw new RuntimeException("Such order id does not exist.");
+    }
+
+    @Override
+    public Integer getAmountOfPizzasByOrderId(Long orderId) {
+        Order order = findById(orderId);
+        return order.getAmountOfPizzas();
+    }
+
+    @Override
+    public Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId) {
+        Order order = findById(orderId);
+        return order.getPizzaById(pizzaId);
+    }
+
+    @Benchmark(value = false)
+    @Override
+    public Order save(Order order) {
+        order.setId(getNextId());
+        orders.add(order);
+        order.confirm();
+        return order;
     }
 
     @Override

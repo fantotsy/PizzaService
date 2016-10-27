@@ -18,14 +18,14 @@ public class SimplePizzaService implements PizzaService {
 
     /*Public Methods*/
     @Override
-    public Pizza getPizzaById(long id) {
+    public Pizza getPizzaById(Long id) {
         return pizzaRepository.findById(id);
     }
 
     @Override
-    @Benchmark(value = true)
+    @Benchmark(value = false)
     @Transactional
-    public void addNewPizza(String name, double price, Pizza.PizzaType type) {
+    public Pizza addNewPizza(String name, Double price, Pizza.PizzaType type) {
         if (price <= 0.0) {
             throw new RuntimeException("Price is not available!");
         }
@@ -33,7 +33,8 @@ public class SimplePizzaService implements PizzaService {
         newPizza.setName(name);
         newPizza.setPrice(price);
         newPizza.setType(type);
-        pizzaRepository.save(newPizza);
+        newPizza = pizzaRepository.save(newPizza);
+        return newPizza;
     }
 
     /*Private & Protected Methods*/

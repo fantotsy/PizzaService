@@ -42,7 +42,7 @@ public class SimpleCustomerServiceTest {
 
     @Test
     public void testAddNewCustomerWithAccumulativeCard() {
-        when(accumulativeCardServiceMock.addAndReturnNewAccumulativeCard()).thenReturn(accumulativeCardMock);
+        when(accumulativeCardServiceMock.addNewAccumulativeCard()).thenReturn(accumulativeCardMock);
         customerService.addNewCustomer("Name", "City", "Street", true);
         verify(customerMock).setAccumulativeCard(accumulativeCardMock);
     }

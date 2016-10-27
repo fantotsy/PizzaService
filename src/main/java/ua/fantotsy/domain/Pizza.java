@@ -16,7 +16,7 @@ public class Pizza implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "name", nullable = false, length = 20, unique = true)
+    @Column(name = "name", nullable = false, length = 20)
     private String name;
     @Column(name = "price", nullable = false)
     private Double price;

@@ -6,5 +6,5 @@ public interface AccumulativeCardService {
 
     AccumulativeCard getAccumulativeCardById(Long id);
 
-    AccumulativeCard addAndReturnNewAccumulativeCard();
+    AccumulativeCard addNewAccumulativeCard();
 }

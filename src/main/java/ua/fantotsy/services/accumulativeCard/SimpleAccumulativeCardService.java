@@ -23,9 +23,9 @@ public class SimpleAccumulativeCardService implements AccumulativeCardService {
 
     @Override
     @Transactional
-    public AccumulativeCard addAndReturnNewAccumulativeCard() {
+    public AccumulativeCard addNewAccumulativeCard() {
         AccumulativeCard accumulativeCard = createNewAccumulativeCard();
-        accumulativeCardRepository.save(accumulativeCard);
+        accumulativeCard = accumulativeCardRepository.save(accumulativeCard);
         return accumulativeCard;
     }
 

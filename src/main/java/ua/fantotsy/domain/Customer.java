@@ -19,7 +19,7 @@ public class Customer {
     private Long id;
     @Column(name = "name", nullable = false, length = 30)
     private String name;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
     @OneToOne(cascade = {CascadeType.ALL})

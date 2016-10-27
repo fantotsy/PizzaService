@@ -149,7 +149,7 @@ public class Order {
                 return pizza.getKey();
             }
         }
-        throw new RuntimeException("Pizza is not found.");
+        throw new RuntimeException("Pizza not found.");
     }
 
     public void countTotalPrice() {
@@ -175,13 +175,13 @@ public class Order {
         setLocalDateTime(LocalDateTime.now());
     }
 
-    public boolean isEmpty() {
+    public Boolean isEmpty() {
         return (pizzas.size() == 0);
     }
 
     /*Private Methods*/
     private void countInitialPrice() {
-        double result = 0.0;
+        Double result = 0.0;
         for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
             result += (pizza.getKey().getPrice() * pizza.getValue());
         }
@@ -189,10 +189,10 @@ public class Order {
     }
 
     private void countDiscount() {
-        double maxDiscount = 0.0;
+        Double maxDiscount = 0.0;
         for (Discount discount : activeDiscounts) {
             if (discount.canBeApplied(this)) {
-                double currentDiscount = discount.getDiscount(this);
+                Double currentDiscount = discount.getDiscount(this);
                 if (currentDiscount > maxDiscount) {
                     maxDiscount = currentDiscount;
                     setAppliedDiscount(discount);

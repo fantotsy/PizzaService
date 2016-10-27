@@ -23,11 +23,11 @@ public class SimpleAddressService implements AddressService {
 
     @Override
     @Transactional
-    public Address addAndReturnNewAddress(String city, String street) {
+    public Address addNewAddress(String city, String street) {
         Address address = createNewAddress();
         address.setCity(city);
         address.setStreet(street);
-        addressRepository.save(address);
+        address = addressRepository.save(address);
         return address;
     }
 

@@ -7,6 +7,10 @@ public interface OrderRepository {
 
     Order findById(Long id);
 
+    Integer getAmountOfPizzasByOrderId(Long orderId);
+
+    Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId);
+
     Order save(Order order);
 
     Order confirmById(Long id);

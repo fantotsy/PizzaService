@@ -4,7 +4,7 @@ import ua.fantotsy.domain.Pizza;
 
 public interface PizzaService {
 
-    Pizza getPizzaById(long id);
+    Pizza getPizzaById(Long id);
 
-    void addNewPizza(String name, double price, Pizza.PizzaType type);
+    Pizza addNewPizza(String name, Double price, Pizza.PizzaType type);
 }
