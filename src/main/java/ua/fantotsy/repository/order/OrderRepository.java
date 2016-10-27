@@ -3,9 +3,13 @@ package ua.fantotsy.repository.order;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 
+import java.util.List;
+
 public interface OrderRepository {
 
     Order findById(Long id);
+
+    List<Order> findOrdersByCustomerName(String customerName);
 
     Integer getAmountOfPizzasByOrderId(Long orderId);
 

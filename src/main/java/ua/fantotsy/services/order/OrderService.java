@@ -4,9 +4,13 @@ import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 
+import java.util.List;
+
 public interface OrderService {
 
     Order addNewOrderByCustomerIdAndPizzaIds(Long customerId, Long... pizzasId);
+
+    List<Order> findOrdersByCustomerName(String customerName);
 
     Order addPizzaByOrderId(Long orderId, Long pizzaId);
 

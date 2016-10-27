@@ -30,6 +30,11 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
+    public List<Order> findOrdersByCustomerName(String customerName) {
+        return null;
+    }
+
+    @Override
     public Integer getAmountOfPizzasByOrderId(Long orderId) {
         Order order = findById(orderId);
         return order.getAmountOfPizzas();

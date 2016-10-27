@@ -7,6 +7,7 @@ import ua.fantotsy.domain.Pizza;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository("orderRepository")
 public class JpaOrderRepository implements OrderRepository {
@@ -16,6 +17,12 @@ public class JpaOrderRepository implements OrderRepository {
     @Override
     public Order findById(Long id) {
         return entityManager.find(Order.class, id);
+    }
+
+    @Override
+    public List<Order> findOrdersByCustomerName(String customerName) {
+        return entityManager.createNamedQuery("Order.findOrdersByCustomerName", Order.class)
+                .getResultList();
     }
 
     @Override

@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -12,7 +11,7 @@ import java.util.List;
 @Component
 @Scope(scopeName = "prototype")
 @NamedQueries({
-        @NamedQuery(name = "findCustomerByName", query = "SELECT c FROM Customer c WHERE c.name=:name")
+        @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name=:name"),
 })
 public class Customer {
     /*Fields*/

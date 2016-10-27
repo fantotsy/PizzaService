@@ -1,8 +1,10 @@
 package ua.fantotsy.domain.discounts;
 
 import ua.fantotsy.domain.Order;
+import ua.fantotsy.domain.Payment;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "discounts")
@@ -14,6 +16,8 @@ public abstract class Discount {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "state", nullable = false)
     private DiscountState state;
+    @OneToMany(mappedBy = "appliedDiscount", fetch = FetchType.LAZY)
+    private List<Payment> payments;
     @Transient
     protected Order order;
 
@@ -61,8 +65,24 @@ public abstract class Discount {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public DiscountState getState() {
         return state;
+    }
+
+    public void setState(DiscountState state) {
+        this.state = state;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     @Override

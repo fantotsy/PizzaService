@@ -1,6 +1,10 @@
 package ua.fantotsy.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
+import ua.fantotsy.domain.discounts.DiscountManager;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,13 +12,18 @@ import java.util.*;
 
 @Entity
 @Table(name = "orders")
+@Component
+@Scope(scopeName = "prototype")
+@NamedQueries({
+        @NamedQuery(name = "Order.findOrdersByCustomerName", query = "SELECT o FROM Order o"),
+})
 public class Order {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "pizzas_quantities", joinColumns = @JoinColumn(name = "order_id", nullable = false))
     @MapKeyJoinColumn(name = "pizza_id")
     @Column(name = "quantity", nullable = false)
@@ -31,28 +40,27 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private OrderStatus status;
-    @Transient
-    private Set<Discount> activeDiscounts;
+//    @Transient
+//    private Set<Discount> activeDiscounts;
 
     /*Constructors*/
     public Order() {
         status = OrderStatus.NEW;
         pizzas = new HashMap<>();
         payment = new Payment();
-        activeDiscounts = new HashSet<>();
     }
 
-    public Order(Set<Discount> discounts) {
-        this();
-        removeInactiveDiscounts(discounts);
-        activeDiscounts = discounts;
-    }
+//    @Autowired
+//    public Order(Set<Discount> discounts) {
+//        this();
+//        removeInactiveDiscounts(discounts);
+//        activeDiscounts = discounts;
+//    }
 
-    public Order(Map<Pizza, Integer> pizzas, Customer customer, Set<Discount> activeDiscounts) {
+    public Order(Map<Pizza, Integer> pizzas, Customer customer) {
         this();
         this.pizzas = pizzas;
         this.customer = customer;
-        this.activeDiscounts = activeDiscounts;
     }
 
     /*Internal Objects*/
@@ -189,26 +197,16 @@ public class Order {
     }
 
     private void countDiscount() {
-        Double maxDiscount = 0.0;
-        for (Discount discount : activeDiscounts) {
-            if (discount.canBeApplied(this)) {
-                Double currentDiscount = discount.getDiscount(this);
-                if (currentDiscount > maxDiscount) {
-                    maxDiscount = currentDiscount;
-                    setAppliedDiscount(discount);
-                }
-            }
-        }
-        setDiscount(maxDiscount);
+        DiscountManager.countDiscount(this);
     }
 
-    private void removeInactiveDiscounts(Set<Discount> discounts) {
-        for (Discount discount : discounts) {
-            if (discount.getState().equals(Discount.DiscountState.INACTIVE)) {
-                discounts.remove(discount);
-            }
-        }
-    }
+//    private void removeInactiveDiscounts(Set<Discount> discounts) {
+//        for (Discount discount : discounts) {
+//            if (discount.getState().equals(Discount.DiscountState.INACTIVE)) {
+//                discounts.remove(discount);
+//            }
+//        }
+//    }
 
     /*Getters & Setters*/
     public Long getId() {
@@ -255,7 +253,7 @@ public class Order {
         return payment.getAppliedDiscount();
     }
 
-    private void setAppliedDiscount(Discount appliedDiscount) {
+    public void setAppliedDiscount(Discount appliedDiscount) {
         payment.setAppliedDiscount(appliedDiscount);
     }
 
@@ -263,7 +261,7 @@ public class Order {
         return payment.getDiscount();
     }
 
-    private void setDiscount(double discount) {
+    public void setDiscount(double discount) {
         payment.setDiscount(discount);
     }
 

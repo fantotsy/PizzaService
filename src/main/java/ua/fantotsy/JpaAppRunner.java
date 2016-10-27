@@ -45,14 +45,9 @@ public class JpaAppRunner {
         Customer customer2 = new Customer("Petya", address, new AccumulativeCard(23456L));
         Customer customer3 = new Customer("Fedya", address, new AccumulativeCard(12121L));
 
-        Set<Discount> discounts = new HashSet<Discount>() {{
-            add(new TheMostExpensivePizzaDiscount());
-            add(new AccumulativeCardDiscount());
-        }};
-
-        Order order1 = new Order(pizzas1, customer1, discounts);
-        Order order2 = new Order(pizzas2, customer2, discounts);
-        Order order3 = new Order(pizzas3, customer3, discounts);
+        Order order1 = new Order(pizzas1, customer1);
+        Order order2 = new Order(pizzas2, customer2);
+        Order order3 = new Order(pizzas3, customer3);
 
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();

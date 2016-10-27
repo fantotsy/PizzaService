@@ -39,7 +39,7 @@
 
     <bean name="paymentService" class="ua.fantotsy.services.payment.SimplePaymentService"/>
 
-    <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype">
+    <bean name="discountManager" class="ua.fantotsy.domain.discounts.DiscountManager">
         <constructor-arg>
             <set>
                 <ref bean="accumulativeCardDiscount"/>

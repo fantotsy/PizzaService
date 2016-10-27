@@ -5,6 +5,9 @@ import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.utils.Utils;
 
+import javax.persistence.Entity;
+
+@Entity
 @Component
 public class AccumulativeCardDiscount extends Discount {
     private final static int INITIAL_PRICE_PERCENTAGE_LIMIT = 30;

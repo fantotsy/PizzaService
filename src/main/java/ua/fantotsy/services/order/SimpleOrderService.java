@@ -47,6 +47,11 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
+    public List<Order> findOrdersByCustomerName(String customerName) {
+        return orderRepository.findOrdersByCustomerName(customerName);
+    }
+
+    @Override
     public Integer getAmountOfPizzasByOrderId(Long orderId) {
         return orderRepository.getAmountOfPizzasByOrderId(orderId);
     }

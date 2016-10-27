@@ -5,11 +5,13 @@ import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.utils.Utils;
 
+import javax.persistence.Entity;
 import java.util.*;
 
+@Entity
 @Component
 public class TheMostExpensivePizzaDiscount extends Discount {
-    private final static int MIN_AMOUNT_OF_PIZZAS = 4;
+    private final static int MIN_AMOUNT_OF_PIZZAS = 5;
     private final static int PIZZA_PRICE_PERCENTAGE = 30;
 
     @Override
@@ -29,7 +31,7 @@ public class TheMostExpensivePizzaDiscount extends Discount {
     }
 
     private boolean isEnoughPizzasInOrder() {
-        return (order.getAmountOfPizzas() > MIN_AMOUNT_OF_PIZZAS);
+        return (order.getAmountOfPizzas() >= MIN_AMOUNT_OF_PIZZAS);
     }
 
     private Map<Pizza, Integer> getTheMostExpensivePizzas() {

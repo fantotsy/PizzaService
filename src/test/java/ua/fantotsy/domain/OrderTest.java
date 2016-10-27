@@ -28,7 +28,7 @@ public class OrderTest {
             add(new AccumulativeCardDiscount());
             add(new TheMostExpensivePizzaDiscount());
         }};
-        order = new Order(discounts);
+        order = new Order();
 
         pizza1 = new Pizza();
         pizza1.setId(1L);

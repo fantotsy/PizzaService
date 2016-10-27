@@ -22,7 +22,7 @@ public class Payment {
     @Column(name = "initial_price")
     private Double initialPrice;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "discount_name")
+    @JoinColumn(name = "applied_discount")
     private Discount appliedDiscount;
     @Column(name = "discount")
     private Double discount;
@@ -130,8 +130,12 @@ public class Payment {
 
     @Override
     public String toString() {
-        return "\tInitial price: " + initialPrice + " UAH" +
-                "\n\tDiscount: " + discount + " UAH (" + appliedDiscount.getName() + ")" +
-                "\n\tIN TOTAL: " + totalPrice + " UAH\n";
+        StringBuilder info = new StringBuilder();
+        if (appliedDiscount != null) {
+            info.append("\tInitial price: " + initialPrice + " UAH");
+            info.append("\n\tDiscount: " + discount + " UAH (" + appliedDiscount.getName() + ")");
+        }
+        info.append("\n\tIN TOTAL: " + totalPrice + " UAH\n");
+        return info.toString();
     }
 }

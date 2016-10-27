@@ -33,7 +33,7 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
         Address address = addressRepository.save(new Address("City", "Street"));
         AccumulativeCard accumulativeCard = accumulativeCardRepository.save(new AccumulativeCard(12345L));
         Customer customer = customerRepository.save(new Customer("Name", address, accumulativeCard));
-        Order order = new Order(new HashMap<>(), customer, new HashSet<>());
+        Order order = new Order(new HashMap<>(), customer);
         order = orderRepository.save(order);
         assertNotNull(order.getId());
     }
