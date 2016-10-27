@@ -35,9 +35,9 @@ public class SimpleOrderService implements OrderService {
         } else {
             List<Pizza> pizzas = new ArrayList<>();
             for (Long id : pizzasId) {
-                pizzas.add(getPizzaById(id));
+                pizzas.add(findPizzaById(id));
             }
-            Customer customer = customerService.getCustomerById(customerId);
+            Customer customer = customerService.findCustomerById(customerId);
             Order newOrder = createNewOrder();
             newOrder.setCustomer(customer);
             newOrder.insertPizzas(pizzas);
@@ -52,7 +52,7 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId) {
+    public Pizza findPizzaByIdInOrderById(Long orderId, Long pizzaId) {
         return orderRepository.getPizzaByIdInOrderById(orderId, pizzaId);
     }
 
@@ -77,29 +77,29 @@ public class SimpleOrderService implements OrderService {
     @Override
     @Transactional
     public Order addPizzaByOrderId(Long orderId, Long pizzaId) {
-        Pizza pizza = getPizzaById(pizzaId);
+        Pizza pizza = findPizzaById(pizzaId);
         return orderRepository.addPizzaByOrderId(orderId, pizza);
     }
 
     @Override
     @Transactional
     public Order removePizzaByOrderId(Long orderId, Long pizzaId) {
-        Pizza pizza = getPizzaById(pizzaId);
+        Pizza pizza = findPizzaById(pizzaId);
         return orderRepository.removePizzaByOrderId(orderId, pizza);
     }
 
     @Override
-    public Pizza getPizzaById(Long id) {
-        return pizzaService.getPizzaById(id);
+    public Pizza findPizzaById(Long id) {
+        return pizzaService.findPizzaById(id);
     }
 
     @Override
-    public Customer getCustomerById(Long id) {
-        return customerService.getCustomerById(id);
+    public Customer findCustomerById(Long id) {
+        return customerService.findCustomerById(id);
     }
 
     @Override
-    public Integer getNumberOfOrders() {
+    public Integer getAmountOfOrders() {
         return orderRepository.getNumberOfOrders();
     }
 

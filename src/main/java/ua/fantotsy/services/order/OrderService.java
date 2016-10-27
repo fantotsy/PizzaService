@@ -14,7 +14,7 @@ public interface OrderService {
 
     Integer getAmountOfPizzasByOrderId(Long orderId);
 
-    Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId);
+    Pizza findPizzaByIdInOrderById(Long orderId, Long pizzaId);
 
     Order confirmOrderById(Long orderId);
 
@@ -22,11 +22,11 @@ public interface OrderService {
 
     Order payOrderById(Long id);
 
-    Pizza getPizzaById(Long id);
+    Pizza findPizzaById(Long id);
 
-    Customer getCustomerById(Long id);
+    Customer findCustomerById(Long id);
 
-    Integer getNumberOfOrders();
+    Integer getAmountOfOrders();
 
     void addNewPizza(String name, Double price, Pizza.PizzaType type);
 

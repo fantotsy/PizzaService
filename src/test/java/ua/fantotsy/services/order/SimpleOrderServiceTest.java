@@ -46,7 +46,7 @@ public class SimpleOrderServiceTest {
     public void testPlaceNewOrderSearchesForPizza() {
         doReturn(orderMock).when(orderService).createNewOrder();
         orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getId(), 1L, 1L, 1L);
-        verify(pizzaServiceMock, times(3)).getPizzaById(1L);
+        verify(pizzaServiceMock, times(3)).findPizzaById(1L);
     }
 
     @Test

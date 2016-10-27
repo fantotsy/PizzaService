@@ -17,7 +17,7 @@ public class SimpleAccumulativeCardService implements AccumulativeCardService {
 
     /*Public Methods*/
     @Override
-    public AccumulativeCard getAccumulativeCardById(Long id) {
+    public AccumulativeCard findAccumulativeCardById(Long id) {
         return accumulativeCardRepository.findById(id);
     }
 

@@ -3,6 +3,7 @@ package ua.fantotsy;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.fantotsy.domain.Pizza;
+import ua.fantotsy.services.customer.CustomerService;
 import ua.fantotsy.services.order.OrderService;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ public class SpringJpaAppRunner {
         System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
 
         OrderService orderService = appContext.getBean(OrderService.class, "orderService");
+
         orderService.addNewCustomer("Vasya", "Kyiv", "K18", true);
         orderService.addNewCustomer("Petya", "Kyiv", "K18", false);
         orderService.addNewCustomer("Katya", "Kyiv", "K18a", true);
@@ -32,6 +34,9 @@ public class SpringJpaAppRunner {
 
         orderService.confirmOrderById(13L);
         orderService.payOrderById(13L);
+
+        CustomerService customerService = appContext.getBean(CustomerService.class, "customerService");
+        System.out.println(customerService.findCustomerByName("Vasya"));
 
         repoContext.close();
         appContext.close();

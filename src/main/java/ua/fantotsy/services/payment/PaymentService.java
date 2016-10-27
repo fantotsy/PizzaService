@@ -4,5 +4,5 @@ import ua.fantotsy.domain.Payment;
 
 public interface PaymentService {
 
-    Payment getPaymentById(Long id);
+    Payment findPaymentById(Long id);
 }

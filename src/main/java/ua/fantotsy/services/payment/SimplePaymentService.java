@@ -16,7 +16,7 @@ public class SimplePaymentService implements PaymentService {
 
     /*Public Methods*/
     @Override
-    public Payment getPaymentById(Long id) {
+    public Payment findPaymentById(Long id) {
         return paymentRepository.findById(id);
     }
 }

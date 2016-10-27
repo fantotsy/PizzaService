@@ -6,5 +6,7 @@ public interface CustomerRepository {
 
     Customer findById(Long id);
 
+    Customer findCustomerByName(String name);
+
     Customer save(Customer customer);
 }

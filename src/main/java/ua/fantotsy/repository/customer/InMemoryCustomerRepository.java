@@ -6,7 +6,7 @@ import ua.fantotsy.domain.Customer;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Repository()
 public class InMemoryCustomerRepository implements CustomerRepository {
     /*Fields*/
     private final List<Customer> customers;
@@ -27,6 +27,11 @@ public class InMemoryCustomerRepository implements CustomerRepository {
             }
         }
         throw new RuntimeException();
+    }
+
+    @Override
+    public Customer findCustomerByName(String name) {
+        return null;
     }
 
     @Override

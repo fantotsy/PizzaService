@@ -26,8 +26,13 @@ public class SimpleCustomerService implements CustomerService {
 
     /*Public Methods*/
     @Override
-    public Customer getCustomerById(Long id) {
+    public Customer findCustomerById(Long id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public Customer findCustomerByName(String name) {
+        return customerRepository.findCustomerByName(name);
     }
 
     @Override
