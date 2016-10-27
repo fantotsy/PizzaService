@@ -18,7 +18,6 @@ public class JpaCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    @Transactional
     public Customer save(Customer customer) {
         return entityManager.merge(customer);
     }

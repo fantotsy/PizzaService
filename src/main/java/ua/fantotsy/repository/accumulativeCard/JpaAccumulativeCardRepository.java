@@ -18,7 +18,6 @@ public class JpaAccumulativeCardRepository implements AccumulativeCardRepository
     }
 
     @Override
-    @Transactional
     public AccumulativeCard save(AccumulativeCard accumulativeCard) {
         return entityManager.merge(accumulativeCard);
     }

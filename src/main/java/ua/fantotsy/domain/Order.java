@@ -19,20 +19,24 @@ public class Order {
     @MapKeyJoinColumn(name = "pizza_id")
     @Column(name = "quantity", nullable = false)
     private Map<Pizza, Integer> pizzas;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-    @Embedded
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "address_id")
+    private Address address;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "payment_id")
     private Payment payment;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    private Status status;
+    private OrderStatus status;
     @Transient
     private Set<Discount> activeDiscounts;
 
     /*Constructors*/
     public Order() {
-        status = Status.NEW;
+        status = OrderStatus.NEW;
         pizzas = new HashMap<>();
         payment = new Payment();
         activeDiscounts = new HashSet<>();
@@ -52,55 +56,55 @@ public class Order {
     }
 
     /*Internal Objects*/
-    private enum Status {
+    private enum OrderStatus {
         NEW {
             @Override
-            public Status nextStatus() {
+            public OrderStatus nextStatus() {
                 return IN_PROGRESS;
             }
 
             @Override
-            public Status previousStatus() {
+            public OrderStatus previousStatus() {
                 throw new RuntimeException("Previous status for NEW does not exist.");
             }
         },
         IN_PROGRESS {
             @Override
-            public Status nextStatus() {
+            public OrderStatus nextStatus() {
                 return DONE;
             }
 
             @Override
-            public Status previousStatus() {
+            public OrderStatus previousStatus() {
                 return CANCELED;
             }
         },
         CANCELED {
             @Override
-            public Status nextStatus() {
+            public OrderStatus nextStatus() {
                 throw new RuntimeException("Next status for CANCELED does not exist.");
             }
 
             @Override
-            public Status previousStatus() {
+            public OrderStatus previousStatus() {
                 throw new RuntimeException("Previous status for CANCELED does not exist.");
             }
         },
         DONE {
             @Override
-            public Status nextStatus() {
+            public OrderStatus nextStatus() {
                 throw new RuntimeException("Next status for DONE does not exist.");
             }
 
             @Override
-            public Status previousStatus() {
+            public OrderStatus previousStatus() {
                 throw new RuntimeException("Previous status for DONE does not exist.");
             }
         };
 
-        public abstract Status nextStatus();
+        public abstract OrderStatus nextStatus();
 
-        public abstract Status previousStatus();
+        public abstract OrderStatus previousStatus();
     }
 
     /*Public Methods*/
@@ -229,6 +233,14 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public double getInitialPrice() {

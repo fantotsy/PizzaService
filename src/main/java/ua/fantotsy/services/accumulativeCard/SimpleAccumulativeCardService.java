@@ -1,6 +1,7 @@
 package ua.fantotsy.services.accumulativeCard;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.repository.accumulativeCard.AccumulativeCardRepository;
 
@@ -16,11 +17,12 @@ public class SimpleAccumulativeCardService implements AccumulativeCardService {
 
     /*Public Methods*/
     @Override
-    public AccumulativeCard getAccumulativeCardById(long id) {
+    public AccumulativeCard getAccumulativeCardById(Long id) {
         return accumulativeCardRepository.findById(id);
     }
 
     @Override
+    @Transactional
     public AccumulativeCard addAndReturnNewAccumulativeCard() {
         AccumulativeCard accumulativeCard = createNewAccumulativeCard();
         accumulativeCardRepository.save(accumulativeCard);

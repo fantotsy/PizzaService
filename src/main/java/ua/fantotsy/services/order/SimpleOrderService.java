@@ -27,12 +27,12 @@ public class SimpleOrderService implements OrderService {
     /*Public Methods*/
     @Override
     @Benchmark(value = true)
-    public Order placeNewOrder(Customer customer, Integer... pizzasId) {
+    public Order addNewOrder(Customer customer, Long... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
             throw new RuntimeException("Not allowed amount of pizzas!");
         } else {
             List<Pizza> pizzas = new ArrayList<>();
-            for (int id : pizzasId) {
+            for (Long id : pizzasId) {
                 pizzas.add(getPizzaById(id));
             }
             Order newOrder = createNewOrder();
@@ -45,24 +45,24 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public void addPizzaInOrderById(long orderId, long pizzaId) {
+    public void addPizzaInOrderById(Long orderId, Long pizzaId) {
         Pizza pizza = getPizzaById(pizzaId);
         orderRepository.addPizzaByOrderId(orderId, pizza);
     }
 
     @Override
-    public void removePizzaFromOrderById(long orderId, long pizzaId) {
+    public void removePizzaFromOrderById(Long orderId, Long pizzaId) {
         Pizza pizza = getPizzaById(pizzaId);
         orderRepository.removePizzaByOrderId(orderId, pizza);
     }
 
     @Override
-    public Pizza getPizzaById(long id) {
+    public Pizza getPizzaById(Long id) {
         return pizzaService.getPizzaById(id);
     }
 
     @Override
-    public Customer getCustomerById(long id) {
+    public Customer getCustomerById(Long id) {
         return customerService.getCustomerById(id);
     }
 
@@ -72,32 +72,32 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public int getNumberOfOrders() {
+    public Integer getNumberOfOrders() {
         return orderRepository.getNumberOfOrders();
     }
 
     @Override
-    public void addNewPizza(String name, double price, Pizza.PizzaTypes type) {
+    public void addNewPizza(String name, Double price, Pizza.PizzaType type) {
         pizzaService.addNewPizza(name, price, type);
     }
 
     @Override
-    public void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard) {
+    public void addNewCustomer(String name, String city, String street, Boolean hasAccumulativeCard) {
         customerService.addNewCustomer(name, city, street, hasAccumulativeCard);
     }
 
     @Override
-    public void payOrderById(long id) {
+    public void payOrderById(Long id) {
         orderRepository.payById(id);
     }
 
     @Override
-    public void cancelOrderById(long id) {
+    public void cancelOrderById(Long id) {
         orderRepository.cancelById(id);
     }
 
     @Override
-    public double getTotalOrderPriceById(long id) {
+    public Double getTotalOrderPriceById(Long id) {
         return orderRepository.findById(id).getTotalPrice();
     }
 
@@ -106,7 +106,7 @@ public class SimpleOrderService implements OrderService {
         throw new IllegalStateException();
     }
 
-    private boolean isAllowedAmountOfPizzas(Integer... pizzasId) {
+    private boolean isAllowedAmountOfPizzas(Long... pizzasId) {
         return ((pizzasId.length >= 1) && (pizzasId.length <= 10));
     }
 }

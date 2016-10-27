@@ -18,7 +18,7 @@ public class SpringJpaAppRunner {
         System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
 
         PizzaRepository pizzaRepository = (PizzaRepository) appContext.getBean("pizzaRepository");
-        Pizza pizza = new Pizza("Sea", 200.0, Pizza.PizzaTypes.SEA);
+        Pizza pizza = new Pizza("Sea", 200.0, Pizza.PizzaType.SEA);
 
         pizza = pizzaRepository.save(pizza);
         System.out.println(pizza);

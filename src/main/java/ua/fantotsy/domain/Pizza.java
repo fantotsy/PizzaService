@@ -22,22 +22,30 @@ public class Pizza implements Serializable {
     private Double price;
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
-    private PizzaTypes type;
+    private PizzaType type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private PizzaStatus status;
 
     /*Constructors*/
     protected Pizza() {
-
+        status = PizzaStatus.AVAILABLE;
     }
 
-    public Pizza(String name, double price, PizzaTypes type) {
+    public Pizza(String name, double price, PizzaType type) {
+        this();
         this.name = name;
         this.price = price;
         this.type = type;
     }
 
     /*Internal Objects*/
-    public enum PizzaTypes {
+    public enum PizzaType {
         VEGETARIAN, SEA, MEAT;
+    }
+
+    public enum PizzaStatus {
+        AVAILABLE, NOT_AVAILABLE, CANCELED;
     }
 
     /*Getters & Setters*/
@@ -65,12 +73,20 @@ public class Pizza implements Serializable {
         this.price = price;
     }
 
-    public PizzaTypes getType() {
+    public PizzaType getType() {
         return type;
     }
 
-    public void setType(PizzaTypes type) {
+    public void setType(PizzaType type) {
         this.type = type;
+    }
+
+    public PizzaStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PizzaStatus status) {
+        this.status = status;
     }
 
     @Override

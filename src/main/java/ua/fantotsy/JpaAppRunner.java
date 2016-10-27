@@ -4,8 +4,6 @@ import ua.fantotsy.domain.*;
 import ua.fantotsy.domain.discounts.AccumulativeCardDiscount;
 import ua.fantotsy.domain.discounts.Discount;
 import ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount;
-import ua.fantotsy.services.order.OrderService;
-import ua.fantotsy.services.order.SimpleOrderService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,9 +19,9 @@ public class JpaAppRunner {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Pizza pizza1 = new Pizza("Diabola", 200.0, Pizza.PizzaTypes.MEAT);
-        Pizza pizza2 = new Pizza("Neapolitana", 300.0, Pizza.PizzaTypes.VEGETARIAN);
-        Pizza pizza3 = new Pizza("Hawaii", 400.0, Pizza.PizzaTypes.SEA);
+        Pizza pizza1 = new Pizza("Diabola", 200.0, Pizza.PizzaType.MEAT);
+        Pizza pizza2 = new Pizza("Neapolitana", 300.0, Pizza.PizzaType.VEGETARIAN);
+        Pizza pizza3 = new Pizza("Hawaii", 400.0, Pizza.PizzaType.SEA);
 
         Map<Pizza, Integer> pizzas1 = new HashMap<Pizza, Integer>() {{
             put(pizza1, 2);

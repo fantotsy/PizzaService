@@ -37,6 +37,8 @@
         <lookup-method name="createNewOrder" bean="order"/>
     </bean>
 
+    <bean name="paymentService" class="ua.fantotsy.services.payment.SimplePaymentService"/>
+
     <bean name="order" class="ua.fantotsy.domain.Order" scope="prototype">
         <constructor-arg>
             <set>

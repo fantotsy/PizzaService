@@ -1,5 +1,7 @@
 package ua.fantotsy.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
@@ -7,13 +9,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Embeddable
+@Entity
 @Table(name = "payments")
-class Payment {
+@Component
+@Scope(scopeName = "prototype")
+public class Payment {
     /*Fields*/
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
     @Column(name = "initial_price")
     private Double initialPrice;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "discount_name")
     private Discount appliedDiscount;
     @Column(name = "discount")
@@ -22,6 +30,8 @@ class Payment {
     private Double totalPrice;
     @Column(name = "date_time")
     private LocalDateTime dateTime;
+    @OneToOne(mappedBy = "payment", fetch = FetchType.LAZY)
+    private Order order;
 
     /*Constructors*/
     public Payment() {
@@ -37,6 +47,14 @@ class Payment {
     }
 
     /*Getters & Setters*/
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     Double getInitialPrice() {
         return initialPrice;
@@ -76,6 +94,14 @@ class Payment {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override

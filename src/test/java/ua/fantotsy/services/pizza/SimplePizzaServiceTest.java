@@ -25,13 +25,13 @@ public class SimplePizzaServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testAddNewPizzaNotAllowedPrice() {
-        pizzaService.addNewPizza("Name", 0.0, Pizza.PizzaTypes.MEAT);
+        pizzaService.addNewPizza("Name", 0.0, Pizza.PizzaType.MEAT);
     }
 
     @Test
     public void testAddNewPizzaAddsPizza() {
         doReturn(pizzaMock).when(pizzaService).createNewPizza();
-        pizzaService.addNewPizza("Name", 100.0, Pizza.PizzaTypes.SEA);
+        pizzaService.addNewPizza("Name", 100.0, Pizza.PizzaType.SEA);
         verify(pizzaRepositoryMock).save(pizzaMock);
     }
 }

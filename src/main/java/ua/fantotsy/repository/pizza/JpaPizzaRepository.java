@@ -18,7 +18,6 @@ public class JpaPizzaRepository implements PizzaRepository {
     }
 
     @Override
-    @Transactional
     public Pizza save(Pizza pizza) {
         return entityManager.merge(pizza);
     }

@@ -34,25 +34,25 @@ public class SimpleOrderServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testPlaceNewOrderTooMuchPizzas() {
-        orderService.placeNewOrder(customerMock, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        orderService.addNewOrder(customerMock, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L);
     }
 
     @Test(expected = RuntimeException.class)
     public void testPlaceNewOrderNotEnoughPizzas() {
-        orderService.placeNewOrder(customerMock);
+        orderService.addNewOrder(customerMock);
     }
 
     @Test
     public void testPlaceNewOrderSearchesForPizza() {
         doReturn(orderMock).when(orderService).createNewOrder();
-        orderService.placeNewOrder(customerMock, 1, 1, 1);
+        orderService.addNewOrder(customerMock, 1L, 1L, 1L);
         verify(pizzaServiceMock, times(3)).getPizzaById(1);
     }
 
     @Test
     public void testPlaceNewOrderSavesOrder() {
         doReturn(orderMock).when(orderService).createNewOrder();
-        orderService.placeNewOrder(customerMock, 1, 1, 1);
+        orderService.addNewOrder(customerMock, 1L, 1L, 1L);
         verify(orderRepositoryMock).save(orderMock);
     }
 }

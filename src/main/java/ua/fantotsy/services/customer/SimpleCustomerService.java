@@ -1,6 +1,7 @@
 package ua.fantotsy.services.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
@@ -25,11 +26,12 @@ public class SimpleCustomerService implements CustomerService {
 
     /*Public Methods*/
     @Override
-    public Customer getCustomerById(long id) {
+    public Customer getCustomerById(Long id) {
         return customerRepository.findById(id);
     }
 
     @Override
+    @Transactional
     public void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard) {
         Customer newCustomer = createNewCustomer();
         newCustomer.setName(name);

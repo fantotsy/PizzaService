@@ -1,6 +1,7 @@
 package ua.fantotsy.services.pizza;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.repository.pizza.PizzaRepository;
@@ -23,7 +24,8 @@ public class SimplePizzaService implements PizzaService {
 
     @Override
     @Benchmark(value = true)
-    public void addNewPizza(String name, double price, Pizza.PizzaTypes type) {
+    @Transactional
+    public void addNewPizza(String name, double price, Pizza.PizzaType type) {
         if (price <= 0.0) {
             throw new RuntimeException("Price is not available!");
         }

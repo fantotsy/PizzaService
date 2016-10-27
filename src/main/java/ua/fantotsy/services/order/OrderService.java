@@ -1,38 +1,32 @@
 package ua.fantotsy.services.order;
 
-import ua.fantotsy.domain.Address;
 import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
-import ua.fantotsy.domain.discounts.Discount;
-import ua.fantotsy.repository.order.OrderRepository;
-import ua.fantotsy.services.pizza.PizzaService;
-
-import java.util.Set;
 
 public interface OrderService {
 
-    Order placeNewOrder(Customer customer, Integer... pizzasId);
+    Order addNewOrder(Customer customer, Long... pizzasId);
 
-    void addPizzaInOrderById(long orderId, long pizzaId);
+    void addPizzaInOrderById(Long orderId, Long pizzaId);
 
-    void removePizzaFromOrderById(long orderId, long pizzaId);
+    void removePizzaFromOrderById(Long orderId, Long pizzaId);
 
-    Pizza getPizzaById(long id);
+    Pizza getPizzaById(Long id);
 
-    Customer getCustomerById(long id);
+    Customer getCustomerById(Long id);
 
     void saveOrder(Order newOrder);
 
-    int getNumberOfOrders();
+    Integer getNumberOfOrders();
 
-    void addNewPizza(String name, double price, Pizza.PizzaTypes type);
+    void addNewPizza(String name, Double price, Pizza.PizzaType type);
 
-    void addNewCustomer(String name, String city, String street, boolean hasAccumulativeCard);
+    void addNewCustomer(String name, String city, String street, Boolean hasAccumulativeCard);
 
-    void payOrderById(long id);
+    void payOrderById(Long id);
 
-    void cancelOrderById(long id);
+    void cancelOrderById(Long id);
 
-    double getTotalOrderPriceById(long id);
+    Double getTotalOrderPriceById(Long id);
 }

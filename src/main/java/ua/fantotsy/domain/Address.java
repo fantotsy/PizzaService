@@ -23,6 +23,8 @@ public class Address implements Serializable {
     private String street;
     @OneToMany(mappedBy = "address")
     private List<Customer> customers;
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     /*Constructors*/
     public Address() {
@@ -65,6 +67,14 @@ public class Address implements Serializable {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

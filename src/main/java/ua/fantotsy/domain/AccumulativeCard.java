@@ -20,7 +20,7 @@ public class AccumulativeCard implements Serializable {
     private String number;
     @Column(name = "balance", nullable = false)
     private Double balance;
-    @OneToOne(mappedBy = "accumulativeCard")
+    @OneToOne(mappedBy = "accumulativeCard", fetch = FetchType.LAZY)
     private Customer customer;
 
     /*Constructors*/

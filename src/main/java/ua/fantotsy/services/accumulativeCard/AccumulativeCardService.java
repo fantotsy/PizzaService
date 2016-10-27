@@ -4,7 +4,7 @@ import ua.fantotsy.domain.AccumulativeCard;
 
 public interface AccumulativeCardService {
 
-    AccumulativeCard getAccumulativeCardById(long id);
+    AccumulativeCard getAccumulativeCardById(Long id);
 
     AccumulativeCard addAndReturnNewAccumulativeCard();
 }

@@ -19,7 +19,7 @@ public class JpaPizzaRepositoryIT extends RepositoryTestConfig {
 
     @Test
     public void testSavePizza() {
-        Pizza pizza = new Pizza("Sea", 200.0, Pizza.PizzaTypes.SEA);
+        Pizza pizza = new Pizza("Sea", 200.0, Pizza.PizzaType.SEA);
         pizza = pizzaRepository.save(pizza);
         assertNotNull(pizza.getId());
     }

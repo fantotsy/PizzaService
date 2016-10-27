@@ -18,7 +18,6 @@ public class JpaAddressRepository implements AddressRepository {
     }
 
     @Override
-    @Transactional
     public Address save(Address address) {
         return entityManager.merge(address);
     }

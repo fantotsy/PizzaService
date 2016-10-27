@@ -1,6 +1,7 @@
 package ua.fantotsy.services.address;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.Address;
 import ua.fantotsy.repository.address.AddressRepository;
 
@@ -16,11 +17,12 @@ public class SimpleAddressService implements AddressService {
 
     /*Public Methods*/
     @Override
-    public Address getAddressById(long id) {
+    public Address getAddressById(Long id) {
         return addressRepository.findById(id);
     }
 
     @Override
+    @Transactional
     public Address addAndReturnNewAddress(String city, String street) {
         Address address = createNewAddress();
         address.setCity(city);
