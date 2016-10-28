@@ -38,4 +38,8 @@ public class DiscountManager {
         }
         return result;
     }
+
+    public static void setActiveDiscounts(Set<Discount> activeDiscounts) {
+        DiscountManager.activeDiscounts = activeDiscounts;
+    }
 }

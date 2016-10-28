@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.fantotsy.domain.discounts.AccumulativeCardDiscount;
 import ua.fantotsy.domain.discounts.Discount;
+import ua.fantotsy.domain.discounts.DiscountManager;
 import ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount;
 
 import java.util.ArrayList;
@@ -24,23 +25,11 @@ public class OrderTest {
 
     @Before
     public void setUp() {
-        Set<Discount> discounts = new HashSet<Discount>() {{
-            add(new AccumulativeCardDiscount());
-            add(new TheMostExpensivePizzaDiscount());
-        }};
         order = new Order();
 
-        pizza1 = new Pizza();
-        pizza1.setId(1L);
-        pizza1.setPrice(100.0);
-
-        pizza2 = new Pizza();
-        pizza2.setId(2L);
-        pizza2.setPrice(200.0);
-
-        pizza3 = new Pizza();
-        pizza3.setId(3L);
-        pizza3.setPrice(300.0);
+        pizza1 = new Pizza("Name1", 100.0, Pizza.PizzaType.VEGETARIAN);
+        pizza2 = new Pizza("Name2", 200.0, Pizza.PizzaType.SEA);
+        pizza3 = new Pizza("Name3", 300.0, Pizza.PizzaType.MEAT);
 
         for (int i = 0; i < 2; i++) {
             order.addPizza(pizza1);
@@ -67,63 +56,9 @@ public class OrderTest {
     }
 
     @Test
-    public void testCountTotalPriceCountsInitialPrice() {
-        order.countTotalPrice();
+    public void testConfirmCountsInitialPrice() {
+        order.confirm();
         org.junit.Assert.assertEquals(1200.0, order.getInitialPrice(), eps);
     }
 
-    @Test
-    public void testDiscountMoreThanFourPizzas() {
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
-    }
-
-    @Test
-    public void testDiscountLessThanFourPizzas() {
-        order.removePizza(pizza1);
-        order.removePizza(pizza2);
-        order.removePizza(pizza3);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(0.0, order.getDiscount(), eps);
-    }
-
-    @Test
-    public void testDiscountMoreThanFourPizzasWithCard() {
-        customer.getAccumulativeCard().setBalance(100.0);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
-        customer.getAccumulativeCard().setBalance(4000.0);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(360.0, order.getDiscount(), eps);
-        customer.getAccumulativeCard().setBalance(3000.0);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(300.0, order.getDiscount(), eps);
-    }
-
-    @Test
-    public void testDiscountLessThanFourPizzasWithCard() {
-        order.removePizza(pizza1);
-        order.removePizza(pizza2);
-        order.removePizza(pizza3);
-        customer.getAccumulativeCard().setBalance(100.0);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(10.0, order.getDiscount(), eps);
-    }
-
-    @Test
-    public void testDiscountMoreThanFourPizzasWithoutCard() {
-        customer.setAccumulativeCard(null);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
-    }
-
-    @Test
-    public void testDiscountLessThanFourPizzasWithoutCard() {
-        order.removePizza(pizza1);
-        order.removePizza(pizza2);
-        order.removePizza(pizza3);
-        customer.setAccumulativeCard(null);
-        order.countTotalPrice();
-        org.junit.Assert.assertEquals(0.0, order.getDiscount(), eps);
-    }
 }

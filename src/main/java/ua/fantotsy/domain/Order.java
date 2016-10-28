@@ -54,7 +54,7 @@ public class Order {
     }
 
     /*Internal Objects*/
-    private enum OrderStatus {
+    public enum OrderStatus {
         NEW {
             @Override
             public OrderStatus nextStatus() {
@@ -252,7 +252,7 @@ public class Order {
         return payment.getTotalPrice();
     }
 
-    private void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         payment.setTotalPrice(totalPrice);
     }
 
@@ -260,8 +260,16 @@ public class Order {
         return payment.getDateTime();
     }
 
-    private void setLocalDateTime(LocalDateTime dateTime) {
+    public void setLocalDateTime(LocalDateTime dateTime) {
         payment.setDateTime(dateTime);
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     @Override
