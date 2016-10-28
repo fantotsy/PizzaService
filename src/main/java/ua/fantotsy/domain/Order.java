@@ -1,6 +1,5 @@
 package ua.fantotsy.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
@@ -15,7 +14,8 @@ import java.util.*;
 @Component
 @Scope(scopeName = "prototype")
 @NamedQueries({
-        @NamedQuery(name = "Order.findOrdersByCustomerName", query = "SELECT o FROM Order o"),
+        @NamedQuery(name = "Order.findOrdersByCustomerName",
+                query = "SELECT o FROM Order o WHERE o.customer.name = :customerName")
 })
 public class Order {
     /*Fields*/
@@ -40,22 +40,12 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private OrderStatus status;
-//    @Transient
-//    private Set<Discount> activeDiscounts;
 
     /*Constructors*/
     public Order() {
         status = OrderStatus.NEW;
         pizzas = new HashMap<>();
-        payment = new Payment();
     }
-
-//    @Autowired
-//    public Order(Set<Discount> discounts) {
-//        this();
-//        removeInactiveDiscounts(discounts);
-//        activeDiscounts = discounts;
-//    }
 
     public Order(Map<Pizza, Integer> pizzas, Customer customer) {
         this();
@@ -73,7 +63,7 @@ public class Order {
 
             @Override
             public OrderStatus previousStatus() {
-                throw new RuntimeException("Previous status for NEW does not exist.");
+                return CANCELED;
             }
         },
         IN_PROGRESS {
@@ -171,6 +161,7 @@ public class Order {
     }
 
     public void confirm() {
+        payment = new Payment();
         countTotalPrice();
         status = status.nextStatus();
     }
@@ -199,14 +190,6 @@ public class Order {
     private void countDiscount() {
         DiscountManager.countDiscount(this);
     }
-
-//    private void removeInactiveDiscounts(Set<Discount> discounts) {
-//        for (Discount discount : discounts) {
-//            if (discount.getState().equals(Discount.DiscountState.INACTIVE)) {
-//                discounts.remove(discount);
-//            }
-//        }
-//    }
 
     /*Getters & Setters*/
     public Long getId() {

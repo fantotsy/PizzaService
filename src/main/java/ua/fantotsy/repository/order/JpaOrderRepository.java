@@ -22,7 +22,7 @@ public class JpaOrderRepository implements OrderRepository {
     @Override
     public List<Order> findOrdersByCustomerName(String customerName) {
         return entityManager.createNamedQuery("Order.findOrdersByCustomerName", Order.class)
-                .getResultList();
+                .setParameter("customerName", customerName).getResultList();
     }
 
     @Override

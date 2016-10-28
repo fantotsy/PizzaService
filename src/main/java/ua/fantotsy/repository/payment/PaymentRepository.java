@@ -5,5 +5,6 @@ import ua.fantotsy.domain.Payment;
 
 @Repository("paymentRepository")
 public interface PaymentRepository {
+
     Payment findById(Long id);
 }

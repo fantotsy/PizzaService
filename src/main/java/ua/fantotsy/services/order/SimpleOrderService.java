@@ -35,7 +35,7 @@ public class SimpleOrderService implements OrderService {
         } else {
             List<Pizza> pizzas = new ArrayList<>();
             for (Long id : pizzasId) {
-                pizzas.add(findPizzaById(id));
+                pizzas.add(pizzaService.findPizzaById(id));
             }
             Customer customer = customerService.findCustomerById(customerId);
             Order newOrder = createNewOrder();
@@ -82,41 +82,20 @@ public class SimpleOrderService implements OrderService {
     @Override
     @Transactional
     public Order addPizzaByOrderId(Long orderId, Long pizzaId) {
-        Pizza pizza = findPizzaById(pizzaId);
+        Pizza pizza = pizzaService.findPizzaById(pizzaId);
         return orderRepository.addPizzaByOrderId(orderId, pizza);
     }
 
     @Override
     @Transactional
     public Order removePizzaByOrderId(Long orderId, Long pizzaId) {
-        Pizza pizza = findPizzaById(pizzaId);
+        Pizza pizza = pizzaService.findPizzaById(pizzaId);
         return orderRepository.removePizzaByOrderId(orderId, pizza);
-    }
-
-    @Override
-    public Pizza findPizzaById(Long id) {
-        return pizzaService.findPizzaById(id);
-    }
-
-    @Override
-    public Customer findCustomerById(Long id) {
-        return customerService.findCustomerById(id);
     }
 
     @Override
     public Integer getAmountOfOrders() {
         return orderRepository.getNumberOfOrders();
-    }
-
-    @Override
-
-    public void addNewPizza(String name, Double price, Pizza.PizzaType type) {
-        pizzaService.addNewPizza(name, price, type);
-    }
-
-    @Override
-    public void addNewCustomer(String name, String city, String street, Boolean hasAccumulativeCard) {
-        customerService.addNewCustomer(name, city, street, hasAccumulativeCard);
     }
 
     /*Private & Protected Methods*/

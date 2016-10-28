@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "payments")

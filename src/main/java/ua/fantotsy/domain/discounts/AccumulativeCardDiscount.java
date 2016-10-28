@@ -1,7 +1,6 @@
 package ua.fantotsy.domain.discounts;
 
 import org.springframework.stereotype.Component;
-import ua.fantotsy.domain.Customer;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.infrastructure.utils.Utils;
 

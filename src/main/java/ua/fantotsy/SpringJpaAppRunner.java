@@ -2,11 +2,10 @@ package ua.fantotsy;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.domain.Pizza;
-import ua.fantotsy.services.accumulativeCard.AccumulativeCardService;
 import ua.fantotsy.services.customer.CustomerService;
 import ua.fantotsy.services.order.OrderService;
+import ua.fantotsy.services.pizza.PizzaService;
 
 import java.util.Arrays;
 
@@ -22,27 +21,28 @@ public class SpringJpaAppRunner {
 
 
         OrderService orderService = appContext.getBean(OrderService.class, "orderService");
+        PizzaService pizzaService = appContext.getBean(PizzaService.class, "pizzaService");
+        CustomerService customerService = appContext.getBean(CustomerService.class, "customerService");
 
 
+        customerService.addNewCustomer("Vasya", "Kyiv", "K18", true);
+        customerService.addNewCustomer("Petya", "Kyiv", "K18", false);
+        customerService.addNewCustomer("Katya", "Kyiv", "K18a", true);
 
-        orderService.addNewCustomer("Vasya", "Kyiv", "K18", true);
-        orderService.addNewCustomer("Petya", "Kyiv", "K18", false);
-        orderService.addNewCustomer("Katya", "Kyiv", "K18a", true);
-
-        orderService.addNewPizza("Diabola", 100.5, Pizza.PizzaType.MEAT);
-        orderService.addNewPizza("Hawaii", 100.0, Pizza.PizzaType.SEA);
-        orderService.addNewPizza("Neapolitana", 90.0, Pizza.PizzaType.VEGETARIAN);
+        pizzaService.addNewPizza("Diabola", 100.5, Pizza.PizzaType.MEAT);
+        pizzaService.addNewPizza("Hawaii", 100.0, Pizza.PizzaType.SEA);
+        pizzaService.addNewPizza("Neapolitana", 90.0, Pizza.PizzaType.VEGETARIAN);
 
         orderService.addNewOrderByCustomerIdAndPizzaIds(3L, 9L, 10L, 10L, 11L);
         orderService.addNewOrderByCustomerIdAndPizzaIds(3L, 9L, 11L);
         orderService.addNewOrderByCustomerIdAndPizzaIds(8L, 10L);
 
+        orderService.confirmOrderById(12L);
+        orderService.payOrderById(12L);
         orderService.confirmOrderById(13L);
         orderService.payOrderById(13L);
-        orderService.confirmOrderById(15L);
-        orderService.payOrderById(15L);
+        orderService.cancelOrderById(14L);
 
-        CustomerService customerService = appContext.getBean(CustomerService.class, "customerService");
         System.out.println(customerService.findCustomerByName("Vasya"));
 
         System.out.println(orderService.findOrdersByCustomerName("Vasya"));

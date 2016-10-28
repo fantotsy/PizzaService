@@ -1,7 +1,6 @@
 package ua.fantotsy.repository.pizza;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.Pizza;
 
 import javax.persistence.EntityManager;
