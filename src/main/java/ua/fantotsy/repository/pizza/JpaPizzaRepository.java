@@ -17,6 +17,12 @@ public class JpaPizzaRepository implements PizzaRepository {
     }
 
     @Override
+    public Pizza findByName(String name) {
+        return entityManager.createNamedQuery("Pizza.findByName", Pizza.class)
+                .setParameter("name", name).getSingleResult();
+    }
+
+    @Override
     public Pizza save(Pizza pizza) {
         return entityManager.merge(pizza);
     }

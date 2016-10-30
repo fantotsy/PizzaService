@@ -36,6 +36,18 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     @Override
+    public Pizza findByName(String name) {
+        if (pizzas.size() > 0) {
+            for (Pizza pizza : pizzas) {
+                if (pizza.getName().equals(name)) {
+                    return pizza;
+                }
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    @Override
     public Pizza save(Pizza pizza) {
         pizza.setId(getNextId());
         pizzas.add(pizza);

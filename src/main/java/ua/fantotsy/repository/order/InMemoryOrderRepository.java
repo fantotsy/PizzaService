@@ -35,7 +35,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Integer getAmountOfPizzasByOrderId(Long orderId) {
+    public long getAmountOfPizzasByOrderId(Long orderId) {
         Order order = findById(orderId);
         return order.getAmountOfPizzas();
     }
@@ -91,7 +91,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     @Override
-    public int getNumberOfOrders() {
+    public long getNumberOfOrders() {
         return orders.size();
     }
 

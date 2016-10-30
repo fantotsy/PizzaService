@@ -18,7 +18,7 @@ public class JpaCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Customer findCustomerByName(String name) {
+    public Customer findByName(String name) {
         return entityManager.createNamedQuery("Customer.findByName", Customer.class)
                 .setParameter("name", name).getSingleResult();
     }

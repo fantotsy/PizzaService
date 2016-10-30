@@ -18,8 +18,13 @@ public class SimplePizzaService implements PizzaService {
 
     /*Public Methods*/
     @Override
-    public Pizza findPizzaById(Long id) {
+    public Pizza findById(Long id) {
         return pizzaRepository.findById(id);
+    }
+
+    @Override
+    public Pizza findByName(String name) {
+        return pizzaRepository.findByName(name);
     }
 
     @Override

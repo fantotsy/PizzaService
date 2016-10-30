@@ -42,4 +42,8 @@ public class DiscountManager {
     public static void setActiveDiscounts(Set<Discount> activeDiscounts) {
         DiscountManager.activeDiscounts = activeDiscounts;
     }
+
+    public static Set<Discount> getActiveDiscounts() {
+        return activeDiscounts;
+    }
 }

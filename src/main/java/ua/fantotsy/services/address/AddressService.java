@@ -4,7 +4,7 @@ import ua.fantotsy.domain.Address;
 
 public interface AddressService {
 
-    Address findAddressById(Long id);
+    Address findById(Long id);
 
     Address addNewAddress(String city, String street);
 }

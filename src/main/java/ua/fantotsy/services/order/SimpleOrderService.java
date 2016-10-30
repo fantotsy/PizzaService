@@ -35,9 +35,9 @@ public class SimpleOrderService implements OrderService {
         } else {
             List<Pizza> pizzas = new ArrayList<>();
             for (Long id : pizzasId) {
-                pizzas.add(pizzaService.findPizzaById(id));
+                pizzas.add(pizzaService.findById(id));
             }
-            Customer customer = customerService.findCustomerById(customerId);
+            Customer customer = customerService.findById(customerId);
             Order newOrder = createNewOrder();
             newOrder.setCustomer(customer);
             newOrder.insertPizzas(pizzas);
@@ -52,7 +52,7 @@ public class SimpleOrderService implements OrderService {
     }
 
     @Override
-    public Integer getAmountOfPizzasByOrderId(Long orderId) {
+    public long getAmountOfPizzasByOrderId(Long orderId) {
         return orderRepository.getAmountOfPizzasByOrderId(orderId);
     }
 
@@ -82,19 +82,19 @@ public class SimpleOrderService implements OrderService {
     @Override
     @Transactional
     public Order addPizzaByOrderId(Long orderId, Long pizzaId) {
-        Pizza pizza = pizzaService.findPizzaById(pizzaId);
+        Pizza pizza = pizzaService.findById(pizzaId);
         return orderRepository.addPizzaByOrderId(orderId, pizza);
     }
 
     @Override
     @Transactional
     public Order removePizzaByOrderId(Long orderId, Long pizzaId) {
-        Pizza pizza = pizzaService.findPizzaById(pizzaId);
+        Pizza pizza = pizzaService.findById(pizzaId);
         return orderRepository.removePizzaByOrderId(orderId, pizza);
     }
 
     @Override
-    public Integer getAmountOfOrders() {
+    public long getAmountOfOrders() {
         return orderRepository.getNumberOfOrders();
     }
 

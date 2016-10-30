@@ -10,6 +10,9 @@ import java.io.Serializable;
 @Table(name = "pizzas")
 @Component
 @Scope(scopeName = "prototype")
+@NamedQueries({
+        @NamedQuery(name = "Pizza.findByName", query = "SELECT p FROM Pizza p WHERE p.name=:name"),
+})
 public class Pizza implements Serializable {
     /*Fields*/
     @Id

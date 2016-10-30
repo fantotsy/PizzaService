@@ -30,8 +30,15 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Customer findCustomerByName(String name) {
-        return null;
+    public Customer findByName(String name) {
+        if (customers.size() > 0) {
+            for (Customer customer : customers) {
+                if (customer.getName().equals(name)) {
+                    return customer;
+                }
+            }
+        }
+        throw new RuntimeException();
     }
 
     @Override

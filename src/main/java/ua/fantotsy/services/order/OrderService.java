@@ -15,7 +15,7 @@ public interface OrderService {
 
     Order removePizzaByOrderId(Long orderId, Long pizzaId);
 
-    Integer getAmountOfPizzasByOrderId(Long orderId);
+    long getAmountOfPizzasByOrderId(Long orderId);
 
     Pizza findPizzaByIdInOrderById(Long orderId, Long pizzaId);
 
@@ -25,5 +25,5 @@ public interface OrderService {
 
     Order payOrderById(Long id);
 
-    Integer getAmountOfOrders();
+    long getAmountOfOrders();
 }

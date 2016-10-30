@@ -11,7 +11,7 @@ public interface OrderRepository {
 
     List<Order> findOrdersByCustomerName(String customerName);
 
-    Integer getAmountOfPizzasByOrderId(Long orderId);
+    long getAmountOfPizzasByOrderId(Long orderId);
 
     Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId);
 
@@ -27,5 +27,5 @@ public interface OrderRepository {
 
     Order removePizzaByOrderId(Long orderId, Pizza pizza);
 
-    int getNumberOfOrders();
+    long getNumberOfOrders();
 }

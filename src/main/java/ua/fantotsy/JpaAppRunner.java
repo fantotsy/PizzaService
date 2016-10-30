@@ -45,9 +45,9 @@ public class JpaAppRunner {
         Customer customer2 = new Customer("Petya", address, new AccumulativeCard(23456L));
         Customer customer3 = new Customer("Fedya", address, new AccumulativeCard(12121L));
 
-        Order order1 = new Order(pizzas1, customer1);
-        Order order2 = new Order(pizzas2, customer2);
-        Order order3 = new Order(pizzas3, customer3);
+        Order order1 = new Order(pizzas1, customer1, address);
+        Order order2 = new Order(pizzas2, customer2, address);
+        Order order3 = new Order(pizzas3, customer3, address);
 
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -93,7 +93,7 @@ public class JpaAppRunner {
         order.pay();
     }
 
-    private static void removePizza(Order order, Pizza pizza){
+    private static void removePizza(Order order, Pizza pizza) {
         order.removePizza(pizza);
     }
 }

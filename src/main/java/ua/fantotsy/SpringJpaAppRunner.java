@@ -10,20 +10,15 @@ import ua.fantotsy.services.pizza.PizzaService;
 import java.util.Arrays;
 
 public class SpringJpaAppRunner {
+    private static ConfigurableApplicationContext repoContext;
+    private static ConfigurableApplicationContext appContext;
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
-        System.out.println(Arrays.toString(repoContext.getBeanDefinitionNames()));
-
-        ConfigurableApplicationContext appContext =
-                new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repoContext);
-        System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
-
+        initializeDB();
 
         OrderService orderService = appContext.getBean(OrderService.class, "orderService");
         PizzaService pizzaService = appContext.getBean(PizzaService.class, "pizzaService");
         CustomerService customerService = appContext.getBean(CustomerService.class, "customerService");
-
 
         customerService.addNewCustomer("Vasya", "Kyiv", "K18", true);
         customerService.addNewCustomer("Petya", "Kyiv", "K18", false);
@@ -43,11 +38,19 @@ public class SpringJpaAppRunner {
         orderService.payOrderById(13L);
         orderService.cancelOrderById(14L);
 
-        System.out.println(customerService.findCustomerByName("Vasya"));
+        System.out.println(customerService.findByName("Vasya"));
 
         System.out.println(orderService.findOrdersByCustomerName("Vasya"));
 
         repoContext.close();
         appContext.close();
+    }
+
+    public static void initializeDB(){
+        repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
+        System.out.println(Arrays.toString(repoContext.getBeanDefinitionNames()));
+
+        appContext = new ClassPathXmlApplicationContext(new String[]{"appContext.xml"}, repoContext);
+        System.out.println(Arrays.toString(appContext.getBeanDefinitionNames()));
     }
 }

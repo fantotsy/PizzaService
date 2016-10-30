@@ -6,5 +6,7 @@ public interface PizzaRepository {
 
     Pizza findById(Long id);
 
+    Pizza findByName(String name);
+
     Pizza save(Pizza pizza);
 }

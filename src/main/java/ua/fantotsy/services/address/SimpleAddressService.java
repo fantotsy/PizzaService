@@ -17,7 +17,7 @@ public class SimpleAddressService implements AddressService {
 
     /*Public Methods*/
     @Override
-    public Address findAddressById(Long id) {
+    public Address findById(Long id) {
         return addressRepository.findById(id);
     }
 

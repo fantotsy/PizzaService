@@ -15,7 +15,9 @@ import java.util.*;
 @Scope(scopeName = "prototype")
 @NamedQueries({
         @NamedQuery(name = "Order.findOrdersByCustomerName",
-                query = "SELECT o FROM Order o WHERE o.customer.name = :customerName")
+                query = "SELECT o FROM Order o WHERE o.customer.name = :customerName"),
+        @NamedQuery(name = "Order.getNumberOfOrders",
+                query = "SELECT COUNT(*) FROM Order")
 })
 public class Order {
     /*Fields*/
@@ -47,10 +49,11 @@ public class Order {
         pizzas = new HashMap<>();
     }
 
-    public Order(Map<Pizza, Integer> pizzas, Customer customer) {
+    public Order(Map<Pizza, Integer> pizzas, Customer customer, Address address) {
         this();
         this.pizzas = pizzas;
         this.customer = customer;
+        this.address = address;
     }
 
     /*Internal Objects*/
@@ -262,6 +265,14 @@ public class Order {
 
     public void setLocalDateTime(LocalDateTime dateTime) {
         payment.setDateTime(dateTime);
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public OrderStatus getStatus() {

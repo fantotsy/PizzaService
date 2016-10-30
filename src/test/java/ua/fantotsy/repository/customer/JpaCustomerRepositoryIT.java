@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
-
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -32,8 +31,6 @@ public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
         AccumulativeCard accumulativeCard1 = new AccumulativeCard(12345L);
         jdbcTemplate.update("INSERT INTO accumulative_cards (id, balance, number) VALUES (1, ?, ?)",
                 accumulativeCard1.getBalance(), accumulativeCard1.getNumber());
-
-        jdbcTemplate.update("INSERT INTO customers (id, name, address_id, accumulative_card_id) VALUES (1, 'Name1', 1, 1)");
     }
 
     @After
@@ -45,24 +42,16 @@ public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
 
     @Test
     public void testFindCustomerById() {
+        jdbcTemplate.update("INSERT INTO customers (id, name, address_id, accumulative_card_id) VALUES (1, 'Name1', 1, 1)");
         Customer customer = customerRepository.findById(1L);
         long id = customer.getId();
         assertEquals(1L, id);
     }
 
     @Test
-    public void testSaveCustomer() {
-        AccumulativeCard accumulativeCard2 = new AccumulativeCard(12346L);
-        jdbcTemplate.update("INSERT INTO accumulative_cards (id, balance, number) VALUES (2, ?, ?)",
-                accumulativeCard2.getBalance(), accumulativeCard2.getNumber());
-
-        Customer customer = new Customer("Name2", addressRepository.findById(1L), accumulativeCardRepository.findById(2L));
+    public void testSetIdAfterSave() {
+        Customer customer = new Customer("Name2", addressRepository.findById(1L), accumulativeCardRepository.findById(1L));
         customer = customerRepository.save(customer);
         assertNotNull(customer.getId());
-
-        String savedCustomer = jdbcTemplate.queryForObject("SELECT name FROM customers WHERE name = ?",
-                    new Object[]{customer.getName()}, String.class);
-        System.out.println(savedCustomer);
-        assertEquals(customer.getName(), savedCustomer);
     }
 }

@@ -27,12 +27,12 @@ public class SpringAppRunner {
         pizzaService.addNewPizza("Diabola", 300.0, Pizza.PizzaType.MEAT);
         customerService.addNewCustomer("Vasya", "Kyiv", "K18a", true);
 
-        Order order1 = orderService.addNewOrderByCustomerIdAndPizzaIds(1L, 1L, 1L, 1L, 1L, 1L);
+        long customer_id = customerService.findByName("Vasya").getId();
+        long pizza_id = pizzaService.findByName("Diabola").getId();
+        Order order1 = orderService.addNewOrderByCustomerIdAndPizzaIds(customer_id, pizza_id, pizza_id, pizza_id, pizza_id, pizza_id);
+        order1.confirm();
         order1.pay();
-        Order order2 = orderService.addNewOrderByCustomerIdAndPizzaIds(1L, 1L, 1L);
-        System.out.println("TOTAL: " + order1.getTotalPrice());
-        System.out.println("TOTAL: " + order2.getTotalPrice());
-
+        Order order2 = orderService.addNewOrderByCustomerIdAndPizzaIds(customer_id, pizza_id, pizza_id);
         System.out.println(order1);
         System.out.println(order2);
 

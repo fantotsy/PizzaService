@@ -26,7 +26,7 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    public Integer getAmountOfPizzasByOrderId(Long orderId) {
+    public long getAmountOfPizzasByOrderId(Long orderId) {
         Order order = findById(orderId);
         return order.getAmountOfPizzas();
     }
@@ -84,7 +84,7 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    public int getNumberOfOrders() {
-        return 0;
+    public long getNumberOfOrders() {
+        return entityManager.createNamedQuery("Order.getNumberOfOrders", Long.class).getSingleResult();
     }
 }
