@@ -77,7 +77,7 @@ public class Order {
 
             @Override
             public OrderStatus previousStatus() {
-                return CANCELED;
+                return NEW;
             }
         },
         CANCELED {
@@ -115,23 +115,37 @@ public class Order {
         }
     }
 
-    public void addPizza(Pizza pizza) {
-        int initialQuantity = 0;
-        if (pizzas.containsKey(pizza)) {
-            initialQuantity = pizzas.get(pizza);
+    public void removePizzas(List<Pizza> pizzas) {
+        for (Pizza pizza : pizzas) {
+            removePizza(pizza);
         }
-        pizzas.put(pizza, ++initialQuantity);
+    }
+
+    public void addPizza(Pizza pizza) {
+        if (isOrderManipulationEnabled()) {
+            throw new RuntimeException("Pizza cannot be inserted into 'IN_PROGRESS', 'DONE' or 'CANCELED' order.");
+        } else {
+            int initialQuantity = 0;
+            if (pizzas.containsKey(pizza)) {
+                initialQuantity = pizzas.get(pizza);
+            }
+            pizzas.put(pizza, ++initialQuantity);
+        }
     }
 
     public void removePizza(Pizza pizza) {
-        if (!pizzas.containsKey(pizza)) {
-            throw new RuntimeException("Such pizza does not exist in order");
+        if (isOrderManipulationEnabled()) {
+            throw new RuntimeException("Pizza cannot be removed from 'IN_PROGRESS', 'DONE' or 'CANCELED' order.");
         } else {
-            int initialQuantity = pizzas.get(pizza);
-            if (initialQuantity > 1) {
-                pizzas.put(pizza, --initialQuantity);
+            if (!pizzas.containsKey(pizza)) {
+                throw new RuntimeException("Such pizza does not exist in order");
             } else {
-                pizzas.remove(pizza);
+                int initialQuantity = pizzas.get(pizza);
+                if (initialQuantity > 1) {
+                    pizzas.put(pizza, --initialQuantity);
+                } else {
+                    pizzas.remove(pizza);
+                }
             }
         }
     }
@@ -153,27 +167,21 @@ public class Order {
         throw new RuntimeException("Pizza not found.");
     }
 
-    public void countTotalPrice() {
-        countInitialPrice();
-        countDiscount();
-        setTotalPrice(getInitialPrice() - getDiscount());
-    }
-
     public void cancel() {
         status = status.previousStatus();
     }
 
     public void confirm() {
+        status = status.nextStatus();
         payment = new Payment();
         countTotalPrice();
-        status = status.nextStatus();
     }
 
     public void pay() {
+        status = status.nextStatus();
         if (customer.hasAccumulativeCard()) {
             customer.increaseAccumulativeCardBalance(getTotalPrice());
         }
-        status = status.nextStatus();
         setLocalDateTime(LocalDateTime.now());
     }
 
@@ -192,6 +200,16 @@ public class Order {
 
     private void countDiscount() {
         DiscountManager.countDiscount(this);
+    }
+
+    private boolean isOrderManipulationEnabled() {
+        return !status.equals(OrderStatus.NEW);
+    }
+
+    private void countTotalPrice() {
+        countInitialPrice();
+        countDiscount();
+        setTotalPrice(getInitialPrice() - getDiscount());
     }
 
     /*Getters & Setters*/

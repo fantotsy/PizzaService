@@ -7,7 +7,9 @@ import ua.fantotsy.domain.discounts.Discount;
 import ua.fantotsy.domain.discounts.DiscountManager;
 import ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DiscountTest {
@@ -33,9 +35,11 @@ public class DiscountTest {
         pizza3 = new Pizza("Name3", 300.0, Pizza.PizzaType.MEAT);
 
         for (int i = 0; i < 2; i++) {
-            order.addPizza(pizza1);
-            order.addPizza(pizza2);
-            order.addPizza(pizza3);
+            order.insertPizzas(new ArrayList<Pizza>() {{
+                add(pizza1);
+                add(pizza2);
+                add(pizza3);
+            }});
         }
 
         customer = new Customer();
@@ -52,9 +56,11 @@ public class DiscountTest {
 
     @Test
     public void testDiscountLessThanFourPizzas() {
-        order.removePizza(pizza1);
-        order.removePizza(pizza2);
-        order.removePizza(pizza3);
+        order.removePizzas(new ArrayList<Pizza>() {{
+            add(pizza1);
+            add(pizza2);
+            add(pizza3);
+        }});
         order.confirm();
         org.junit.Assert.assertEquals(0.0, order.getDiscount(), eps);
     }
@@ -76,9 +82,11 @@ public class DiscountTest {
 
     @Test
     public void testDiscountLessThanFourPizzasWithCard() {
-        order.removePizza(pizza1);
-        order.removePizza(pizza2);
-        order.removePizza(pizza3);
+        order.removePizzas(new ArrayList<Pizza>() {{
+            add(pizza1);
+            add(pizza2);
+            add(pizza3);
+        }});
         customer.getAccumulativeCard().setBalance(100.0);
         order.confirm();
         org.junit.Assert.assertEquals(10.0, order.getDiscount(), eps);
@@ -93,9 +101,11 @@ public class DiscountTest {
 
     @Test
     public void testDiscountLessThanFourPizzasWithoutCard() {
-        order.removePizza(pizza1);
-        order.removePizza(pizza2);
-        order.removePizza(pizza3);
+        order.removePizzas(new ArrayList<Pizza>() {{
+            add(pizza1);
+            add(pizza2);
+            add(pizza3);
+        }});
         customer.setAccumulativeCard(null);
         order.confirm();
         org.junit.Assert.assertEquals(0.0, order.getDiscount(), eps);

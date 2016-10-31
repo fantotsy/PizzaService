@@ -2,10 +2,13 @@ package ua.fantotsy.repository.order;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import ua.fantotsy.domain.*;
 import ua.fantotsy.domain.discounts.AccumulativeCardDiscount;
@@ -80,6 +83,38 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
     }
 
     @Test
+    @Ignore
+    public void test(){
+        Pizza pizza = pizzaRepository.findById(1L);
+        Customer customer = customerRepository.findById(1L);
+        Address address = addressRepository.findById(1L);
+        Order order = new Order(new HashMap<Pizza, Integer>() {{
+            put(pizza, 1);
+        }}, customer, address);
+        order = testt(order);
+        long id = orderRepository.findOrdersByCustomerName("Name1").get(0).getId();
+        order = testt2(id);
+        //id = orderRepository.findOrdersByCustomerName("Name1").get(0).getId();
+        Order newOrder = getOrderObjectFromDatabaseById(id);
+        order = testt3(id);
+        Order newOrder1 = getOrderObjectFromDatabaseById(id);
+        System.out.println(newOrder);
+    }
+
+    @Transactional
+    private Order testt(Order order){
+        return orderRepository.save(order);
+    }
+    @Transactional
+    private Order testt2(long id){
+        return orderRepository.confirmById(id);
+    }
+    @Transactional
+    private Order testt3(long id){
+        return orderRepository.payById(id);
+    }
+
+    @Test
     public void testGetNumberOfOrders() {
         jdbcTemplate.update("INSERT INTO orders (id, status, address_id, customer_id) VALUES (1, 'NEW', 1, 1)");
         jdbcTemplate.update("INSERT INTO orders (id, status, address_id, customer_id) VALUES (2, 'NEW', 1, 1)");
@@ -88,6 +123,7 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
     }
 
     private Order getOrderObjectFromDatabaseById(long id) {
+        Order order = new Order();
         Map<Pizza, Integer> pizzas = new HashMap<>();
         List<Map<String, Object>> selectedPizzas = jdbcTemplate.queryForList("SELECT pizza_id, quantity FROM pizzas_quantities WHERE order_id = ?", id);
         for (Map<String, Object> map : selectedPizzas) {
@@ -95,39 +131,31 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
                     new BeanPropertyRowMapper(Pizza.class));
             pizzas.put(pizza, (Integer) map.get("QUANTITY"));
         }
-        int customer_id = 0;
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet("SELECT customer_id FROM orders WHERE id = ?", new Object[]{id});
-        while (rowSet.next()) {
-            customer_id = rowSet.getInt("customer_id");
-        }
-        Customer customer = (Customer) jdbcTemplate.queryForObject("SELECT * FROM customers WHERE id = ?", new Object[]{customer_id}, new BeanPropertyRowMapper(Customer.class));
+        Customer c = customerRepository.findById(1L);
+        Customer customer = (Customer) jdbcTemplate.queryForObject("SELECT * FROM customers JOIN orders ON customer_id = customers.id WHERE orders.id = ?", new Object[]{id}, new BeanPropertyRowMapper(Customer.class));
+        AccumulativeCard accumulativeCard = (AccumulativeCard) jdbcTemplate.queryForObject("SELECT * FROM accumulative_cards JOIN customers ON accumulative_card_id = customers.id WHERE customers.id IN (SELECT customers.id FROM customers JOIN orders ON customer_id = customers.id WHERE orders.id = ?)", new Object[]{id}, new BeanPropertyRowMapper(AccumulativeCard.class));
+        Address address = (Address) jdbcTemplate.queryForObject("SELECT * FROM addresses JOIN customers ON address_id = customers.id WHERE customers.id IN (SELECT customers.id FROM customers JOIN orders ON customer_id = customers.id WHERE orders.id = ?)", new Object[]{id}, new BeanPropertyRowMapper(Address.class));
+        customer.setAccumulativeCard(accumulativeCard);
+        customer.setAddress(address);
 
-        int address_id = 0;
-        rowSet = jdbcTemplate.queryForRowSet("SELECT address_id FROM orders WHERE id = ?", new Object[]{id});
-        while (rowSet.next()) {
-            address_id = rowSet.getInt("address_id");
-        }
-        Address address = (Address) jdbcTemplate.queryForObject("SELECT * FROM addresses WHERE id = ?", new Object[]{address_id}, new BeanPropertyRowMapper(Address.class));
+        address = (Address) jdbcTemplate.queryForObject("SELECT * FROM addresses JOIN orders ON addresses.id = address_id WHERE orders.id = ?", new Object[]{id}, new BeanPropertyRowMapper(Address.class));
 
-        Integer payment_id = null;
-        rowSet = jdbcTemplate.queryForRowSet("SELECT payment_id FROM orders WHERE id = ?", new Object[]{id});
-        while (rowSet.next()) {
-            payment_id = (Integer) rowSet.getObject("payment_id");
-        }
-        Payment payment = null;
-        if (payment_id != 0) {
-            payment = (Payment) jdbcTemplate.queryForObject("SELECT * FROM payments WHERE id = ?", new Object[]{payment_id}, new BeanPropertyRowMapper(Payment.class));
+        try {
+            Payment payment = (Payment) jdbcTemplate.queryForObject("SELECT * FROM payments JOIN orders ON payments.id = payment_id WHERE orders.id = ?", new Object[]{id}, new BeanPropertyRowMapper(Payment.class));
+            Discount discount = (Discount) jdbcTemplate.queryForObject("SELECT * FROM discounts JOIN payments ON applied_discount = discounts.name WHERE payments.id IN (SELECT payments.id FROM payments JOIN orders ON payment_id = payments.id WHERE orders.id = ?)", new Object[]{id}, new BeanPropertyRowMapper(Discount.class));
+            payment.setAppliedDiscount(discount);
+            order.setPayment(payment);
+        }catch(EmptyResultDataAccessException ex){
+            order.setPayment(null);
         }
 
-        String status = null;
-        rowSet = jdbcTemplate.queryForRowSet("SELECT status FROM orders WHERE id = ?", new Object[]{id});
-        while (rowSet.next()) {
-            status = rowSet.getString("status");
-        }
+        order.setPizzas(pizzas);
+        order.setCustomer(customer);
+        order.setAddress(address);
 
-        Order order = new Order(pizzas, customer, address);
-        order.setPayment(payment);
+        String status = jdbcTemplate.queryForObject("SELECT status FROM orders WHERE id = ?", new Object[]{id}, String.class);
         order.setStatus(Order.OrderStatus.valueOf(status));
-        return new Order(pizzas, customer, address);
+        ///order.setStatus(Order.OrderStatus.valueOf(status));
+        return order;
     }
 }
