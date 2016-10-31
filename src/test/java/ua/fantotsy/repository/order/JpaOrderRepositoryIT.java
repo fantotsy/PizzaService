@@ -112,7 +112,7 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
         Integer payment_id = null;
         rowSet = jdbcTemplate.queryForRowSet("SELECT payment_id FROM orders WHERE id = ?", new Object[]{id});
         while (rowSet.next()) {
-            payment_id = (Integer) rowSet.getInt("payment_id");
+            payment_id = (Integer) rowSet.getObject("payment_id");
         }
         Payment payment = null;
         if (payment_id != 0) {

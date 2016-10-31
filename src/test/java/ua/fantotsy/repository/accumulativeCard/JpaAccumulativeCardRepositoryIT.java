@@ -27,7 +27,7 @@ public class JpaAccumulativeCardRepositoryIT extends RepositoryTestConfig {
     }
 
     @Test
-    public void testSaveAccumulativeCard() {
+    public void testSetIdAfterSave() {
         AccumulativeCard accumulativeCard = new AccumulativeCard(12345L);
         accumulativeCard = accumulativeCardRepository.save(accumulativeCard);
         assertNotNull(accumulativeCard.getId());

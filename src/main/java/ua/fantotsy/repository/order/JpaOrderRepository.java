@@ -38,13 +38,11 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public Order save(Order order) {
         return entityManager.merge(order);
     }
 
     @Override
-    @Transactional
     public Order confirmById(Long id) {
         Order order = entityManager.find(Order.class, id);
         order.confirm();
@@ -52,7 +50,6 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public Order payById(Long id) {
         Order order = entityManager.find(Order.class, id);
         order.pay();
@@ -60,7 +57,6 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public Order cancelById(Long id) {
         Order order = entityManager.find(Order.class, id);
         order.cancel();
@@ -68,7 +64,6 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public Order addPizzaByOrderId(Long orderId, Pizza pizza) {
         Order order = entityManager.find(Order.class, orderId);
         order.addPizza(pizza);
@@ -76,7 +71,6 @@ public class JpaOrderRepository implements OrderRepository {
     }
 
     @Override
-    @Transactional
     public Order removePizzaByOrderId(Long orderId, Pizza pizza) {
         Order order = entityManager.find(Order.class, orderId);
         order.removePizza(pizza);
