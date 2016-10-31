@@ -95,7 +95,7 @@ public class AccumulativeCard implements Serializable {
 
     @Override
     public String toString() {
-        return "Accumulation card id: " + id +
-                "\nAccumulation card balance: " + balance + "\n";
+        return "Accumulative card id: " + id +
+                "\nAccumulative card balance: " + balance + "\n";
     }
 }
