@@ -182,7 +182,31 @@ public class Order {
         if (customer.hasAccumulativeCard()) {
             customer.increaseAccumulativeCardBalance(getTotalPrice());
         }
-        setLocalDateTime(LocalDateTime.now());
+        setDateTime(LocalDateTime.now());
+    }
+
+    public double getInitialPrice() {
+        return payment.getInitialPrice();
+    }
+
+    public Discount getAppliedDiscount() {
+        return payment.getAppliedDiscount();
+    }
+
+    public void setAppliedDiscount(Discount appliedDiscount) {
+        payment.setAppliedDiscount(appliedDiscount);
+    }
+
+    public double getDiscount() {
+        return payment.getDiscount();
+    }
+
+    public void setDiscount(double discount) {
+        payment.setDiscount(discount);
+    }
+
+    public LocalDateTime getDateTime() {
+        return payment.getDateTime();
     }
 
     public Boolean isEmpty() {
@@ -210,6 +234,22 @@ public class Order {
         countInitialPrice();
         countDiscount();
         setTotalPrice(getInitialPrice() - getDiscount());
+    }
+
+    private void setInitialPrice(double initialPrice) {
+        payment.setInitialPrice(initialPrice);
+    }
+
+    private double getTotalPrice() {
+        return payment.getTotalPrice();
+    }
+
+    private void setTotalPrice(double totalPrice) {
+        payment.setTotalPrice(totalPrice);
+    }
+
+    private void setDateTime(LocalDateTime dateTime) {
+        payment.setDateTime(dateTime);
     }
 
     /*Getters & Setters*/
@@ -243,46 +283,6 @@ public class Order {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public double getInitialPrice() {
-        return payment.getInitialPrice();
-    }
-
-    private void setInitialPrice(double initialPrice) {
-        payment.setInitialPrice(initialPrice);
-    }
-
-    public Discount getAppliedDiscount() {
-        return payment.getAppliedDiscount();
-    }
-
-    public void setAppliedDiscount(Discount appliedDiscount) {
-        payment.setAppliedDiscount(appliedDiscount);
-    }
-
-    public double getDiscount() {
-        return payment.getDiscount();
-    }
-
-    public void setDiscount(double discount) {
-        payment.setDiscount(discount);
-    }
-
-    public double getTotalPrice() {
-        return payment.getTotalPrice();
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        payment.setTotalPrice(totalPrice);
-    }
-
-    public LocalDateTime getDateTime() {
-        return payment.getDateTime();
-    }
-
-    public void setLocalDateTime(LocalDateTime dateTime) {
-        payment.setDateTime(dateTime);
     }
 
     public Payment getPayment() {
