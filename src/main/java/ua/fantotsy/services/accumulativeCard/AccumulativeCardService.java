@@ -7,4 +7,6 @@ public interface AccumulativeCardService {
     AccumulativeCard findById(Long id);
 
     AccumulativeCard addNewAccumulativeCard();
+
+    Long getMaxCardNumber();
 }

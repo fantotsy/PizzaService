@@ -19,6 +19,15 @@ public class JpaAccumulativeCardRepository implements AccumulativeCardRepository
 
     @Override
     public AccumulativeCard save(AccumulativeCard accumulativeCard) {
+        Long maxCardNumber = getMaxCardNumber();
+        if (maxCardNumber != null) {
+            accumulativeCard.setNumber(maxCardNumber + 1);
+        }
         return entityManager.merge(accumulativeCard);
+    }
+
+    @Override
+    public Long getMaxCardNumber() {
+        return entityManager.createNamedQuery("AccumulativeCard.getMaxCardNumber", Long.class).getSingleResult();
     }
 }

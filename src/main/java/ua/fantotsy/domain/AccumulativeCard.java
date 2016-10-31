@@ -2,6 +2,7 @@ package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import ua.fantotsy.infrastructure.utils.Utils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,10 @@ import java.io.Serializable;
 @Table(name = "accumulative_cards")
 @Component
 @Scope(scopeName = "prototype")
+@NamedQueries({
+        @NamedQuery(name = "AccumulativeCard.getMaxCardNumber",
+                query = "SELECT MAX(ac.number) FROM AccumulativeCard ac"),
+})
 public class AccumulativeCard implements Serializable {
     /*Fields*/
     @Id

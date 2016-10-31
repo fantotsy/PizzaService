@@ -2,7 +2,11 @@ package ua.fantotsy;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.fantotsy.domain.AccumulativeCard;
 import ua.fantotsy.domain.Pizza;
+import ua.fantotsy.repository.accumulativeCard.AccumulativeCardRepository;
+import ua.fantotsy.repository.accumulativeCard.JpaAccumulativeCardRepository;
+import ua.fantotsy.services.accumulativeCard.AccumulativeCardService;
 import ua.fantotsy.services.customer.CustomerService;
 import ua.fantotsy.services.order.OrderService;
 import ua.fantotsy.services.pizza.PizzaService;
@@ -46,7 +50,7 @@ public class SpringJpaAppRunner {
         appContext.close();
     }
 
-    public static void initializeDB(){
+    public static void initializeDB() {
         repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
         System.out.println(Arrays.toString(repoContext.getBeanDefinitionNames()));
 

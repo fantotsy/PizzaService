@@ -29,6 +29,12 @@ public class SimpleAccumulativeCardService implements AccumulativeCardService {
         return accumulativeCard;
     }
 
+    @Override
+    @Transactional
+    public Long getMaxCardNumber(){
+        return accumulativeCardRepository.getMaxCardNumber();
+    }
+
     /*Privet & Protected Methods*/
     protected AccumulativeCard createNewAccumulativeCard() {
         throw new IllegalStateException();

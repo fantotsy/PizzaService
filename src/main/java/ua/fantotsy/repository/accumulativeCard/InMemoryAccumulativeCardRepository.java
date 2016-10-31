@@ -36,6 +36,11 @@ public class InMemoryAccumulativeCardRepository implements AccumulativeCardRepos
         return accumulativeCard;
     }
 
+    @Override
+    public Long getMaxCardNumber() {
+        return null;
+    }
+
     /*Private Methods*/
     private long getNextId() {
         return (accumulativeCards.size() + 1);
