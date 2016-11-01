@@ -1,23 +1,37 @@
 package ua.fantotsy.web.infrastructure;
 
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.fantotsy.web.HelloController;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class DispatcherServlet extends HttpServlet {
+    private ConfigurableApplicationContext webContext;
 
-    protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try (PrintWriter out = resp.getWriter()) {
-            out.println("Hello!");
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String url = request.getRequestURI();
+        String controllerName = getControllerName(url);
+
+        MyController controller = (MyController) webContext.getBean(controllerName);
+        if (controller != null) {
+            controller.handleRequest(request, response);
         }
     }
 
     @Override
     public void init() throws ServletException {
-        super.init();
+        webContext = new ClassPathXmlApplicationContext("webContext.xml");
+    }
+
+    @Override
+    public void destroy() {
+        webContext.close();
     }
 
     @Override
@@ -28,5 +42,9 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
+    }
+
+    private String getControllerName(String url) {
+        return url.substring(url.lastIndexOf("/"));
     }
 }

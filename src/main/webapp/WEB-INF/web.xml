@@ -7,9 +7,10 @@
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>ua.fantotsy.web.infrastructure.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
-        <url-pattern>/app/*</url-pattern>
+        <url-pattern>/servlet/*</url-pattern>
     </servlet-mapping>
 </web-app>
