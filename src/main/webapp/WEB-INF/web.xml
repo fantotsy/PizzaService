@@ -4,10 +4,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:/repoContext.xml classpath:/appContext.xml</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>ua.fantotsy.web.infrastructure.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/webContext.xml</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>

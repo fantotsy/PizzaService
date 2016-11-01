@@ -2,7 +2,6 @@ package ua.fantotsy.web.infrastructure;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.fantotsy.web.HelloController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +11,7 @@ import java.io.IOException;
 
 public class DispatcherServlet extends HttpServlet {
     private ConfigurableApplicationContext webContext;
+    private ConfigurableApplicationContext[] applicationContexts;
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,12 +26,31 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        webContext = new ClassPathXmlApplicationContext("webContext.xml");
+        String contextsLocations = getServletContext().getInitParameter("contextConfigLocation");
+        String[] contexts = contextsLocations.split(" ");
+
+        applicationContexts = new ConfigurableApplicationContext[contexts.length];
+
+        for (int i = 0; i < applicationContexts.length; i++) {
+            ConfigurableApplicationContext context;
+            if (i == 0) {
+                context = new ClassPathXmlApplicationContext(contexts[i]);
+            } else {
+                context = new ClassPathXmlApplicationContext(new String[]{contexts[i]}, applicationContexts[i - 1]);
+            }
+            applicationContexts[i] = context;
+        }
+
+        String webContextConfigLocation = getInitParameter("contextConfigLocation");
+        webContext = new ClassPathXmlApplicationContext(new String[]{webContextConfigLocation}, applicationContexts[applicationContexts.length - 1]);
     }
 
     @Override
     public void destroy() {
         webContext.close();
+        for (int i = applicationContexts.length - 1; i >= 0; i--) {
+            applicationContexts[i].close();
+        }
     }
 
     @Override
