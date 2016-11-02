@@ -10,9 +10,23 @@
     </context-param>
 
     <servlet>
+        <servlet-name>SpringRestDispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/restContext.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SpringRestDispatcherServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>ua.fantotsy.web.infrastructure.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <!--<load-on-startup>1</load-on-startup>-->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:/webContext.xml</param-value>
@@ -22,4 +36,8 @@
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/servlet/*</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 </web-app>

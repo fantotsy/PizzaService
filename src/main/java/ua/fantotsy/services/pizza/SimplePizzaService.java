@@ -18,6 +18,7 @@ public class SimplePizzaService implements PizzaService {
 
     /*Public Methods*/
     @Override
+    @Benchmark(true)
     public Pizza findById(Long id) {
         return pizzaRepository.findById(id);
     }

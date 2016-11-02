@@ -11,7 +11,6 @@ import ua.fantotsy.services.pizza.PizzaService;
 import java.util.ArrayList;
 import java.util.List;
 
-@Benchmark(true)
 public class SimpleOrderService implements OrderService {
     /*Fields*/
     private final OrderRepository orderRepository;
@@ -28,7 +27,7 @@ public class SimpleOrderService implements OrderService {
 
     /*Public Methods*/
     @Override
-//    @Benchmark(value = true)
+    @Benchmark(true)
     @Transactional
     public Order addNewOrderByCustomerIdAndPizzaIds(Long customerId, Long... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
