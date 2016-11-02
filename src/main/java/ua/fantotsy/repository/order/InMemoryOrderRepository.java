@@ -46,7 +46,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         return order.getPizzaById(pizzaId);
     }
 
-    @Benchmark(value = false)
+    @Benchmark(false)
     @Override
     public Order save(Order order) {
         order.setId(getNextId());

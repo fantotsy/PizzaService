@@ -18,7 +18,7 @@ public class SimplePizzaService implements PizzaService {
 
     /*Public Methods*/
     @Override
-    @Benchmark(true)
+    @Benchmark(false)
     public Pizza findById(Long id) {
         return pizzaRepository.findById(id);
     }
@@ -29,7 +29,7 @@ public class SimplePizzaService implements PizzaService {
     }
 
     @Override
-    @Benchmark(value = false)
+    @Benchmark(false)
     @Transactional
     public Pizza addNewPizza(String name, Double price, Pizza.PizzaType type) {
         if (price <= 0.0) {

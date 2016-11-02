@@ -27,7 +27,7 @@ public class SimpleOrderService implements OrderService {
 
     /*Public Methods*/
     @Override
-    @Benchmark(true)
+    @Benchmark(false)
     @Transactional
     public Order addNewOrderByCustomerIdAndPizzaIds(Long customerId, Long... pizzasId) {
         if (!isAllowedAmountOfPizzas(pizzasId)) {
