@@ -10,6 +10,6 @@
 
     <context:component-scan base-package="ua.fantotsy.web"/>
 
-
+    <bean name="handlerMappingStrategy" class="ua.fantotsy.web.infrastructure.SimpleUrlHandlerMapping"/>
 
 </beans>

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
 import ua.fantotsy.domain.discounts.DiscountManager;
+import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

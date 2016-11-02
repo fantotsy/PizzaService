@@ -15,10 +15,11 @@ public class DispatcherServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url = request.getRequestURI();
-        String controllerName = getControllerName(url);
+        HandlerMapping handlerMapping = webContext.getBean("handlerMappingStrategy", HandlerMapping.class);
+        //= new SimpleUrlHandlerMapping(webContext);
 
-        MyController controller = (MyController) webContext.getBean(controllerName);
+        MyController controller = handlerMapping.getController(request);
+
         if (controller != null) {
             controller.handleRequest(request, response);
         }
@@ -63,7 +64,5 @@ public class DispatcherServlet extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private String getControllerName(String url) {
-        return url.substring(url.lastIndexOf("/"));
-    }
+
 }

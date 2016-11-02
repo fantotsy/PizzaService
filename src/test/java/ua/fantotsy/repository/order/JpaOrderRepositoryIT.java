@@ -131,7 +131,6 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
                     new BeanPropertyRowMapper(Pizza.class));
             pizzas.put(pizza, (Integer) map.get("QUANTITY"));
         }
-        Customer c = customerRepository.findById(1L);
         Customer customer = (Customer) jdbcTemplate.queryForObject("SELECT * FROM customers JOIN orders ON customer_id = customers.id WHERE orders.id = ?", new Object[]{id}, new BeanPropertyRowMapper(Customer.class));
         AccumulativeCard accumulativeCard = (AccumulativeCard) jdbcTemplate.queryForObject("SELECT * FROM accumulative_cards JOIN customers ON accumulative_card_id = customers.id WHERE customers.id IN (SELECT customers.id FROM customers JOIN orders ON customer_id = customers.id WHERE orders.id = ?)", new Object[]{id}, new BeanPropertyRowMapper(AccumulativeCard.class));
         Address address = (Address) jdbcTemplate.queryForObject("SELECT * FROM addresses JOIN customers ON address_id = customers.id WHERE customers.id IN (SELECT customers.id FROM customers JOIN orders ON customer_id = customers.id WHERE orders.id = ?)", new Object[]{id}, new BeanPropertyRowMapper(Address.class));
@@ -155,7 +154,6 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
 
         String status = jdbcTemplate.queryForObject("SELECT status FROM orders WHERE id = ?", new Object[]{id}, String.class);
         order.setStatus(Order.OrderStatus.valueOf(status));
-        ///order.setStatus(Order.OrderStatus.valueOf(status));
         return order;
     }
 }
