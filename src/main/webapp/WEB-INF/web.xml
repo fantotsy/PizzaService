@@ -26,7 +26,7 @@
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>ua.fantotsy.web.infrastructure.DispatcherServlet</servlet-class>
-        <!--<load-on-startup>1</load-on-startup>-->
+        <load-on-startup>1</load-on-startup>
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:/webContext.xml</param-value>
