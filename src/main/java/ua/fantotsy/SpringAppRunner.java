@@ -28,7 +28,7 @@ public class SpringAppRunner {
         customerService.addNewCustomer("Vasya", "Kyiv", "K18a", true);
 
         long customer_id = customerService.findByName("Vasya").getId();
-        long pizza_id = pizzaService.findByName("Diabola").getId();
+        long pizza_id = pizzaService.findByName("Diabola").getPizzaId();
         Order order1 = orderService.addNewOrderByCustomerIdAndPizzaIds(customer_id, pizza_id, pizza_id, pizza_id, pizza_id, pizza_id);
         order1.confirm();
         order1.pay();

@@ -1,6 +1,7 @@
 package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -13,12 +14,12 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "Pizza.findByName", query = "SELECT p FROM Pizza p WHERE p.name=:name"),
 })
-public class Pizza implements Serializable {
+public class Pizza extends ResourceSupport implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long pizzaId;
     @Column(name = "name", nullable = false, length = 20)
     private String name;
     @Column(name = "price", nullable = false)
@@ -52,12 +53,12 @@ public class Pizza implements Serializable {
     }
 
     /*Getters & Setters*/
-    public Long getId() {
-        return id;
+    public Long getPizzaId() {
+        return pizzaId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPizzaId(Long pizzaId) {
+        this.pizzaId = pizzaId;
     }
 
     public String getName() {
@@ -114,7 +115,7 @@ public class Pizza implements Serializable {
 
     @Override
     public String toString() {
-        return "\tPizza #" + id +
+        return "\tPizza #" + pizzaId +
                 "\n\tName: " + name +
                 "\n\tType: " + type.name() +
                 "\n\tPrice: " + price + " UAH";

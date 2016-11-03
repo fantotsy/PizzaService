@@ -24,7 +24,7 @@ public class JpaPizzaRepositoryIT extends RepositoryTestConfig {
         jdbcTemplate.update("INSERT INTO pizzas (id, name, price, status, type) VALUES (1, ?, ?, ?, ?)",
                 pizza.getName(), pizza.getPrice(), pizza.getStatus().name(), pizza.getType().name());
         pizza = pizzaRepository.findById(1L);
-        long id = pizza.getId();
+        long id = pizza.getPizzaId();
         assertEquals(1L, id);
     }
 
@@ -32,6 +32,6 @@ public class JpaPizzaRepositoryIT extends RepositoryTestConfig {
     public void testSetIdAfterSave() {
         Pizza pizza = new Pizza("Sea", 200.0, Pizza.PizzaType.SEA);
         pizza = pizzaRepository.save(pizza);
-        assertNotNull(pizza.getId());
+        assertNotNull(pizza.getPizzaId());
     }
 }

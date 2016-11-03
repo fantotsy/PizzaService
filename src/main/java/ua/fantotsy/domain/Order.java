@@ -139,7 +139,7 @@ public class Order {
             throw new RuntimeException("Pizza cannot be removed from 'IN_PROGRESS', 'DONE' or 'CANCELED' order.");
         } else {
             if (!pizzas.containsKey(pizza)) {
-                throw new RuntimeException("Such pizza does not exist in order");
+                throw new RuntimeException("Such find does not exist in order");
             } else {
                 int initialQuantity = pizzas.get(pizza);
                 if (initialQuantity > 1) {

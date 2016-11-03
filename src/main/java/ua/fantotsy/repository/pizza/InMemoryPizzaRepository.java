@@ -49,7 +49,7 @@ public class InMemoryPizzaRepository implements PizzaRepository {
 
     @Override
     public Pizza save(Pizza pizza) {
-        pizza.setId(getNextId());
+        pizza.setPizzaId(getNextId());
         pizzas.add(pizza);
         return pizza;
     }

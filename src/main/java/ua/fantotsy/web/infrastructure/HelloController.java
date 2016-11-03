@@ -1,4 +1,4 @@
-package ua.fantotsy.web;
+package ua.fantotsy.web.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
