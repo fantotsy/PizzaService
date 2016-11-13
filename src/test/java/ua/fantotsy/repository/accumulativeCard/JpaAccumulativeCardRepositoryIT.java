@@ -22,7 +22,7 @@ public class JpaAccumulativeCardRepositoryIT extends RepositoryTestConfig {
     public void testFindAccumulativeCardById() {
         jdbcTemplate.update("INSERT INTO accumulative_cards (id, number, balance) VALUES (1, 12345, 100.0)");
         AccumulativeCard accumulativeCard = accumulativeCardRepository.findById(1L);
-        long id = accumulativeCard.getId();
+        long id = accumulativeCard.getAccumulativeCardId();
         assertEquals(1L, id);
     }
 
@@ -30,6 +30,6 @@ public class JpaAccumulativeCardRepositoryIT extends RepositoryTestConfig {
     public void testSetIdAfterSave() {
         AccumulativeCard accumulativeCard = new AccumulativeCard(12345L);
         accumulativeCard = accumulativeCardRepository.save(accumulativeCard);
-        assertNotNull(accumulativeCard.getId());
+        assertNotNull(accumulativeCard.getAccumulativeCardId());
     }
 }

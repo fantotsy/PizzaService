@@ -1,6 +1,7 @@
 package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -11,12 +12,12 @@ import java.util.List;
 @Table(name = "addresses")
 @Component
 @Scope(scopeName = "prototype")
-public class Address implements Serializable {
+public class Address extends ResourceSupport implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long addressId;
     @Column(name = "city", nullable = false, length = 20)
     private String city;
     @Column(name = "street", nullable = false, length = 20)
@@ -37,12 +38,12 @@ public class Address implements Serializable {
     }
 
     /*Getters & Setters*/
-    public Long getId() {
-        return id;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public String getCity() {

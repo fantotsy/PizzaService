@@ -66,7 +66,7 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
         jdbcTemplate.update("INSERT INTO orders (id, status, address_id, customer_id) VALUES (1, 'NEW', 1, 1)");
         jdbcTemplate.update("INSERT INTO pizzas_quantities VALUES (1, 1, 1)");
         Order order = orderRepository.findById(1L);
-        long id = order.getId();
+        long id = order.getOrderId();
         assertEquals(1L, id);
     }
 
@@ -79,7 +79,7 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
             put(pizza, 1);
         }}, customer, address);
         order = orderRepository.save(order);
-        assertNotNull(order.getId());
+        assertNotNull(order.getOrderId());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class JpaOrderRepositoryIT extends RepositoryTestConfig {
             put(pizza, 1);
         }}, customer, address);
         order = testt(order);
-        long id = orderRepository.findOrdersByCustomerName("Name1").get(0).getId();
+        long id = orderRepository.findOrdersByCustomerName("Name1").get(0).getOrderId();
         order = testt2(id);
         //id = orderRepository.findOrdersByCustomerName("Name1").get(0).getId();
         Order newOrder = getOrderObjectFromDatabaseById(id);

@@ -22,7 +22,7 @@ public class JpaAddressRepositoryIT extends RepositoryTestConfig {
     public void testFindAddressById() {
         jdbcTemplate.update("INSERT INTO addresses (id, city, street) VALUES (1, 'City', 'Street')");
         Address address = addressRepository.findById(1L);
-        long id = address.getId();
+        long id = address.getAddressId();
         assertEquals(1L, id);
     }
 
@@ -30,6 +30,6 @@ public class JpaAddressRepositoryIT extends RepositoryTestConfig {
     public void testSetIdAfterSave() {
         Address address = new Address("City", "Street");
         address = addressRepository.save(address);
-        assertNotNull(address.getId());
+        assertNotNull(address.getAddressId());
     }
 }

@@ -43,7 +43,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     @Override
     public Customer save(Customer customer) {
-        customer.setId(getNextId());
+        customer.setCustomerId(getNextId());
         customers.add(customer);
         return customer;
     }

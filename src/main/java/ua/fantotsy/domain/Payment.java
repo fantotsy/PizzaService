@@ -1,22 +1,24 @@
 package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payments")
 @Component
 @Scope(scopeName = "prototype")
-public class Payment {
+public class Payment extends ResourceSupport implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long paymentId;
     @Column(name = "initial_price")
     private Double initialPrice;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -46,12 +48,12 @@ public class Payment {
 
     /*Getters & Setters*/
 
-    public Long getId() {
-        return id;
+    public Long getPaymentId() {
+        return paymentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
     }
 
     Double getInitialPrice() {

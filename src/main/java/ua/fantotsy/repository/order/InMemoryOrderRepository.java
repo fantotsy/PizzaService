@@ -49,7 +49,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Benchmark(false)
     @Override
     public Order save(Order order) {
-        order.setId(getNextId());
+        order.setOrderId(getNextId());
         orders.add(order);
         order.confirm();
         return order;

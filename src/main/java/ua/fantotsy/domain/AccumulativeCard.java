@@ -1,6 +1,7 @@
 package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 import ua.fantotsy.infrastructure.utils.Utils;
 
@@ -15,12 +16,12 @@ import java.io.Serializable;
         @NamedQuery(name = "AccumulativeCard.getMaxCardNumber",
                 query = "SELECT MAX(ac.number) FROM AccumulativeCard ac"),
 })
-public class AccumulativeCard implements Serializable {
+public class AccumulativeCard extends ResourceSupport implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long accumulativeCardId;
     @Column(name = "number", nullable = false, length = 5)
     private Long number;
     @Column(name = "balance", nullable = false)
@@ -45,12 +46,12 @@ public class AccumulativeCard implements Serializable {
     }
 
     /*Getters & Setters*/
-    public Long getId() {
-        return id;
+    public Long getAccumulativeCardId() {
+        return accumulativeCardId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAccumulativeCardId(Long accumulativeCardId) {
+        this.accumulativeCardId = accumulativeCardId;
     }
 
     public Long getNumber() {
@@ -95,7 +96,7 @@ public class AccumulativeCard implements Serializable {
 
     @Override
     public String toString() {
-        return "Accumulative card id: " + id +
+        return "Accumulative card id: " + accumulativeCardId +
                 "\nAccumulative card balance: " + balance + "\n";
     }
 }

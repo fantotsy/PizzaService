@@ -1,12 +1,14 @@
 package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 import ua.fantotsy.domain.discounts.Discount;
 import ua.fantotsy.domain.discounts.DiscountManager;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,12 +22,12 @@ import java.util.*;
         @NamedQuery(name = "Order.getNumberOfOrders",
                 query = "SELECT COUNT(*) FROM Order")
 })
-public class Order {
+public class Order extends ResourceSupport implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long orderId;
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "pizzas_quantities", joinColumns = @JoinColumn(name = "order_id", nullable = false))
     @MapKeyJoinColumn(name = "pizza_id")
@@ -254,12 +256,12 @@ public class Order {
     }
 
     /*Getters & Setters*/
-    public Long getId() {
-        return id;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Map<Pizza, Integer> getPizzas() {
@@ -325,7 +327,7 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder info = new StringBuilder();
-        info.append("ORDER #" + id + ":\n");
+        info.append("ORDER #" + orderId + ":\n");
         info.append("CUSTOMER:\n" + customer);
         info.append("PIZZAS:\n");
         for (Map.Entry<Pizza, Integer> entry : pizzas.entrySet()) {

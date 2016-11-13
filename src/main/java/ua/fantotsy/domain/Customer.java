@@ -1,9 +1,11 @@
 package ua.fantotsy.domain;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,12 +15,12 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name=:name"),
 })
-public class Customer {
+public class Customer extends ResourceSupport implements Serializable {
     /*Fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long customerId;
     @Column(name = "name", nullable = false, length = 30)
     private String name;
     @ManyToOne(cascade = {CascadeType.PERSIST})
@@ -58,12 +60,12 @@ public class Customer {
     }
 
     /*Getters & Setters*/
-    public Long getId() {
-        return id;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {

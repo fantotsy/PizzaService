@@ -44,7 +44,7 @@ public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
     public void testFindCustomerById() {
         jdbcTemplate.update("INSERT INTO customers (id, name, address_id, accumulative_card_id) VALUES (1, 'Name1', 1, 1)");
         Customer customer = customerRepository.findById(1L);
-        long id = customer.getId();
+        long id = customer.getCustomerId();
         assertEquals(1L, id);
     }
 
@@ -52,6 +52,6 @@ public class JpaCustomerRepositoryIT extends RepositoryTestConfig {
     public void testSetIdAfterSave() {
         Customer customer = new Customer("Name2", addressRepository.findById(1L), accumulativeCardRepository.findById(1L));
         customer = customerRepository.save(customer);
-        assertNotNull(customer.getId());
+        assertNotNull(customer.getCustomerId());
     }
 }

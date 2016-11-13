@@ -31,7 +31,7 @@ public class InMemoryAddressRepository implements AddressRepository {
 
     @Override
     public Address save(Address address) {
-        address.setId(getNextId());
+        address.setAddressId(getNextId());
         addresses.add(address);
         return address;
     }

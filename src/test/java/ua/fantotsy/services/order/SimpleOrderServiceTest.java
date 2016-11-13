@@ -34,25 +34,25 @@ public class SimpleOrderServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testPlaceNewOrderTooMuchPizzas() {
-        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getId(), 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L);
+        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getCustomerId(), 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L);
     }
 
     @Test(expected = RuntimeException.class)
     public void testPlaceNewOrderNotEnoughPizzas() {
-        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getId());
+        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getCustomerId());
     }
 
     @Test
     public void testPlaceNewOrderSearchesForPizza() {
         doReturn(orderMock).when(orderService).createNewOrder();
-        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getId(), 1L, 1L, 1L);
+        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getCustomerId(), 1L, 1L, 1L);
         verify(pizzaServiceMock, times(3)).findById(1L);
     }
 
     @Test
     public void testPlaceNewOrderSavesOrder() {
         doReturn(orderMock).when(orderService).createNewOrder();
-        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getId(), 1L, 1L, 1L);
+        orderService.addNewOrderByCustomerIdAndPizzaIds(customerMock.getCustomerId(), 1L, 1L, 1L);
         verify(orderRepositoryMock).save(orderMock);
     }
 }
