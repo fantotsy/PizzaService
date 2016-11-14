@@ -1,5 +1,6 @@
 package ua.fantotsy.domain;
 
+import org.hibernate.annotations.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,11 @@ import ua.fantotsy.domain.discounts.DiscountManager;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -31,6 +37,7 @@ public class Order extends ResourceSupport implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "pizzas_quantities", joinColumns = @JoinColumn(name = "order_id", nullable = false))
     @MapKeyJoinColumn(name = "pizza_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @Column(name = "quantity", nullable = false)
     private Map<Pizza, Integer> pizzas;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -153,7 +160,7 @@ public class Order extends ResourceSupport implements Serializable {
         }
     }
 
-    public int getAmountOfPizzas() {
+    public int amountOfPizzas() {
         int result = 0;
         for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
             result += pizza.getValue();
@@ -161,7 +168,7 @@ public class Order extends ResourceSupport implements Serializable {
         return result;
     }
 
-    public Pizza getPizzaById(Long id) {
+    public Pizza pizzaById(Long id) {
         for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
             if ((pizza.getKey().getId()).equals(id)) {
                 return pizza.getKey();
@@ -183,38 +190,38 @@ public class Order extends ResourceSupport implements Serializable {
     public void pay() {
         status = status.nextStatus();
         if (customer.hasAccumulativeCard()) {
-            customer.increaseAccumulativeCardBalance(getTotalPrice());
+            customer.increaseAccumulativeCardBalance(payment.getTotalPrice());
         }
         setDateTime(LocalDateTime.now());
     }
 
-    public double getInitialPrice() {
-        return payment.getInitialPrice();
-    }
+//    public double getInitialPrice() {
+//        return payment.getInitialPrice();
+//    }
 
-    public Discount getAppliedDiscount() {
-        return payment.getAppliedDiscount();
-    }
+//    public Discount getAppliedDiscount() {
+//        return payment.getAppliedDiscount();
+//    }
 
     public void setAppliedDiscount(Discount appliedDiscount) {
         payment.setAppliedDiscount(appliedDiscount);
     }
 
-    public double getDiscount() {
-        return payment.getDiscount();
-    }
+//    public double getDiscount() {
+//        return payment.getDiscount();
+//    }
 
     public void setDiscount(double discount) {
         payment.setDiscount(discount);
     }
 
-    public LocalDateTime getDateTime() {
-        return payment.getDateTime();
-    }
+//    public LocalDateTime getDateTime() {
+//        return payment.getDateTime();
+//    }
 
-    public Boolean isEmpty() {
-        return (pizzas.size() == 0);
-    }
+//    public Boolean isEmpty() {
+//        return (pizzas.size() == 0);
+//    }
 
     /*Private Methods*/
     private void countInitialPrice() {
@@ -236,16 +243,16 @@ public class Order extends ResourceSupport implements Serializable {
     private void countTotalPrice() {
         countInitialPrice();
         countDiscount();
-        setTotalPrice(getInitialPrice() - getDiscount());
+        setTotalPrice(payment.getInitialPrice() - payment.getDiscount());
     }
 
     private void setInitialPrice(double initialPrice) {
         payment.setInitialPrice(initialPrice);
     }
 
-    private double getTotalPrice() {
-        return payment.getTotalPrice();
-    }
+//    private double getTotalPrice() {
+//        return payment.getTotalPrice();
+//    }
 
     private void setTotalPrice(double totalPrice) {
         payment.setTotalPrice(totalPrice);

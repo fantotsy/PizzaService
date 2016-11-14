@@ -27,6 +27,11 @@ public class SimpleOrderService implements OrderService {
 
     /*Public Methods*/
     @Override
+    public Order findById(Long id) {
+        return orderRepository.findById(id);
+    }
+
+    @Override
     @Benchmark(false)
     @Transactional
     public Order addNewOrderByCustomerIdAndPizzaIds(Long customerId, Long... pizzasId) {

@@ -4,14 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import ua.fantotsy.domain.discounts.AccumulativeCardDiscount;
-import ua.fantotsy.domain.discounts.Discount;
-import ua.fantotsy.domain.discounts.DiscountManager;
-import ua.fantotsy.domain.discounts.TheMostExpensivePizzaDiscount;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderTest {
@@ -46,19 +38,19 @@ public class OrderTest {
     @Test
     public void testAddPizza() {
         order.addPizza(pizza1);
-        org.junit.Assert.assertEquals(7, order.getAmountOfPizzas());
+        org.junit.Assert.assertEquals(7, order.amountOfPizzas());
     }
 
     @Test
     public void testRemovePizza() {
         order.removePizza(pizza1);
-        org.junit.Assert.assertEquals(5, order.getAmountOfPizzas());
+        org.junit.Assert.assertEquals(5, order.amountOfPizzas());
     }
 
     @Test
     public void testConfirmCountsInitialPrice() {
         order.confirm();
-        org.junit.Assert.assertEquals(1200.0, order.getInitialPrice(), eps);
+        org.junit.Assert.assertEquals(1200.0, order.getPayment().getInitialPrice(), eps);
     }
 
 }

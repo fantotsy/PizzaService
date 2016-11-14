@@ -1,5 +1,6 @@
 package ua.fantotsy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ public class Customer extends ResourceSupport implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "accumulative_card_id")
     private AccumulativeCard accumulativeCard;
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Order> orders;
 

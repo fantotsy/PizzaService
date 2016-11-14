@@ -50,6 +50,6 @@ public class AccumulativeCardDiscount extends Discount {
     }
 
     private double getInitialPrice() {
-        return order.getInitialPrice();
+        return order.getPayment().getInitialPrice();
     }
 }

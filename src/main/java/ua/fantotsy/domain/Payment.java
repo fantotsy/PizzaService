@@ -1,5 +1,6 @@
 package ua.fantotsy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,7 @@ public class Payment extends ResourceSupport implements Serializable {
     private Double totalPrice;
     @Column(name = "date_time")
     private LocalDateTime dateTime;
+    @JsonIgnore
     @OneToOne(mappedBy = "payment", fetch = FetchType.LAZY)
     private Order order;
 
@@ -56,11 +58,11 @@ public class Payment extends ResourceSupport implements Serializable {
         this.paymentId = paymentId;
     }
 
-    Double getInitialPrice() {
+    public Double getInitialPrice() {
         return initialPrice;
     }
 
-    void setInitialPrice(Double initialPrice) {
+    public void setInitialPrice(Double initialPrice) {
         this.initialPrice = initialPrice;
     }
 
@@ -72,19 +74,19 @@ public class Payment extends ResourceSupport implements Serializable {
         this.appliedDiscount = appliedDiscount;
     }
 
-    Double getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    void setDiscount(Double discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
-    Double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

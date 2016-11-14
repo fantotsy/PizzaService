@@ -1,5 +1,6 @@
 package ua.fantotsy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ public class AccumulativeCard extends ResourceSupport implements Serializable {
     private Long number;
     @Column(name = "balance", nullable = false)
     private Double balance;
+    @JsonIgnore
     @OneToOne(mappedBy = "accumulativeCard", fetch = FetchType.LAZY)
     private Customer customer;
 

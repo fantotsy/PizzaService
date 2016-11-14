@@ -1,7 +1,6 @@
 package ua.fantotsy.repository.order;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Pizza;
 
@@ -28,13 +27,13 @@ public class JpaOrderRepository implements OrderRepository {
     @Override
     public long getAmountOfPizzasByOrderId(Long orderId) {
         Order order = findById(orderId);
-        return order.getAmountOfPizzas();
+        return order.amountOfPizzas();
     }
 
     @Override
     public Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId) {
         Order order = findById(orderId);
-        return order.getPizzaById(pizzaId);
+        return order.pizzaById(pizzaId);
     }
 
     @Override

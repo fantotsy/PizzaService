@@ -51,7 +51,7 @@ public class DiscountTest {
     @Test
     public void testDiscountMoreThanFourPizzas() {
         order.confirm();
-        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(180.0, order.getPayment().getDiscount(), eps);
     }
 
     @Test
@@ -62,22 +62,22 @@ public class DiscountTest {
             add(pizza3);
         }});
         order.confirm();
-        org.junit.Assert.assertEquals(0.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(0.0, order.getPayment().getDiscount(), eps);
     }
 
     @Test
     public void testDiscountMoreThanFourPizzasWithCard() {
         customer.getAccumulativeCard().setBalance(100.0);
         order.confirm();
-        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(180.0, order.getPayment().getDiscount(), eps);
         customer.getAccumulativeCard().setBalance(4000.0);
         order.setStatus(Order.OrderStatus.NEW);
         order.confirm();
-        org.junit.Assert.assertEquals(360.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(360.0, order.getPayment().getDiscount(), eps);
         customer.getAccumulativeCard().setBalance(3000.0);
         order.setStatus(Order.OrderStatus.NEW);
         order.confirm();
-        org.junit.Assert.assertEquals(300.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(300.0, order.getPayment().getDiscount(), eps);
     }
 
     @Test
@@ -89,14 +89,14 @@ public class DiscountTest {
         }});
         customer.getAccumulativeCard().setBalance(100.0);
         order.confirm();
-        org.junit.Assert.assertEquals(10.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(10.0, order.getPayment().getDiscount(), eps);
     }
 
     @Test
     public void testDiscountMoreThanFourPizzasWithoutCard() {
         customer.setAccumulativeCard(null);
         order.confirm();
-        org.junit.Assert.assertEquals(180.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(180.0, order.getPayment().getDiscount(), eps);
     }
 
     @Test
@@ -108,6 +108,6 @@ public class DiscountTest {
         }});
         customer.setAccumulativeCard(null);
         order.confirm();
-        org.junit.Assert.assertEquals(0.0, order.getDiscount(), eps);
+        org.junit.Assert.assertEquals(0.0, order.getPayment().getDiscount(), eps);
     }
 }

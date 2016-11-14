@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface OrderService {
 
+    Order findById(Long id);
+
     Order addNewOrderByCustomerIdAndPizzaIds(Long customerId, Long... pizzasId);
 
     List<Order> findOrdersByCustomerName(String customerName);

@@ -31,7 +31,7 @@ public class TheMostExpensivePizzaDiscount extends Discount {
     }
 
     private boolean isEnoughPizzasInOrder() {
-        return (order.getAmountOfPizzas() >= MIN_AMOUNT_OF_PIZZAS);
+        return (order.amountOfPizzas() >= MIN_AMOUNT_OF_PIZZAS);
     }
 
     private Map<Pizza, Integer> getTheMostExpensivePizzas() {
@@ -57,11 +57,11 @@ public class TheMostExpensivePizzaDiscount extends Discount {
     }
 
     private boolean isEmpty() {
-        return order.isEmpty();
+        return (order.getPizzas().size() == 0);
     }
 
     private Pizza getPizzaInOrderById(Long id) {
-        return order.getPizzaById(id);
+        return order.pizzaById(id);
     }
 
     private Map<Pizza, Integer> getPizzasFromOrder() {

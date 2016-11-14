@@ -1,5 +1,6 @@
 package ua.fantotsy.domain.discounts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.fantotsy.domain.Order;
 import ua.fantotsy.domain.Payment;
 
@@ -16,6 +17,7 @@ public abstract class Discount {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "state", nullable = false)
     private DiscountState state;
+    @JsonIgnore
     @OneToMany(mappedBy = "appliedDiscount", fetch = FetchType.LAZY)
     private List<Payment> payments;
     @Transient

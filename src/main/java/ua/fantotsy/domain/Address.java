@@ -1,5 +1,6 @@
 package ua.fantotsy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,10 @@ public class Address extends ResourceSupport implements Serializable {
     private String city;
     @Column(name = "street", nullable = false, length = 20)
     private String street;
+    @JsonIgnore
     @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
     private List<Customer> customers;
+    @JsonIgnore
     @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
     private List<Order> orders;
 

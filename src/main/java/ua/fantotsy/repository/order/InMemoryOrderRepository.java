@@ -37,13 +37,13 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Override
     public long getAmountOfPizzasByOrderId(Long orderId) {
         Order order = findById(orderId);
-        return order.getAmountOfPizzas();
+        return order.amountOfPizzas();
     }
 
     @Override
     public Pizza getPizzaByIdInOrderById(Long orderId, Long pizzaId) {
         Order order = findById(orderId);
-        return order.getPizzaById(pizzaId);
+        return order.pizzaById(pizzaId);
     }
 
     @Benchmark(false)
