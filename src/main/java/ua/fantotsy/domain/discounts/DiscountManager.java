@@ -21,11 +21,11 @@ public class DiscountManager {
                 Double currentDiscount = discount.getDiscount(order);
                 if (currentDiscount > maxDiscount) {
                     maxDiscount = currentDiscount;
-                    order.setAppliedDiscount(discount);
+                    order.getPayment().setAppliedDiscount(discount);
                 }
             }
         }
-        order.setDiscount(maxDiscount);
+        order.getPayment().setDiscount(maxDiscount);
         return order;
     }
 

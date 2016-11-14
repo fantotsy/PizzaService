@@ -46,7 +46,7 @@ public class Customer extends ResourceSupport implements Serializable {
     }
 
     /*Methods*/
-    public double getCardBalance() {
+    public double cardBalance() {
         if (hasAccumulativeCard()) {
             return accumulativeCard.getBalance();
         }

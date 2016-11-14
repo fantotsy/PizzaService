@@ -4,9 +4,7 @@ import org.hibernate.annotations.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
-import ua.fantotsy.domain.discounts.Discount;
 import ua.fantotsy.domain.discounts.DiscountManager;
-import ua.fantotsy.infrastructure.annotations.Benchmark;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -132,7 +130,7 @@ public class Order extends ResourceSupport implements Serializable {
     }
 
     public void addPizza(Pizza pizza) {
-        if (isOrderManipulationEnabled()) {
+        if (!status.equals(OrderStatus.NEW)) {
             throw new RuntimeException("Pizza cannot be inserted into 'IN_PROGRESS', 'DONE' or 'CANCELED' order.");
         } else {
             int initialQuantity = 0;
@@ -144,7 +142,7 @@ public class Order extends ResourceSupport implements Serializable {
     }
 
     public void removePizza(Pizza pizza) {
-        if (isOrderManipulationEnabled()) {
+        if (!status.equals(OrderStatus.NEW)) {
             throw new RuntimeException("Pizza cannot be removed from 'IN_PROGRESS', 'DONE' or 'CANCELED' order.");
         } else {
             if (!pizzas.containsKey(pizza)) {
@@ -170,7 +168,7 @@ public class Order extends ResourceSupport implements Serializable {
 
     public Pizza pizzaById(Long id) {
         for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
-            if ((pizza.getKey().getId()).equals(id)) {
+            if ((pizza.getKey().getPizzaId()).equals(id)) {
                 return pizza.getKey();
             }
         }
@@ -192,36 +190,8 @@ public class Order extends ResourceSupport implements Serializable {
         if (customer.hasAccumulativeCard()) {
             customer.increaseAccumulativeCardBalance(payment.getTotalPrice());
         }
-        setDateTime(LocalDateTime.now());
+        payment.setDateTime(LocalDateTime.now());
     }
-
-//    public double getInitialPrice() {
-//        return payment.getInitialPrice();
-//    }
-
-//    public Discount getAppliedDiscount() {
-//        return payment.getAppliedDiscount();
-//    }
-
-    public void setAppliedDiscount(Discount appliedDiscount) {
-        payment.setAppliedDiscount(appliedDiscount);
-    }
-
-//    public double getDiscount() {
-//        return payment.getDiscount();
-//    }
-
-    public void setDiscount(double discount) {
-        payment.setDiscount(discount);
-    }
-
-//    public LocalDateTime getDateTime() {
-//        return payment.getDateTime();
-//    }
-
-//    public Boolean isEmpty() {
-//        return (pizzas.size() == 0);
-//    }
 
     /*Private Methods*/
     private void countInitialPrice() {
@@ -229,37 +199,17 @@ public class Order extends ResourceSupport implements Serializable {
         for (Map.Entry<Pizza, Integer> pizza : pizzas.entrySet()) {
             result += (pizza.getKey().getPrice() * pizza.getValue());
         }
-        setInitialPrice(result);
+        payment.setInitialPrice(result);
     }
 
     private void countDiscount() {
         DiscountManager.countDiscount(this);
     }
 
-    private boolean isOrderManipulationEnabled() {
-        return !status.equals(OrderStatus.NEW);
-    }
-
     private void countTotalPrice() {
         countInitialPrice();
         countDiscount();
-        setTotalPrice(payment.getInitialPrice() - payment.getDiscount());
-    }
-
-    private void setInitialPrice(double initialPrice) {
-        payment.setInitialPrice(initialPrice);
-    }
-
-//    private double getTotalPrice() {
-//        return payment.getTotalPrice();
-//    }
-
-    private void setTotalPrice(double totalPrice) {
-        payment.setTotalPrice(totalPrice);
-    }
-
-    private void setDateTime(LocalDateTime dateTime) {
-        payment.setDateTime(dateTime);
+        payment.setTotalPrice(payment.getInitialPrice() - payment.getDiscount());
     }
 
     /*Getters & Setters*/

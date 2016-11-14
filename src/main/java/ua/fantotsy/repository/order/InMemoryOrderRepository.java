@@ -22,7 +22,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Override
     public Order findById(Long id) {
         for (Order order : orders) {
-            if (order.getId().equals(id)) {
+            if (order.getOrderId().equals(id)) {
                 return order;
             }
         }

@@ -21,7 +21,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     public Customer findById(Long id) {
         if (customers.size() > 0) {
             for (Customer customer : customers) {
-                if (customer.getId().equals(id)) {
+                if (customer.getCustomerId().equals(id)) {
                     return customer;
                 }
             }

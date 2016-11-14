@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
-import ua.fantotsy.infrastructure.utils.Utils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -84,11 +83,8 @@ public class AccumulativeCard extends ResourceSupport implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AccumulativeCard that = (AccumulativeCard) o;
-
         return number != null ? number.equals(that.number) : that.number == null;
-
     }
 
     @Override

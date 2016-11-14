@@ -21,7 +21,7 @@ public class InMemoryAddressRepository implements AddressRepository {
     public Address findById(Long id) {
         if (addresses.size() > 0) {
             for (Address address : addresses) {
-                if (address.getId().equals(id)) {
+                if (address.getAddressId().equals(id)) {
                     return address;
                 }
             }
