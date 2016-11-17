@@ -24,6 +24,20 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>SpringWebDispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/webContext.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SpringWebDispatcherServlet</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>ua.fantotsy.web.infrastructure.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>

@@ -21,12 +21,27 @@
                 <version>3.1</version>
             </plugin>
 
+            <!--<plugin>-->
+                <!--<groupId>org.apache.tomcat.maven</groupId>-->
+                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+                <!--<version>${tomcat.version}</version>-->
+                <!--<configuration>-->
+                    <!--<port>8089</port>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat.version}</version>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.11.v20150529</version>
                 <configuration>
-                    <port>8089</port>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/PizzaService</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <port>8089</port>
+                    </httpConnector>
                 </configuration>
             </plugin>
         </plugins>
@@ -114,7 +129,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
 
