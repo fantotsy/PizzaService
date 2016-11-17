@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Scope(scopeName = "prototype")
 @NamedQueries({
         @NamedQuery(name = "Pizza.findByName", query = "SELECT p FROM Pizza p WHERE p.name=:name"),
+        @NamedQuery(name = "Pizza.findAllPizzas", query = "SELECT p FROM Pizza p")
 })
 public class Pizza extends ResourceSupport implements Serializable {
     /*Fields*/

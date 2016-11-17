@@ -6,6 +6,8 @@ import ua.fantotsy.domain.Pizza;
 import ua.fantotsy.infrastructure.annotations.Benchmark;
 import ua.fantotsy.repository.pizza.PizzaRepository;
 
+import java.util.List;
+
 public class SimplePizzaService implements PizzaService {
     /*Fields*/
     private PizzaRepository pizzaRepository;
@@ -26,6 +28,11 @@ public class SimplePizzaService implements PizzaService {
     @Override
     public Pizza findByName(String name) {
         return pizzaRepository.findByName(name);
+    }
+
+    @Override
+    public List<Pizza> findAllPizzas() {
+        return pizzaRepository.findAllPizzas();
     }
 
     @Override

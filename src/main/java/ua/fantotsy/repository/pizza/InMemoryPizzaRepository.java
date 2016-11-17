@@ -48,6 +48,11 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     }
 
     @Override
+    public List<Pizza> findAllPizzas() {
+        return pizzas;
+    }
+
+    @Override
     public Pizza save(Pizza pizza) {
         pizza.setPizzaId(getNextId());
         pizzas.add(pizza);
