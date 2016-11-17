@@ -48,22 +48,14 @@ public class JpaAppRunner {
 
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
-
         persistPizzas(entityManager, pizza1, pizza2, pizza3);
-
         persistOrders(entityManager, order1, order2, order3);
-
-        confirmOrder(order1);
-        payOrder(order1);
-
         entityTransaction.commit();
 
         entityTransaction.begin();
-
         Order order = entityManager.find(Order.class, 4L);
         Pizza p = entityManager.find(Pizza.class, 1L);
         removePizza(order, pizza1);
-
         entityTransaction.commit();
 
         entityManager.close();

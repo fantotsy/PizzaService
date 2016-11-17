@@ -35,7 +35,7 @@ public class AccumulativeCardDiscount extends Discount {
     }
 
     private double getAccumulationCardBalance() {
-        return order.getCustomer().getCardBalance();
+        return order.getCustomer().cardBalance();
     }
 
     private double getInitialPriceMaxPercentage() {

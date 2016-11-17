@@ -21,7 +21,7 @@ public class InMemoryPaymentRepository implements PaymentRepository {
     public Payment findById(Long id) {
         if (payments.size() > 0) {
             for (Payment payment : payments) {
-                if (payment.getId().equals(id)) {
+                if (payment.getPaymentId().equals(id)) {
                     return payment;
                 }
             }

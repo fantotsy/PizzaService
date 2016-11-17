@@ -27,7 +27,7 @@ public class InMemoryPizzaRepository implements PizzaRepository {
     public Pizza findById(Long id) {
         if (pizzas.size() > 0) {
             for (Pizza pizza : pizzas) {
-                if (pizza.getId().equals(id)) {
+                if (pizza.getPizzaId().equals(id)) {
                     return pizza;
                 }
             }

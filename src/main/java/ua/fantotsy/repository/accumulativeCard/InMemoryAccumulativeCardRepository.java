@@ -21,7 +21,7 @@ public class InMemoryAccumulativeCardRepository implements AccumulativeCardRepos
     public AccumulativeCard findById(Long id) {
         if (accumulativeCards.size() > 0) {
             for (AccumulativeCard accumulativeCard : accumulativeCards) {
-                if (accumulativeCard.getId().equals(id)) {
+                if (accumulativeCard.getAccumulativeCardId().equals(id)) {
                     return accumulativeCard;
                 }
             }
