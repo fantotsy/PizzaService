@@ -23,7 +23,7 @@
                     <td>${pizza.type}</td>
                     <td>${pizza.price}</td>
                     <td>
-                        <form action="pizza/edit/${pizza.pizzaId}">
+                        <form action="${pizza.pizzaId}">
                             <input type="submit" value="Edit">
                         </form>
                     </td>

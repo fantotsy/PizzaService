@@ -7,8 +7,11 @@
     <title>Pizzas</title>
 </head>
     <body>
-    <table>
-        ${requestScope.pizza}
-    </table>
+        <form action="add-new" method="post">
+            Name: <input type="text" name = "name"/>
+            Type: <input type="text" name = "type"/>
+            Price: <input type="text" name = "price"/>
+            <input type="submit" value="Add"/>
+        </form>
     </body>
 </html>
