@@ -7,23 +7,29 @@
         <title>Pizzas</title>
     </head>
     <body>
-    <table>
-        <tbody>
+        <table>
+            <tbody>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Type</th>
                 <th>Price</th>
+                <th>Action</th>
             </tr>
             <c:forEach items="${requestScope.pizzas}" var="pizza">
                 <tr>
-                    <td>"${pizza.pizzaId}"</td>
-                    <td>"${pizza.name}"</td>
-                    <td>"${pizza.type}"</td>
-                    <td>"${pizza.price}"</td>
+                    <td>${pizza.pizzaId}</td>
+                    <td>${pizza.name}</td>
+                    <td>${pizza.type}</td>
+                    <td>${pizza.price}</td>
+                    <td>
+                        <form action="pizza/edit/${pizza.pizzaId}">
+                            <input type="submit" value="Edit">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </body>
 </html>
