@@ -5,7 +5,19 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <context:component-scan base-package="ua.rd.pizzaservice.web.app"/>
+
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="ua.fantotsy.web.app.PizzaConverter"/>
+            </set>
+        </property>
+    </bean>
+
 
     <mvc:view-resolvers>
         <mvc:jsp prefix="/WEB-INF/jsp/"
@@ -13,7 +25,19 @@
                  view-class="org.springframework.web.servlet.view.JstlView"/>
     </mvc:view-resolvers>
 
-    <context:component-scan base-package="ua.fantotsy.web.app"/>
+    <bean id="simpleMappingExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="DatabaseException" value="error"/>
+                <entry key="NumberFormatException" value="error"/>
+            </map>
+        </property>
+        <property name="defaultErrorView" value="error"/>
+        <property name="exceptionAttribute" value="ex"/>
+    </bean>
 
+    <!--<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">-->
 
+    <!--</bean>-->
 </beans>

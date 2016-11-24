@@ -1,6 +1,7 @@
 package ua.fantotsy.web.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,32 +16,42 @@ import java.util.ArrayList;
 
 @Controller
 public class PizzaController {
+
+    @Qualifier("simplePizzaService")
     @Autowired
     private PizzaService pizzaService;
 
-    @RequestMapping("/pizzas")
-    public ModelAndView pizzas(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("pizzas");
+    @RequestMapping("/hello")
+//    @ResponseBody
+    public ModelAndView hello(ModelAndView mv) {
+        mv.setViewName("hello");
         mv.setStatus(HttpStatus.OK);
         mv.addObject("pizzas", pizzaService.findAllPizzas());
         return mv;
     }
 
-    @RequestMapping(value = "/{pizzaId}", method = RequestMethod.GET)
-    public ModelAndView editPizza(@PathVariable("pizzaId") Long pizzaId){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("edit");
+    @RequestMapping("/edit/pizza/{pizzaId}")
+//    @ResponseBody
+    public ModelAndView edit(@PathVariable(name = "pizzaId") Long pizzaId, ModelAndView mv) {
+        mv.setViewName("hello");
         mv.setStatus(HttpStatus.OK);
-        mv.addObject("pizza", pizzaService.findById(pizzaId));
+        mv.addObject("message", "you want to edit pizza #" + pizzaId);
         return mv;
     }
 
-    @RequestMapping(name = "/add-new", method = RequestMethod.POST)
-    public String editPizza(@ModelAttribute Pizza pizza){
-        pizzaService.addNewPizza(pizza.getName(), pizza.getPrice(), pizza.getType());
-        return "redirect:pizzas";
+    @RequestMapping("/create")
+    public String create() {
+        return "create";
     }
 
+    @RequestMapping("/exception")
+    public void exception() {
+        throw new NumberFormatException();
+    }
 
+    @RequestMapping(name = "/add/pizza", method = RequestMethod.POST)
+    public String addNew(@ModelAttribute Pizza pizza) {
+
+        return "newPizza";
+    }
 }
